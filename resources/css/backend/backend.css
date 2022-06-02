@@ -1,0 +1,18 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import "./_colors.css";
+
+/* fonts */
+@import "./fonts/_roboto.css";
+/* @import "./fonts/_ubuntu.css"; */
+
+/* backend */
+@import "./_media.css";
+@import "./_global.css";
+@import "./_transition.css";
+@import "./_sidebar.css";
+@import "./_breadcrumb.css";
+@import "./_dropdown.css";
+@import "./_topbar.css";

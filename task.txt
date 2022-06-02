@@ -1,0 +1,6 @@
+2022-06-01 :
+Konfigurasi webpack untuk backend dan frontend [DONE]
+Buat configurations, role permissions, menus [DONE]
+
+PR :
+1. Buat data asli yang sesuai untuk sidebar (configurations, roles permissions, users)

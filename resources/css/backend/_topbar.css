@@ -1,0 +1,12 @@
+.topbar {
+    height: 70px;
+    z-index: 51;
+    @apply relative flex items-center px-6 bg-white border-b border-l border-slate-200;
+}
+
+.topbar__menu.active {
+    @apply bg-primary/90 hover:bg-primary/80;
+    .topbar__menu__icon {
+        @apply text-white;
+    }
+}

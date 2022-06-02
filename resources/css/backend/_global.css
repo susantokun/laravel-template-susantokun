@@ -1,0 +1,24 @@
+html {
+    @apply bg-primary;
+    &.dark {
+        @apply bg-darkmode-800;
+        body {
+            @apply text-slate-300;
+            *,
+            ::before,
+            ::after {
+                @apply border-white/5;
+            }
+        }
+    }
+    body {
+        @apply flex flex-col h-full min-h-screen p-3 overflow-x-hidden text-sm antialiased sm:flex-row text-slate-800 font-roboto;
+    }
+    main {
+        @apply h-full px-6 py-5;
+    }
+}
+
+.content {
+    @apply flex flex-col justify-between h-full min-w-0 overflow-hidden rounded-lg bg-slate-100;
+}

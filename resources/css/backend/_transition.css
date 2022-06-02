@@ -1,0 +1,53 @@
+* {
+  @for $i from 1 to 50 {
+    > .te-x:nth-child($i) {
+      z-index: calc(50 - $i);
+      opacity: 0;
+      position: relative;
+      transform: translateX(50px);
+      animation: 0.4s te-x-animation ease-in-out 0.33333s;
+      animation-fill-mode: forwards;
+      animation-delay: calc($i * 0.1s);
+    }
+    > .-te-x:nth-child($i) {
+      z-index: calc(50 - $i);
+      opacity: 0;
+      position: relative;
+      transform: translateX(-50px);
+      animation: 0.4s te-x-animation ease-in-out 0.33333s;
+      animation-fill-mode: forwards;
+      animation-delay: calc($i * 0.1s);
+    }
+    > .te-y:nth-child($i) {
+      z-index: calc(50 - $i);
+      opacity: 0;
+      position: relative;
+      transform: translateY(50px);
+      animation: 0.4s te-y-animation ease-in-out 0.33333s;
+      animation-fill-mode: forwards;
+      animation-delay: calc($i * 0.1s);
+    }
+    > .-te-y:nth-child($i) {
+      z-index: calc(50 - $i);
+      opacity: 0;
+      position: relative;
+      transform: translateY(-50px);
+      animation: 0.4s te-y-animation ease-in-out 0.33333s;
+      animation-fill-mode: forwards;
+      animation-delay: calc($i * 0.1s);
+    }
+  }
+}
+
+@keyframes te-x-animation {
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+@keyframes te-y-animation {
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}

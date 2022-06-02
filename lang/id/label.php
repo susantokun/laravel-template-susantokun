@@ -6,11 +6,15 @@
  * |--------------------------------------------------------------|
  * | Author          : Susantokun
  * | Email           : admin@susantokun.com
+ * | Filename        : label.php
  * | Instagram       : @susantokun
- * | Website         : http://www.susantokun.com
+ * | Blog            : http://www.susantokun.com
+ * | Info            : http://info.susantokun.com
+ * | Demo            : http://demo.susantokun.com
  * | Youtube         : http://youtube.com/susantokun
- * | File Created    : Friday, 28th February 2020 2:50:20 pm
- * | Last Modified   : Friday, 28th February 2020 2:50:20 pm
+ * | File Created    : Tuesday, 31st May 2022 5:28:28 pm
+ * | Last Modified   : Thursday, 2nd June 2022 2:02:21 pm
+ * | HISTORY         :
  * |==============================================================|
  */
 

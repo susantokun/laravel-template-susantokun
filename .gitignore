@@ -22,3 +22,5 @@ json
 package-lock.json
 composer.lock
 tailwind.config.js
+tailwind-backend.config.js
+tailwind-frontend.config.js
