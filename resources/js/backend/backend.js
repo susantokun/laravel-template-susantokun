@@ -14,6 +14,8 @@ import "./topbar";
 
 // components
 import "./components/Example";
-import "./components/configuration/General";
+import "./components/configurations/General";
 import "./components/User";
 import "./components/UserBasic";
+import "./components/Role";
+import "./components/Permission";

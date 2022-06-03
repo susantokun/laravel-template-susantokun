@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = User::orderBy('id', 'desc')->get();
-        return view('backend.pages.user.index', [
+        return view('backend.pages.users.index', [
             'users' => $users
         ]);
     }
@@ -19,8 +19,13 @@ class UserController extends Controller
     public function basic(Request $request)
     {
         $users = User::orderBy('id', 'desc')->get();
-        return view('backend.pages.user.userBasic', [
+        return view('backend.pages.users.userBasic', [
             'users' => $users
         ]);
+    }
+
+    public function userRolePermission()
+    {
+        return view('backend.pages.users.usersRolePermission');
     }
 }

@@ -49,9 +49,39 @@ export default function User(props) {
                 accessor: "email",
             },
             {
+                Header: "Role",
+                Cell: ({ row: { original, index } }) => {
+                    let roles = [];
+                    let permissions = [];
+
+                    original.roles.forEach((item, index) => {
+                        roles[index] = item.name;
+                        item.permissions.forEach((item, index) => {
+                            permissions[index] = item.name;
+                        });
+                    });
+                    return <div className="flex-wrap inline-flex w-20">{roles.join(', ')}</div>;
+                },
+            },
+            {
+                Header: "Permissions",
+                Cell: ({ row: { original, index } }) => {
+                    // let roles = [];
+                    let permissions = [];
+
+                    original.roles.forEach((item, index) => {
+                        // roles[index] = item.name;
+                        item.permissions.forEach((item, index) => {
+                            permissions[index] = item.name;
+                        });
+                    });
+                    return <div className="flex-wrap inline-flex w-18">{permissions.join(', ')}</div>;
+                },
+            },
+            {
                 Header: "Created",
                 accessor: "created_at",
-                className: "truncate"
+                className: "truncate",
             },
         ],
         []

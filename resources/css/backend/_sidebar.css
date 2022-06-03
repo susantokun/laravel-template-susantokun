@@ -1,9 +1,9 @@
 .sidebar {
     width: 230px;
     transition: 0.5s;
-    @apply pb-16 pr-5 overflow-x-hidden;
+    @apply overflow-y-auto shrink-0 overflow-x-hidden;
     @include media-breakpoint-down(xl) {
-        width: 85px;
+        width: 65px;
     }
     @include media-breakpoint-down(md) {
         @apply hidden;
@@ -142,7 +142,7 @@
                 &:not(.sidebar_menu__active) .sidebar_menu__icon:before {
                     content: "";
                     z-index: -1;
-                    width: 210px;
+                    width: 230px;
                     @apply absolute top-0 left-0 h-full transition duration-100 ease-in rounded-lg;
                     @include media-breakpoint-down(xl) {
                         @apply hidden;
@@ -158,7 +158,7 @@
 }
 
 .sidebar.active {
-    width: 85px;
+    width: 65px;
     .navigation li {
         &:not(.sidebar_menu__active) .sidebar_menu__icon:before {
             width: 65px;

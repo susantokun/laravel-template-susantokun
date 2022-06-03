@@ -47,16 +47,21 @@
 </head>
 
 <body>
-    @include('backend.layouts.sidebar')
-    <div class="flex-1">
-        <div class="content">
-            @include('backend.layouts.topbar')
-            <main>
-                {{ $slot }}
-            </main>
-            @include('backend.layouts.footer')
+    <div class="flex p-5 min-h-screen">
+        @include('backend.layouts.sidebar')
+        <div class="w-full flex-1 overflow-x-hidden pl-0 md:pl-5">
+            <div class="content">
+                <div class="block">
+                    @include('backend.layouts.topbar')
+                    <main>
+                        {{ $slot }}
+                    </main>
+                </div>
+                @include('backend.layouts.footer')
+            </div>
         </div>
     </div>
+
 </body>
 
 @stack('scripts')

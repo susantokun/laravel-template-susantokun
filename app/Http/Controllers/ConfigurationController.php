@@ -43,7 +43,7 @@ class ConfigurationController extends Controller
             'status',
         ]);
 
-        return view('backend.pages.configuration.general', [
+        return view('backend.pages.configurations.general', [
             'data' => $data,
             'role' => $role
         ]);
@@ -56,7 +56,7 @@ class ConfigurationController extends Controller
             'about',
         ]);
 
-        return view('backend.pages.configuration.about', [
+        return view('backend.pages.configurations.about', [
             'data' => $data,
         ]);
     }
@@ -71,7 +71,7 @@ class ConfigurationController extends Controller
             'map_link',
         ]);
 
-        return view('backend.pages.configuration.contact', [
+        return view('backend.pages.configurations.contact', [
             'data' => $data,
         ]);
     }
@@ -82,7 +82,7 @@ class ConfigurationController extends Controller
             'privacy_policy',
         ]);
 
-        return view('backend.pages.configuration.privacyPolicy', [
+        return view('backend.pages.configurations.privacyPolicy', [
             'data' => $data,
         ]);
     }
@@ -93,7 +93,7 @@ class ConfigurationController extends Controller
             'term_and_condition',
         ]);
 
-        return view('backend.pages.configuration.termAndCondition', [
+        return view('backend.pages.configurations.termAndCondition', [
             'data' => $data,
         ]);
 
