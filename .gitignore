@@ -24,4 +24,5 @@ composer.lock
 tailwind.config.js
 tailwind-backend.config.js
 tailwind-frontend.config.js
-public/{css,js,build}
+public/css
+public/js
