@@ -12,7 +12,7 @@ html {
         }
     }
     body {
-        @apply flex flex-col h-full min-h-screen p-3 overflow-x-hidden text-sm antialiased sm:flex-row text-slate-800 font-roboto;
+        @apply text-sm antialiased text-slate-800 font-roboto;
     }
     main {
         @apply h-full px-6 py-5;

@@ -48,6 +48,19 @@ class MenuSeeder extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ],
+
+            // admin
+            [
+                'role_id' => 2,
+                'parent_id' => 0,
+                'title' => 'Dashboard',
+                'route_name' => 'dashboard',
+                'icon' => 'home',
+                'order' => 1,
+                'status' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ],
         ]);
     }
 }

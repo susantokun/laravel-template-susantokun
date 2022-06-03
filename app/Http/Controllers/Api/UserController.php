@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data = User::orderBy('id', 'desc')->get();
+        $data = User::with('roles')->orderBy('id', 'desc')->get();
 
         return response()->json([
             'data' => $data,
@@ -25,14 +25,18 @@ class UserController extends Controller
     public function indexServerSide($limit = 0, $skip = 0)
     {
         $data = User::take($limit)
+        ->with('roles')
         ->skip($skip)
+        ->with(['roles' => function($q) {
+            $q->with('permissions');
+        }])
         ->orderBy('id', 'desc')->get();
 
         $count = User::get()->count();
 
         return response()->json([
             'data' => $data,
-            'total' => $count
+            'total' => $count,
         ]);
 
         // $pagination  = 5;
