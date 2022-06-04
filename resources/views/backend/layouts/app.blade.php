@@ -47,9 +47,9 @@
 </head>
 
 <body>
-    <div class="flex p-5 min-h-screen">
+    <div class="flex min-h-screen p-5">
         @include('backend.layouts.sidebar')
-        <div class="w-full flex-1 overflow-x-hidden pl-0 md:pl-5">
+        <div class="flex-1 w-full pl-0 overflow-x-hidden md:pl-5">
             <div class="content">
                 <div class="block">
                     @include('backend.layouts.topbar')
