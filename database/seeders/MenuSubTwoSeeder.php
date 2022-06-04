@@ -16,8 +16,9 @@ class MenuSubTwoSeeder extends Seeder
     {
         DB::table('menus')->insert([
             [
+                'id' => 10,
                 'role_id' => 1,
-                'parent_id' => 4,
+                'parent_id' => 5,
                 'title' => 'General',
                 'route_name' => 'configurations.general',
                 'icon' => 'chevron-right',
@@ -27,8 +28,9 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
+                'id' => 11,
                 'role_id' => 1,
-                'parent_id' => 4,
+                'parent_id' => 5,
                 'title' => 'About',
                 'route_name' => 'configurations.about',
                 'icon' => 'chevron-right',
@@ -38,8 +40,9 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
+                'id' => 12,
                 'role_id' => 1,
-                'parent_id' => 4,
+                'parent_id' => 5,
                 'title' => 'Contact',
                 'route_name' => 'configurations.contact',
                 'icon' => 'chevron-right',
@@ -49,8 +52,9 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
+                'id' => 13,
                 'role_id' => 1,
-                'parent_id' => 4,
+                'parent_id' => 5,
                 'title' => 'Privacy Policy',
                 'route_name' => 'configurations.privacyPolicy',
                 'icon' => 'chevron-right',
@@ -60,8 +64,9 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
+                'id' => 14,
                 'role_id' => 1,
-                'parent_id' => 4,
+                'parent_id' => 5,
                 'title' => 'Term And Condition',
                 'route_name' => 'configurations.termAndCondition',
                 'icon' => 'chevron-right',

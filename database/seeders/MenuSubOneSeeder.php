@@ -16,6 +16,7 @@ class MenuSubOneSeeder extends Seeder
     {
         DB::table('menus')->insert([
             [
+                'id' => 5,
                 'role_id' => 1,
                 'parent_id' => 2,
                 'title' => 'Configurations',
@@ -27,6 +28,7 @@ class MenuSubOneSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
+                'id' => 6,
                 'role_id' => 1,
                 'parent_id' => 3,
                 'title' => 'Lists',
@@ -38,6 +40,7 @@ class MenuSubOneSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
+                'id' => 7,
                 'role_id' => 1,
                 'parent_id' => 3,
                 'title' => 'Roles',
@@ -49,6 +52,7 @@ class MenuSubOneSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
+                'id' => 8,
                 'role_id' => 1,
                 'parent_id' => 3,
                 'title' => 'Permissions',
@@ -60,6 +64,7 @@ class MenuSubOneSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
+                'id' => 9,
                 'role_id' => 1,
                 'parent_id' => 3,
                 'title' => 'User Role Permission',

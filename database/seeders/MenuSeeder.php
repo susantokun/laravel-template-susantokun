@@ -16,6 +16,7 @@ class MenuSeeder extends Seeder
     {
         DB::table('menus')->insert([
             [
+                'id' => 1,
                 'role_id' => 1,
                 'parent_id' => 0,
                 'title' => 'Dashboard',
@@ -27,6 +28,7 @@ class MenuSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
+                'id' => 2,
                 'role_id' => 1,
                 'parent_id' => 0,
                 'title' => 'Settings',
@@ -38,6 +40,7 @@ class MenuSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
+                'id' => 3,
                 'role_id' => 1,
                 'parent_id' => 0,
                 'title' => 'Users',
@@ -51,6 +54,7 @@ class MenuSeeder extends Seeder
 
             // admin
             [
+                'id' => 4,
                 'role_id' => 2,
                 'parent_id' => 0,
                 'title' => 'Dashboard',
