@@ -82,7 +82,7 @@ class ConfigurationController extends Controller
             'privacy_policy',
         ]);
 
-        return view('backend.pages.configurations.privacyPolicy', [
+        return view('backend.pages.configurations.privacy-policy', [
             'data' => $data,
         ]);
     }
@@ -93,7 +93,7 @@ class ConfigurationController extends Controller
             'term_and_condition',
         ]);
 
-        return view('backend.pages.configurations.termAndCondition', [
+        return view('backend.pages.configurations.term-and-condition', [
             'data' => $data,
         ]);
 

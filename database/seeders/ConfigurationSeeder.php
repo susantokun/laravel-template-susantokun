@@ -40,8 +40,8 @@ class ConfigurationSeeder extends Seeder
                     'metatext'           => 'metatext',
                     'api_key'            => 'api_key',
                     'about'              => '<p>I am About</p>',
-                    'privacy_policy'     => '<p>I am PrivacyPolicy</p>',
-                    'term_and_condition' => '<p>I am TermAndCondition</p>',
+                    'privacy_policy'     => '<p>I am Privacy Policy</p>',
+                    'term_and_condition' => '<p>I am Term And Condition</p>',
                     'status'             => 1,
                     'created_at'         => date('Y-m-d H:i:s'),
                     'updated_at'         => date('Y-m-d H:i:s')
