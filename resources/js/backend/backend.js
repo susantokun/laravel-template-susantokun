@@ -11,7 +11,7 @@ import "./feather";
 import "./dropdown";
 import "./sidebar";
 import "./topbar";
-import "./mobileMenu";
+import "./mobile-menu";
 
 // components
 import "./components/Example";
