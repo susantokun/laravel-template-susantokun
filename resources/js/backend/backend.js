@@ -14,7 +14,6 @@ import "./topbar";
 import "./mobile-menu";
 
 // components
-import "./components/Example";
 import "./components/configurations/General";
 import "./components/User";
 import "./components/UserBasic";
