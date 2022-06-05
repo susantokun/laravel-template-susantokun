@@ -47,11 +47,12 @@
 </head>
 
 <body>
-    <div class="flex min-h-screen p-5">
+    <div class="flex flex-col min-h-screen p-3 md:flex-row md:p-5">
         @include('backend.layouts.sidebar')
-        <div class="flex-1 w-full pl-0 overflow-x-hidden md:pl-5">
+        @include('backend.layouts.mobile-menu')
+        <div class="flex flex-1 w-full pl-0 overflow-x-hidden md:pl-5">
             <div class="content">
-                <div class="block">
+                <div class="flex-1">
                     @include('backend.layouts.topbar')
                     <main>
                         {{ $slot }}
