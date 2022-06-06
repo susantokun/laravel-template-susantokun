@@ -13,7 +13,7 @@
         <div class="mt-4">
             <div
                 id="user"
-                data-users="{{ $users }}"
+                data-roles="{{ auth()->user()->getRoleNames() }}"
             ></div>
         </div>
     </div>

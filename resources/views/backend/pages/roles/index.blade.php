@@ -11,7 +11,10 @@
             </a>
         </div>
         <div class="mt-4">
-            <div id="role"></div>
+            <div
+                id="role"
+                data-roles="{{ auth()->user()->getRoleNames() }}"
+            ></div>
         </div>
     </div>
 </x-backend-layout>

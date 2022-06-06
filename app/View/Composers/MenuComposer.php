@@ -22,7 +22,7 @@ class MenuComposer
 
             if (auth()->check()) {
                 $user = auth()->user()->roles->pluck('id');
-                $view->with('side_menu', Menu::where('parent_id', 0)->where('role_id', $user)->where('status', 1)->orderBy('order','asc')->get());
+                $view->with('side_menu', Menu::where('parent_id', 0)->whereIn('role_id', $user)->where('status', 1)->orderBy('order','asc')->get());
             }else {
                 $view->with('side_menu', null);
             }
@@ -118,7 +118,7 @@ class MenuComposer
         } else {
             if (auth()->check()) {
                 $user = auth()->user()->roles->pluck('id');
-                $menus = Menu::where('parent_id', 0)->where('role_id', $user)->where('status', 1)->orderBy('order','asc')->get();
+                $menus = Menu::where('parent_id', 0)->whereIn('role_id', $user)->where('status', 1)->orderBy('order','asc')->get();
             }else {
                 $menus = [];
             }

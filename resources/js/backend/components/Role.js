@@ -10,6 +10,7 @@ import { useTable } from "react-table";
 import TablePagination from "./reactTable/TablePagination";
 
 export default function Role(props) {
+    const roles = JSON.parse(props.roles);
     const [dataRoles, setDataRoles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -55,10 +56,15 @@ export default function Role(props) {
                 Header: "Permissions",
                 Cell: ({ row: { original, index } }) => {
                     var permissions = [];
+                    // original.permissions.forEach((item, index) => {
+                    //     permissions[index] = item.name;
+                    // });
+                    // return <div className="inline-flex flex-wrap w-18">{permissions.join(', ')}</div>;
+
                     original.permissions.forEach((item, index) => {
-                        permissions[index] = item.name;
+                        permissions[index] = <div className="list-item" key={item.name}>{item.name}</div>;
                     });
-                    return <div className="inline-flex flex-wrap w-18">{permissions.join(', ')}</div>;
+                    return <div className="list-disc list-inside">{permissions}</div>;
                 },
             },
             {
@@ -67,11 +73,24 @@ export default function Role(props) {
             },
             {
                 Header: "Actions",
+                className: "text-center",
                 Cell: ({ row: { original, index } }) => {
+                    let buttonShow = '';
+                    let buttonEdit = '';
+                    let buttonDelete = '';
+                    roles.forEach(item => {
+                        if (item === 'super-admin') {
+                            buttonEdit = <a href={`/users/${original.id}`}>Edit</a>;
+                            buttonDelete = <div className="">Delete</div>;
+                        }
+                    });
+
+                    buttonShow = <a href={`/users/${original.id}`}>Show</a>;
+
                     return <div className="inline-flex gap-1">
-                        <a href={`/roles/${original.id}`}>Show</a>
-                        <a href={`/roles/${original.id}`}>Edit</a>
-                        <div className="">Delete</div>
+                        {buttonShow}
+                        {buttonEdit}
+                        {buttonDelete}
                     </div>;
                 },
             },

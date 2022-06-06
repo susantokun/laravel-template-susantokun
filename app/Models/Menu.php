@@ -22,7 +22,7 @@ class Menu extends Model
     public function sub_menu()
     {
         return $this->hasMany(Menu::class, 'parent_id')
-        ->where('role_id', auth()->user()->roles->pluck('id'))
+        ->whereIn('role_id', auth()->user()->roles->pluck('id'))
         ->where('status', 1)
         ->orderBy('order', 'asc');
     }

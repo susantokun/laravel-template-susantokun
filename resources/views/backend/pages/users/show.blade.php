@@ -28,9 +28,12 @@
                 <div class="form-group">
                     <strong>Roles:</strong>
                     @if(!empty($user->getRoleNames()))
-                    @foreach($user->getRoleNames() as $v)
-                    <label class="badge badge-success">{{ $v }}</label>
-                    @endforeach
+                    {{ $user->getRoleNames()->implode(', ') }}
+                    {{-- <div class="list-inside list-desc">
+                        @foreach ($user->getRoleNames() as $item)
+                        <div class="list-item">{{ $item }}</div>
+                        @endforeach
+                    </div> --}}
                     @endif
                 </div>
             </div>

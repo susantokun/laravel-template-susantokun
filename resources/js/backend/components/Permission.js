@@ -10,6 +10,7 @@ import { useTable } from "react-table";
 import TablePagination from "./reactTable/TablePagination";
 
 export default function Permission(props) {
+    const roles = JSON.parse(props.roles);
     const [dataPermissions, setDataPermissions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -54,6 +55,29 @@ export default function Permission(props) {
             {
                 Header: "Created",
                 accessor: "created_at",
+            },
+            {
+                Header: "Actions",
+                className: "text-center",
+                Cell: ({ row: { original, index } }) => {
+                    let buttonShow = '';
+                    let buttonEdit = '';
+                    let buttonDelete = '';
+                    roles.forEach(item => {
+                        if (item === 'super-admin') {
+                            buttonEdit = <a href={`/users/${original.id}`}>Edit</a>;
+                            buttonDelete = <div className="">Delete</div>;
+                        }
+                    });
+
+                    buttonShow = <a href={`/users/${original.id}`}>Show</a>;
+
+                    return <div className="inline-flex gap-1">
+                        {buttonShow}
+                        {buttonEdit}
+                        {buttonDelete}
+                    </div>;
+                },
             },
         ],
         []

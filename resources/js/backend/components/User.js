@@ -10,7 +10,7 @@ import { useTable } from "react-table";
 import TablePaginationControlled from "./reactTable/TablePaginationControlled";
 
 export default function User(props) {
-    //   const [dataUsers, setDataUsers] = useState([]);
+    const roles = JSON.parse(props.roles)
     const [isLoading, setIsLoading] = useState(false);
 
     //   const getUsers = async () => {
@@ -52,32 +52,13 @@ export default function User(props) {
                 Header: "Role",
                 Cell: ({ row: { original, index } }) => {
                     let roles = [];
-                    let permissions = [];
 
                     original.roles.forEach((item, index) => {
-                        roles[index] = item.name;
-                        item.permissions.forEach((item, index) => {
-                            permissions[index] = item.name;
-                        });
+                        roles[index] = <div className="list-item" key={item.name}>{item.name}</div>;
                     });
-                    return <div className="inline-flex flex-wrap w-20">{roles.join(', ')}</div>;
+                    return <div className="list-disc list-inside">{roles}</div>;
                 },
             },
-            // {
-            //     Header: "Permissions",
-            //     Cell: ({ row: { original, index } }) => {
-            //         // let roles = [];
-            //         let permissions = [];
-
-            //         original.roles.forEach((item, index) => {
-            //             // roles[index] = item.name;
-            //             item.permissions.forEach((item, index) => {
-            //                 permissions[index] = item.name;
-            //             });
-            //         });
-            //         return <div className="inline-flex flex-wrap w-18">{permissions.join(', ')}</div>;
-            //     },
-            // },
             {
                 Header: "Created",
                 accessor: "created_at",
@@ -85,11 +66,24 @@ export default function User(props) {
             },
             {
                 Header: "Actions",
+                className: "text-center",
                 Cell: ({ row: { original, index } }) => {
+                    let buttonShow = '';
+                    let buttonEdit = '';
+                    let buttonDelete = '';
+                    roles.forEach(item => {
+                        if (item === 'super-admin') {
+                            buttonEdit = <a href={`/users/${original.id}`}>Edit</a>;
+                            buttonDelete = <div className="">Delete</div>;
+                        }
+                    });
+
+                    buttonShow = <a href={`/users/${original.id}`}>Show</a>;
+
                     return <div className="inline-flex gap-1">
-                        <a href={`/users/${original.id}`}>Show</a>
-                        <a href={`/users/${original.id}`}>Edit</a>
-                        <div className="">Delete</div>
+                        {buttonShow}
+                        {buttonEdit}
+                        {buttonDelete}
                     </div>;
                 },
             },

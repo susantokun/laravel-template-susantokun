@@ -133,7 +133,7 @@
             <ul class="text-white dropdown-content bg-primary">
                 <li class="p-2">
                     <div class="font-medium">{{ auth()->user()->name }}</div>
-                    <div class="text-xs text-white/70 mt-0.5 dark:text-slate-500">{{ auth()->user()->getRoleNames()[0] }}</div>
+                    <div class="text-xs text-white/70 mt-0.5 dark:text-slate-500">{{ auth()->user()->getRoleNames()->implode(', ') }}</div>
                 </li>
                 <li>
                     <hr class="dropdown-divider border-white/[0.08]">
