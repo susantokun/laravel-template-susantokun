@@ -80,12 +80,12 @@ export default function Role(props) {
                     let buttonDelete = '';
                     roles.forEach(item => {
                         if (item === 'super-admin') {
-                            buttonEdit = <a href={`/users/${original.id}`}>Edit</a>;
+                            buttonEdit = <a href={`/roles/${original.id}/edit`}>Edit</a>;
                             buttonDelete = <div className="">Delete</div>;
                         }
                     });
 
-                    buttonShow = <a href={`/users/${original.id}`}>Show</a>;
+                    buttonShow = <a href={`/roles/${original.id}`}>Show</a>;
 
                     return <div className="inline-flex gap-1">
                         {buttonShow}

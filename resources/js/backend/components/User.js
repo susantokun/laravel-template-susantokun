@@ -73,7 +73,7 @@ export default function User(props) {
                     let buttonDelete = '';
                     roles.forEach(item => {
                         if (item === 'super-admin') {
-                            buttonEdit = <a href={`/users/${original.id}`}>Edit</a>;
+                            buttonEdit = <a href={`/users/${original.id}/edit`}>Edit</a>;
                             buttonDelete = <div className="">Delete</div>;
                         }
                     });
