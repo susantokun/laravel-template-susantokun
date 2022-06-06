@@ -16,9 +16,9 @@ class MenuSubTwoSeeder extends Seeder
     {
         DB::table('menus')->insert([
             [
-                'id' => 10,
+                'id' => 12,
                 'role_id' => 1,
-                'parent_id' => 5,
+                'parent_id' => 6,
                 'title' => 'General',
                 'route_name' => 'configurations.general',
                 'icon' => 'chevron-right',
@@ -28,9 +28,9 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 11,
+                'id' => 13,
                 'role_id' => 1,
-                'parent_id' => 5,
+                'parent_id' => 6,
                 'title' => 'About',
                 'route_name' => 'configurations.about',
                 'icon' => 'chevron-right',
@@ -40,9 +40,9 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 12,
+                'id' => 14,
                 'role_id' => 1,
-                'parent_id' => 5,
+                'parent_id' => 6,
                 'title' => 'Contact',
                 'route_name' => 'configurations.contact',
                 'icon' => 'chevron-right',
@@ -52,9 +52,9 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 13,
+                'id' => 15,
                 'role_id' => 1,
-                'parent_id' => 5,
+                'parent_id' => 6,
                 'title' => 'Privacy Policy',
                 'route_name' => 'configurations.privacyPolicy',
                 'icon' => 'chevron-right',
@@ -64,9 +64,9 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 14,
+                'id' => 16,
                 'role_id' => 1,
-                'parent_id' => 5,
+                'parent_id' => 6,
                 'title' => 'Term And Condition',
                 'route_name' => 'configurations.termAndCondition',
                 'icon' => 'chevron-right',
