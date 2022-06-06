@@ -10,6 +10,7 @@ import { useTable } from "react-table";
 import Moment from 'react-moment';
 
 import TablePagination from "./reactTable/TablePagination";
+import {ButtonShow, ButtonEdit, ButtonDelete} from './buttons/ButtonActions';
 
 export default function Permission(props) {
     const roles = JSON.parse(props.roles);
@@ -68,14 +69,14 @@ export default function Permission(props) {
                     let buttonShow = '';
                     let buttonEdit = '';
                     let buttonDelete = '';
+
                     roles.forEach(item => {
                         if (item === 'super-admin') {
-                            buttonEdit = <a href={`/users/${original.id}`}>Edit</a>;
-                            buttonDelete = <div className="">Delete</div>;
+                            buttonEdit = <ButtonEdit path={`/permissions/${original.id}/edit`} />;
+                            buttonDelete = <ButtonDelete />;
                         }
                     });
-
-                    buttonShow = <a href={`/users/${original.id}`}>Show</a>;
+                    buttonShow = <ButtonShow path={`/permissions/${original.id}`} />;
 
                     return <div className="inline-flex gap-1">
                         {buttonShow}

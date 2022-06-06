@@ -43,6 +43,7 @@
         "js-beautify": "^1.14.3",
         "moment": "^2.29.3",
         "moment-timezone": "^0.5.34",
+        "react-feather": "^2.0.10",
         "react-moment": "^1.1.2",
         "react-number-format": "^4.9.3",
         "react-table": "^7.8.0",
