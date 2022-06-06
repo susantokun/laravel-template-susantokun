@@ -6,6 +6,12 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
+import Moment from 'react-moment';
+import 'moment-timezone';
+Moment.globalLocale = 'id';
+Moment.globalTimezone = 'Asia/Jakarta';
+Moment.globalLocal = true;
+
 // backend
 import "./feather";
 import "./dropdown";

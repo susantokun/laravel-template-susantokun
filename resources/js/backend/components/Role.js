@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import { useTable } from "react-table";
+import Moment from 'react-moment';
+
 import TablePagination from "./reactTable/TablePagination";
 
 export default function Role(props) {
@@ -70,6 +72,9 @@ export default function Role(props) {
             {
                 Header: "Created",
                 accessor: "created_at",
+                Cell: ({ row: { original, index } }) => {
+                    return <Moment format="dddd, DD MMMM YYYY" date={original.created_at} />;
+                },
             },
             {
                 Header: "Actions",
