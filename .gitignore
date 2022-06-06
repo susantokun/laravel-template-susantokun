@@ -26,3 +26,4 @@ tailwind-backend.config.js
 tailwind-frontend.config.js
 public/css
 public/js
+public/mix-manifest.json
