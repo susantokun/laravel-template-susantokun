@@ -16,7 +16,7 @@ class MenuSubTwoSeeder extends Seeder
     {
         DB::table('menus')->insert([
             [
-                'id' => 12,
+                'id' => 11,
                 'role_id' => 1,
                 'parent_id' => 6,
                 'title' => 'General',
@@ -28,7 +28,7 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 13,
+                'id' => 12,
                 'role_id' => 1,
                 'parent_id' => 6,
                 'title' => 'About',
@@ -40,7 +40,7 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 14,
+                'id' => 13,
                 'role_id' => 1,
                 'parent_id' => 6,
                 'title' => 'Contact',
@@ -52,7 +52,7 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 15,
+                'id' => 14,
                 'role_id' => 1,
                 'parent_id' => 6,
                 'title' => 'Privacy Policy',
@@ -64,7 +64,7 @@ class MenuSubTwoSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 16,
+                'id' => 15,
                 'role_id' => 1,
                 'parent_id' => 6,
                 'title' => 'Term And Condition',
