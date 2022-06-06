@@ -60,28 +60,38 @@ export default function User(props) {
                             permissions[index] = item.name;
                         });
                     });
-                    return <div className="flex-wrap inline-flex w-20">{roles.join(', ')}</div>;
+                    return <div className="inline-flex flex-wrap w-20">{roles.join(', ')}</div>;
                 },
             },
-            {
-                Header: "Permissions",
-                Cell: ({ row: { original, index } }) => {
-                    // let roles = [];
-                    let permissions = [];
+            // {
+            //     Header: "Permissions",
+            //     Cell: ({ row: { original, index } }) => {
+            //         // let roles = [];
+            //         let permissions = [];
 
-                    original.roles.forEach((item, index) => {
-                        // roles[index] = item.name;
-                        item.permissions.forEach((item, index) => {
-                            permissions[index] = item.name;
-                        });
-                    });
-                    return <div className="flex-wrap inline-flex w-18">{permissions.join(', ')}</div>;
-                },
-            },
+            //         original.roles.forEach((item, index) => {
+            //             // roles[index] = item.name;
+            //             item.permissions.forEach((item, index) => {
+            //                 permissions[index] = item.name;
+            //             });
+            //         });
+            //         return <div className="inline-flex flex-wrap w-18">{permissions.join(', ')}</div>;
+            //     },
+            // },
             {
                 Header: "Created",
                 accessor: "created_at",
                 className: "truncate",
+            },
+            {
+                Header: "Actions",
+                Cell: ({ row: { original, index } }) => {
+                    return <div className="inline-flex gap-1">
+                        <a href={`/users/${original.id}`}>Show</a>
+                        <a href={`/users/${original.id}`}>Edit</a>
+                        <div className="">Delete</div>
+                    </div>;
+                },
             },
         ],
         []

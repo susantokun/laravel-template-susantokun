@@ -8,12 +8,10 @@ class ConfigurationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:configurations.view', ['only' => ['index']]);
+        $this->middleware('permission:configurations.*', ['only' => ['index', 'show']]);
         $this->middleware('permission:configurations.create', ['only' => ['create', 'store']]);
         $this->middleware('permission:configurations.edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:configurations.delete', ['only' => ['destroy']]);
-        $this->middleware('permission:configurations.publish', ['only' => ['publish']]);
-        $this->middleware('permission:configurations.unpublish', ['only' => ['unpublish']]);
     }
 
     public function general()

@@ -34,9 +34,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/term-and-condition', [ConfigurationController::class, 'termAndCondition'])->name('configurations.termAndCondition');
     });
 
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
+
     Route::get('/users-basic', [UserController::class, 'basic'])->name('users.basic');
-    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
     Route::get('/user-role-permission', [UserController::class, 'userRolePermission'])->name('userRolePermission');
 });

@@ -3,7 +3,13 @@
     @section('title','Roles | ')
 
     <div class="relative">
-        <div class="">I am Roles</div>
+        <div class="inline-flex items-center justify-between w-full">
+            <a href="{{ route('roles.create') }}">
+                <x-button-primary>
+                    {{ __('label.add_new') }}
+                </x-button-primary>
+            </a>
+        </div>
         <div class="mt-4">
             <div id="role"></div>
         </div>

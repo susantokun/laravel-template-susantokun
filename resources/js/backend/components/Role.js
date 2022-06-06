@@ -58,12 +58,22 @@ export default function Role(props) {
                     original.permissions.forEach((item, index) => {
                         permissions[index] = item.name;
                     });
-                    return <div className="flex-wrap inline-flex w-18">{permissions.join(', ')}</div>;
+                    return <div className="inline-flex flex-wrap w-18">{permissions.join(', ')}</div>;
                 },
             },
             {
                 Header: "Created",
                 accessor: "created_at",
+            },
+            {
+                Header: "Actions",
+                Cell: ({ row: { original, index } }) => {
+                    return <div className="inline-flex gap-1">
+                        <a href={`/roles/${original.id}`}>Show</a>
+                        <a href={`/roles/${original.id}`}>Edit</a>
+                        <div className="">Delete</div>
+                    </div>;
+                },
             },
         ],
         []
