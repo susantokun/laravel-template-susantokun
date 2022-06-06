@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="form-group">
                     <strong>Name:</strong>
-                    {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control block w-full mt-1')) !!}
+                    {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-input block w-full mt-1')) !!}
                 </div>
                 <div class="form-group">
                     <strong>Permission:</strong>

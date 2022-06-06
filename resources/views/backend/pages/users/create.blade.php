@@ -15,19 +15,19 @@
             {!! Form::open(array('route' => 'users.store','method'=>'POST')) !!}
             <div>
                 <strong>Name:</strong>
-                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control block w-full mt-1')) !!}
+                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-input block w-full mt-1')) !!}
             </div>
             <div class="form-group">
                 <strong>Email:</strong>
-                {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control block w-full mt-1')) !!}
+                {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-input block w-full mt-1')) !!}
             </div>
             <div class="form-group">
                 <strong>Password:</strong>
-                {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control block w-full mt-1')) !!}
+                {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-input block w-full mt-1')) !!}
             </div>
             <div class="form-group">
                 <strong>Confirm Password:</strong>
-                {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control block w-full mt-1')) !!}
+                {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-input block w-full mt-1')) !!}
             </div>
             <div class="form-group">
                 <strong>Role:</strong>

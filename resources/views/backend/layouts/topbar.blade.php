@@ -28,7 +28,7 @@
         <div class="hidden search sm:block">
             <input
                 type="text"
-                class="border-transparent search__input form-control"
+                class="border-transparent search__input form-input"
                 placeholder="Search..."
             >
             <i
