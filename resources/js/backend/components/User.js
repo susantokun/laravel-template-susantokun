@@ -57,7 +57,7 @@ export default function User(props) {
                     let roles = [];
 
                     original.roles.forEach((item, index) => {
-                        roles[index] = <div className="list-item" key={item.name}>{item.name}</div>;
+                        roles[index] = <div className="flex flex-col md:list-item" key={item.name}>{item.name}</div>;
                     });
                     return <div className="list-disc list-inside">{roles}</div>;
                 },

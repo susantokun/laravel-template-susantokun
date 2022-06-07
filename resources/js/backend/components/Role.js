@@ -59,13 +59,8 @@ export default function Role(props) {
                 Header: "Permissions",
                 Cell: ({ row: { original, index } }) => {
                     var permissions = [];
-                    // original.permissions.forEach((item, index) => {
-                    //     permissions[index] = item.name;
-                    // });
-                    // return <div className="inline-flex flex-wrap w-18">{permissions.join(', ')}</div>;
-
                     original.permissions.forEach((item, index) => {
-                        permissions[index] = <div className="list-item" key={item.name}>{item.name}</div>;
+                        permissions[index] = <div className="flex flex-col md:list-item" key={item.name}>{item.name}</div>;
                     });
                     return <div className="list-disc list-inside">{permissions}</div>;
                 },
