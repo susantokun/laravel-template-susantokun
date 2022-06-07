@@ -4,7 +4,7 @@
 
     <div class="">
         <div class="inline-flex justify-end w-full">
-            <a href="{{ route('users.index') }}">
+            <a href="{{ route('accounts.users.index') }}">
                 <x-button-secondary>
                     {{ __('label.back') }}
                 </x-button-secondary>

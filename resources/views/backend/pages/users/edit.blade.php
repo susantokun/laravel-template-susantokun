@@ -4,7 +4,7 @@
 
     <div class="">
         <div class="inline-flex justify-end w-full">
-            <a href="{{ route('users.index') }}">
+            <a href="{{ route('accounts.users.index') }}">
                 <x-button-secondary>
                     {{ __('label.back') }}
                 </x-button-secondary>
@@ -12,7 +12,7 @@
         </div>
         <div class="p-4 mt-4 rounded-lg shadow-md bg-secondary">
 
-            {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
+            {!! Form::model($user, ['method' => 'PATCH','route' => ['accounts.users.update', $user->id]]) !!}
             <div>
                 <strong>Name:</strong>
                 {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-input block w-full mt-1')) !!}

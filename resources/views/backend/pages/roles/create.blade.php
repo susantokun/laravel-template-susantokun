@@ -4,7 +4,7 @@
 
     <div class="">
         <div class="inline-flex justify-end w-full">
-            <a href="{{ route('roles.index') }}">
+            <a href="{{ route('accounts.roles.index') }}">
                 <x-button-secondary>
                     {{ __('label.back') }}
                 </x-button-secondary>
@@ -12,7 +12,7 @@
         </div>
         <div class="p-4 mt-4 rounded-lg shadow-md bg-secondary">
 
-            {!! Form::open(array('route' => 'roles.store','method'=>'POST')) !!}
+            {!! Form::open(array('route' => 'accounts.roles.store','method'=>'POST')) !!}
             <div class="row">
                 <div class="form-group">
                     <strong>Name:</strong>

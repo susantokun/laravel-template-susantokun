@@ -26,20 +26,23 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::group(['prefix' => '/configurations'], function () {
-        Route::get('/general', [ConfigurationController::class, 'general'])->name('configurations.general');
-        Route::get('/about', [ConfigurationController::class, 'about'])->name('configurations.about');
-        Route::get('/contact', [ConfigurationController::class, 'contact'])->name('configurations.contact');
-        Route::get('/privacy-policy', [ConfigurationController::class, 'privacyPolicy'])->name('configurations.privacyPolicy');
-        Route::get('/term-and-condition', [ConfigurationController::class, 'termAndCondition'])->name('configurations.termAndCondition');
+    Route::name('settings.')->group(function() {
+        Route::name('configurations.')->prefix('configurations')->group(function() {
+            Route::get('general', [ConfigurationController::class, 'general'])->name('general');
+            Route::get('about', [ConfigurationController::class, 'about'])->name('about');
+            Route::get('contact', [ConfigurationController::class, 'contact'])->name('contact');
+            Route::get('privacy-policy', [ConfigurationController::class, 'privacyPolicy'])->name('privacyPolicy');
+            Route::get('term-and-condition', [ConfigurationController::class, 'termAndCondition'])->name('termAndCondition');
+        });
     });
 
-    Route::resource('users', UserController::class);
-    Route::resource('roles', RoleController::class);
+    Route::name('accounts.')->group(function() {
+        Route::resource('users', UserController::class);
+        Route::resource('roles', RoleController::class);
+        Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
+    });
 
     Route::get('/users-basic', [UserController::class, 'basic'])->name('users.basic');
-    Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
-    Route::get('/user-role-permission', [UserController::class, 'userRolePermission'])->name('userRolePermission');
 });
 
 require __DIR__.'/auth.php';

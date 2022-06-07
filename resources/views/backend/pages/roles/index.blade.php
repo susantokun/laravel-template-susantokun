@@ -4,7 +4,7 @@
 
     <div class="relative">
         <div class="inline-flex items-center justify-between w-full">
-            <a href="{{ route('roles.create') }}">
+            <a href="{{ route('accounts.roles.create') }}">
                 <x-button-primary>
                     {{ __('label.add_new') }}
                 </x-button-primary>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id');
             $table->string('title');
             $table->string('route_name')->nullable();
+            $table->string('route_group')->nullable();
             $table->string('icon')->nullable();
             $table->unsignedInteger('order')->default(0);
             $table->boolean('status')->default(1);
