@@ -17,13 +17,13 @@ class MenuComposer
     {
         if (!is_null(request()->route())) {
             $pageName = request()->route()->getName();
-            $layout = $this->layout($view);
-            $activeMenu = $this->activeMenu($pageName, $layout);
+            $activeMenu = $this->activeMenu($pageName);
 
             if (auth()->check()) {
-                $user = auth()->user()->roles->pluck('id');
-                $view->with('side_menu', Menu::where('parent_id', 0)->whereIn('role_id', $user)->where('status', 1)->orderBy('order','asc')->get());
-            }else {
+                $roleId = auth()->user()->roles->pluck('id');
+                $view->with('side_menu', Menu::where('parent_id', 0)
+                    ->whereIn('role_id', $roleId)->where('status', 1)->with('sub_menu')->orderBy('order', 'asc')->get());
+            } else {
                 $view->with('side_menu', null);
             }
 
@@ -31,25 +31,7 @@ class MenuComposer
             $view->with('second_level_active_index', $activeMenu['second_level_active_index']);
             $view->with('third_level_active_index', $activeMenu['third_level_active_index']);
             $view->with('page_name', $pageName);
-            $view->with('layout', $layout);
         }
-    }
-
-    /**
-     * Specify used layout.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function layout($view)
-    {
-        if (isset($view->layout)) {
-            return $view->layout;
-        } else if (request()->has('layout')) {
-            return request()->query('layout');
-        }
-
-        return 'side-menu';
     }
 
     /**
@@ -58,89 +40,39 @@ class MenuComposer
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function activeMenu($pageName, $layout)
+    public function activeMenu($pageName)
     {
         $firstLevelActiveIndex = '';
         $secondLevelActiveIndex = '';
         $thirdLevelActiveIndex = '';
+        $activeSecond = '';
 
-
-        if ($layout == 'top-menu') {
-            foreach (TopMenu::menu() as $menuKey => $menu) {
-                if (isset($menu['route_name']) && $menu['route_name'] == $pageName && empty($firstPageName)) {
-                    $firstLevelActiveIndex = $menuKey;
-                }
-
-                if (isset($menu['sub_menu'])) {
-                    foreach ($menu['sub_menu'] as $subMenuKey => $subMenu) {
-                        if (isset($subMenu['route_name']) && $subMenu['route_name'] == $pageName && $menuKey != 'menu-layout' && empty($secondPageName)) {
-                            $firstLevelActiveIndex = $menuKey;
-                            $secondLevelActiveIndex = $subMenuKey;
-                        }
-
-                        if (isset($subMenu['sub_menu'])) {
-                            foreach ($subMenu['sub_menu'] as $lastSubMenuKey => $lastSubMenu) {
-                                if (isset($lastSubMenu['route_name']) && $lastSubMenu['route_name'] == $pageName) {
-                                    $firstLevelActiveIndex = $menuKey;
-                                    $secondLevelActiveIndex = $subMenuKey;
-                                    $thirdLevelActiveIndex = $lastSubMenuKey;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else if ($layout == 'simple-menu') {
-            foreach (SimpleMenu::menu() as $menuKey => $menu) {
-                if ($menu !== 'devider' && isset($menu['route_name']) && $menu['route_name'] == $pageName && empty($firstPageName)) {
-                    $firstLevelActiveIndex = $menuKey;
-                }
-
-                if (isset($menu['sub_menu'])) {
-                    foreach ($menu['sub_menu'] as $subMenuKey => $subMenu) {
-                        if (isset($subMenu['route_name']) && $subMenu['route_name'] == $pageName && $menuKey != 'menu-layout' && empty($secondPageName)) {
-                            $firstLevelActiveIndex = $menuKey;
-                            $secondLevelActiveIndex = $subMenuKey;
-                        }
-
-                        if (isset($subMenu['sub_menu'])) {
-                            foreach ($subMenu['sub_menu'] as $lastSubMenuKey => $lastSubMenu) {
-                                if (isset($lastSubMenu['route_name']) && $lastSubMenu['route_name'] == $pageName) {
-                                    $firstLevelActiveIndex = $menuKey;
-                                    $secondLevelActiveIndex = $subMenuKey;
-                                    $thirdLevelActiveIndex = $lastSubMenuKey;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        if (auth()->check()) {
+            $roleId = auth()->user()->roles->pluck('id');
+            $menus = Menu::where('parent_id', 0)->whereIn('role_id', $roleId)->where('status', 1)->orderBy('order', 'asc')->get();
         } else {
-            if (auth()->check()) {
-                $user = auth()->user()->roles->pluck('id');
-                $menus = Menu::where('parent_id', 0)->whereIn('role_id', $user)->where('status', 1)->orderBy('order','asc')->get();
-            }else {
-                $menus = [];
+            $menus = [];
+        }
+
+        foreach ($menus as $menuKey => $menu) {
+            if (!$menu['sub_menu']->count() > 0 && isset($menu['route_name']) && $menu['route_name'] == $pageName) {
+                $firstLevelActiveIndex = $menuKey;
             }
-            foreach ($menus as $menuKey => $menu) {
-                if (!$menu['sub_menu']->count() && $menu['devider'] == 0 && isset($menu['route_name']) && $menu['route_name'] == $pageName && empty($firstPageName)) {
-                    $firstLevelActiveIndex = $menuKey;
-                }
 
-                if (isset($menu['sub_menu'])) {
-                    foreach ($menu['sub_menu'] as $subMenuKey => $subMenu) {
-                        if (isset($subMenu['route_name']) && $subMenu['route_name'] == $pageName && $menuKey != 'menu-layout' && empty($secondPageName)) {
-                            $firstLevelActiveIndex = $menuKey;
-                            $secondLevelActiveIndex = $subMenuKey;
-                        }
+            if ($menus) {
+                foreach ($menu['sub_menu'] as $subMenuKey => $subMenu) {
+                    if (!$subMenu['sub_menu']->count() > 0 && isset($subMenu['route_name']) && $subMenu['route_name'] == $pageName) {
+                        $firstLevelActiveIndex = $menuKey;
+                        $secondLevelActiveIndex = $subMenuKey;
+                        $activeSecond = 'two';
+                    }
 
-                        if (isset($subMenu['sub_menu'])) {
-                            foreach ($subMenu['sub_menu'] as $lastSubMenuKey => $lastSubMenu) {
-                                if (isset($lastSubMenu['route_name']) && $lastSubMenu['route_name'] == $pageName) {
-                                    $firstLevelActiveIndex = $menuKey;
-                                    $secondLevelActiveIndex = $subMenuKey;
-                                    $thirdLevelActiveIndex = $lastSubMenuKey;
-                                }
+                    if (isset($subMenu['sub_menu'])) {
+                        foreach ($subMenu['sub_menu'] as $lastSubMenuKey => $lastSubMenu) {
+                            if (isset($lastSubMenu['route_name']) && $lastSubMenu['route_name'] == $pageName) {
+                                $firstLevelActiveIndex = $menuKey;
+                                $secondLevelActiveIndex = $subMenuKey;
+                                $thirdLevelActiveIndex = $lastSubMenuKey;
                             }
                         }
                     }
@@ -150,7 +82,7 @@ class MenuComposer
 
         return [
             'first_level_active_index' => $firstLevelActiveIndex,
-            'second_level_active_index' => $secondLevelActiveIndex,
+            'second_level_active_index' => $secondLevelActiveIndex.$activeSecond,
             'third_level_active_index' => $thirdLevelActiveIndex
         ];
     }

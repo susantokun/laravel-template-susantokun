@@ -1,7 +1,7 @@
 .sidebar {
     width: 230px;
     transition: 0.5s;
-    @apply overflow-y-auto shrink-0 overflow-x-hidden;
+    @apply overflow-x-hidden overflow-y-auto shrink-0;
     @include media-breakpoint-down(xl) {
         width: 65px;
     }
@@ -54,6 +54,7 @@
                         animation-delay: calc($i * 0.1s);
                     }
                     &.sidebar_menu__active {
+                        @apply mt-1;
                         animation: 0.4s
                             te-active-menu-animation
                             ease-in-out
@@ -78,7 +79,7 @@
                     }
                 }
             }
-            @apply hidden mt-2 rounded-lg bg-black/20 dark:bg-darkmode-900/30;
+            @apply hidden my-2 rounded-lg bg-black/20 dark:bg-darkmode-900/30;
             &.sidebar_menu__sub_open {
                 @apply block;
             }

@@ -26,4 +26,9 @@ class Menu extends Model
         ->where('status', 1)
         ->orderBy('order', 'asc');
     }
+
+    public function childs()
+    {
+        return $this->hasMany(Menu::class, 'parent_id')->where('role_id', auth()->user()->roles->pluck('id'))->where('status', 1);
+    }
 }
