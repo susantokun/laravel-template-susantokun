@@ -28,8 +28,8 @@
         @foreach ($side_menu as $menuKey => $menu)
         <li>
             <a
-                href="{{ !$menu['sub_menu']->count() && isset($menu['route_name']) ? route($menu['route_name'], $menu['params']) : 'javascript:;' }}"
-                class="{{ $first_level_active_index == $menuKey ? 'menu menu__active' : 'menu' }}"
+                href="{{ !$menu['sub_menu']->count() && isset($menu['route_name']) ? route($menu['route_name']) : 'javascript:;' }}"
+                class="{{ $first_level_active_index == $menuKey && request()->routeIs($menu['route_name']) ? 'menu menu__active' : 'menu' }}"
             >
                 <div class="menu__icon">
                     <i data-feather="{{ isset($menu['icon']) ? $menu['icon'] : 'home' }}"></i>
@@ -49,7 +49,7 @@
                 <li>
                     <a
                         href="{{ !$subMenu['sub_menu']->count() && isset($subMenu['route_name']) ? route($subMenu['route_name'], $subMenu['params']) : 'javascript:;' }}"
-                        class="{{ $second_level_active_index == $subMenuKey ? 'menu menu__active' : 'menu' }}"
+                        class="{{ $second_level_active_index == $subMenuKey.'two' && request()->routeIs($subMenu['route_name']) ? 'menu menu__active' : 'menu' }}"
                     >
                         <div class="menu__icon">
                             <i data-feather="{{ isset($subMenu['icon']) ? $subMenu['icon'] : 'corner-down-right' }}"></i>
@@ -69,7 +69,7 @@
                         <li>
                             <a
                                 href="{{ !$lastSubMenu['sub_menu']->count() && isset($lastSubMenu['route_name']) ? route($lastSubMenu['route_name'], $lastSubMenu['params']) : 'javascript:;' }}"
-                                class="{{ $third_level_active_index == $lastSubMenuKey ? 'menu menu__active' : 'menu' }}"
+                                class="{{ $third_level_active_index == $lastSubMenuKey && request()->routeIs($lastSubMenu['route_name']) ? 'menu menu__active' : 'menu' }}"
                             >
                                 <div class="menu__icon">
                                     <i data-feather="{{ isset($lastSubMenu['icon']) ? $lastSubMenu['icon'] : 'chevron-right' }}"></i>

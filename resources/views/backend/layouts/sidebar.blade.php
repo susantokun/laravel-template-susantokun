@@ -19,7 +19,7 @@
         <li>
             <a
                 href="{{ !$menu['sub_menu']->count() && isset($menu['route_name']) ? route($menu['route_name']) : 'javascript:;' }}"
-                class="{{ $first_level_active_index == $menuKey && request()->routeIs($menu->route_name) ? 'sidebar_menu sidebar_menu__active' : 'sidebar_menu' }}"
+                class="{{ $first_level_active_index == $menuKey && request()->routeIs($menu['route_name']) ? 'sidebar_menu sidebar_menu__active' : 'sidebar_menu' }}"
             >
                 <div class="sidebar_menu__icon">
                     <i data-feather="{{ isset($menu['icon']) ? $menu['icon'] : 'home' }}"></i>
@@ -39,7 +39,7 @@
                 <li>
                     <a
                         href="{{ !$subMenu['sub_menu']->count() && isset($subMenu['route_name']) ? route($subMenu['route_name']) : 'javascript:;' }}"
-                        class="{{ $second_level_active_index == $subMenuKey.'two' && request()->routeIs($subMenu->route_name) ? 'sidebar_menu sidebar_menu__active' : 'sidebar_menu' }}"
+                        class="{{ $second_level_active_index == $subMenuKey.'two' && request()->routeIs($subMenu['route_name']) ? 'sidebar_menu sidebar_menu__active' : 'sidebar_menu' }}"
                     >
                         <div class="sidebar_menu__icon">
                             <i data-feather="{{ isset($subMenu['icon']) ? $subMenu['icon'] : 'corner-down-right' }}"></i>
