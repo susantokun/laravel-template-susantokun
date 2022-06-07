@@ -1,28 +1,16 @@
 <div class="topbar">
-    <div class="hidden p-2 overflow-hidden rounded-md cursor-pointer hover:bg-slate-300/90 toggle xl:block bg-slate-200 topbar__menu">
-        <i
-            data-feather="menu"
-            class="w-5 h-5 text-primary dark:text-slate-500 topbar__menu__icon"
-        ></i>
-        {{-- <i
-            data-feather="x"
-            class="w-5 h-5 text-primary dark:text-slate-500"
-        ></i> --}}
+    <div class="hidden mr-auto -intro-x xl:flex">
+        <div class="p-2 overflow-hidden rounded-md cursor-pointer hover:bg-slate-300/90 toggle bg-slate-200 topbar__menu">
+            <i
+                data-feather="menu"
+                class="w-5 h-5 text-primary dark:text-slate-500 topbar__menu__icon"
+            ></i>
+            {{-- <i
+                data-feather="x"
+                class="w-5 h-5 text-primary dark:text-slate-500"
+            ></i> --}}
+        </div>
     </div>
-    <!-- BEGIN: Breadcrumb -->
-    <nav
-        aria-label="breadcrumb"
-        class="hidden ml-0 mr-auto xl:ml-3 -intro-x sm:flex"
-    >
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li
-                class="breadcrumb-item active"
-                aria-current="page"
-            >Dashboard</li>
-        </ol>
-    </nav>
-    <!-- END: Breadcrumb -->
     <!-- BEGIN: Search -->
     {{-- <div class="relative mr-3 intro-x sm:mr-6">
         <div class="hidden search sm:block">
@@ -97,7 +85,7 @@
     </div> --}}
     <!-- END: Search -->
     <!-- BEGIN: Notifications -->
-    <div class="mr-auto intro-x dropdown sm:mr-6">
+    <div class="mr-auto intro-x dropdown xl:mr-6">
         <div
             class="cursor-pointer dropdown-toggle notification notification--bullet"
             role="button"

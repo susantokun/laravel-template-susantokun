@@ -9,6 +9,9 @@
 @import "./fonts/_roboto.css";
 /* @import "./fonts/_ubuntu.css"; */
 
+@import "./_sweetalert.css";
+@import "react-toastify/dist/ReactToastify.css";
+
 /* backend */
 @import "./_media.css";
 @import "./_global.css";

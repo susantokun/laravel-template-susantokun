@@ -1,7 +1,7 @@
 .topbar {
     height: 70px;
     z-index: 51;
-    @apply relative flex items-center px-6 bg-white border-b border-l border-slate-200;
+    @apply flex items-center px-6 bg-white border-b border-l border-slate-200;
 }
 
 .topbar__menu.active {

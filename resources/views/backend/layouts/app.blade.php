@@ -62,9 +62,8 @@
             </div>
         </div>
     </div>
-
+    {{-- @include('sweetalert::alert') --}}
+    @stack('scripts')
 </body>
-
-@stack('scripts')
 
 </html>

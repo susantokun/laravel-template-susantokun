@@ -34,6 +34,7 @@
         "tailwindcss": "^3.0.18"
     },
     "dependencies": {
+        "@headlessui/react": "^1.6.4",
         "@heroicons/react": "^1.0.6",
         "@popperjs/core": "^2.11.5",
         "dayjs": "^1.11.2",
@@ -47,9 +48,9 @@
         "react-moment": "^1.1.2",
         "react-number-format": "^4.9.3",
         "react-table": "^7.8.0",
+        "react-toastify": "^9.0.3",
         "tiny-slider": "^2.9.4",
         "tippy.js": "^6.3.7",
-        "toastify-js": "^1.11.2",
         "zoom-vanilla.js": "^2.0.6"
     }
 }

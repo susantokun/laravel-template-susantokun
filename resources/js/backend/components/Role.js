@@ -20,7 +20,7 @@ export default function Role(props) {
     const getRoles = async () => {
         setIsLoading(true);
         await axios
-            .get(`/api/roles`)
+            .get(`/roles`)
             .then((res) => {
                 const resData = res.data;
                 setDataRoles(resData.data);

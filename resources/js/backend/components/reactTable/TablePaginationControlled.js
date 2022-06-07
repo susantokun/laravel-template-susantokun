@@ -10,7 +10,9 @@ function TablePaginationControlled({
     fetchData,
     loading,
     pageCount: controlledPageCount,
-    countAll,
+    countFilter,
+    countTotal,
+    keyword
 }) {
     const {
         getTableProps,
@@ -52,7 +54,7 @@ function TablePaginationControlled({
     };
 
     useEffect(() => {
-        fetchData({ pageIndex, pageSize });
+        fetchData({ pageIndex, pageSize, keyword });
     }, [fetchData, pageIndex, pageSize]);
 
     return (
@@ -66,6 +68,8 @@ function TablePaginationControlled({
                             pageCount,
                             canNextPage,
                             canPreviousPage,
+                            countFilter,
+                            countTotal,
                         },
                         null,
                         2
@@ -153,11 +157,16 @@ function TablePaginationControlled({
                     </select>
                     <div className="rounded-md text-sm 2xl:text-base transition duration-300 focus:outline-none py-1.5 tracking-wide inline-flex items-center justify-center px-1">
                         <div className="hidden text-sm md:block">
-                            <span>
+                            {/* <span>
                                 Menampilkan <strong>{pageIndex + 1}</strong>{" "}
                                 dari <strong><NumberFormat value={pageOptions.length} displayType="text" thousandSeparator="."
                   decimalSeparator="," /></strong>{" "}
                                 halaman
+                            </span> */}
+                            <span>
+                                Menampilkan <strong>{data.length}</strong> dari{" "}
+                                <strong><NumberFormat value={countFilter} displayType="text" thousandSeparator="."
+                  decimalSeparator="," /></strong> data
                             </span>
                         </div>
                     </div>
@@ -185,9 +194,8 @@ function TablePaginationControlled({
 
             <div className="block text-sm md:hidden">
                 <span>
-                    Menampilkan <strong>{pageIndex + 1}</strong> dari{" "}
-                    <strong><NumberFormat value={pageOptions.length} displayType="text" thousandSeparator="."
-                  decimalSeparator="," /></strong> halaman
+                    Menampilkan <strong>{data.length}</strong> dari{" "}
+                    <strong><NumberFormat value={countFilter} displayType="text" thousandSeparator="." decimalSeparator="," /></strong> data
                 </span>
             </div>
         </div>

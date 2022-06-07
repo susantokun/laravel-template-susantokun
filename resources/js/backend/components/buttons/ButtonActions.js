@@ -19,7 +19,7 @@ export function ButtonShow(props) {
 
 export function ButtonDelete(props) {
     return (
-        <button className="p-1.5 inline-flex items-center justify-center text-white rounded-md shadow-sm bg-danger focus:border-danger/60 focus:ring focus:ring-danger/10 focus:ring-opacity-50 hover:bg-danger/80">
+        <button {...props} className="p-1.5 inline-flex items-center justify-center text-white rounded-md shadow-sm bg-danger focus:border-danger/60 focus:ring focus:ring-danger/10 focus:ring-opacity-50 hover:bg-danger/80 disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:bg-danger">
            <Trash2 className="w-4 h-4" />
         </button>
     );

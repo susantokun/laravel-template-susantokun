@@ -1,0 +1,7 @@
+.swal2-container {
+    @apply !py-3;
+}
+
+.swal2-container.swal2-top-end>.swal2-popup, .swal2-container.swal2-top-right>.swal2-popup {
+    @apply !px-4 !py-3;
+}

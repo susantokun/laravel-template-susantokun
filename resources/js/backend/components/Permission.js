@@ -20,7 +20,7 @@ export default function Permission(props) {
     const getPermissions = async () => {
         setIsLoading(true);
         await axios
-            .get(`/api/permissions`)
+            .get(`/permissions`)
             .then((res) => {
                 const resData = res.data;
                 setDataPermissions(resData.data);

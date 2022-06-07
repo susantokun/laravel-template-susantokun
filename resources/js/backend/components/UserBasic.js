@@ -16,7 +16,7 @@ export default function UserBasic(props) {
     const getUsers = async () => {
         setIsLoading(true);
         await axios
-            .get(`/api/users`)
+            .get(`/users-basic`)
             .then((res) => {
                 const resData = res.data;
                 setDataUsers(resData.data);

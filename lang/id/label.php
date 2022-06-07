@@ -28,6 +28,7 @@ return [
     'update'  => 'Ubah',
     'actions' => 'Tindakan',
     'detail'  => 'Detail',
+    'accounts' => 'Akun',
 
     'login'                      => 'Masuk',
     'register'                   => 'Daftar',

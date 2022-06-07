@@ -25,3 +25,4 @@ import "./components/User";
 import "./components/UserBasic";
 import "./components/Role";
 import "./components/Permission";
+import "./components/notifications/Delete";
