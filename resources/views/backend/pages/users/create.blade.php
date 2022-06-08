@@ -12,11 +12,7 @@
     </x-header-content>
 
     {{-- form create --}}
-    <form
-        action="{{ route('accounts.users.store') }}"
-        method="post"
-    >
-        @csrf
-        @include('backend.pages.users.form')
-    </form>
+    {{ Form::open( array( 'route' => ['accounts.users.store'], 'role' => 'form' ) ) }}
+    @include('backend.pages.users.form')
+    {{ Form::close() }}
 </x-backend-layout>

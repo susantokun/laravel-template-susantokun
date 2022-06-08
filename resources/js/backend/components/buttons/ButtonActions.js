@@ -1,5 +1,14 @@
 import React from "react";
-import { Edit, Eye, Trash2 } from 'react-feather';
+import { Edit, Eye, Trash2, Plus } from 'react-feather';
+
+export function ButtonCreate(props) {
+    return (
+        <button {...props} className="inline-flex items-center justify-center p-2 font-bold border rounded-md shadow-sm border-slate-300 text-primary bg-secondary/80 focus:border-slate-400 focus:ring focus:ring-slate-200 focus:bg-slate-50 focus:ring-opacity-50 hover:bg-slate-100 disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:bg-secondary/80">
+           <Plus className="w-5 h-5" />
+        </button>
+    );
+}
+
 
 export function ButtonEdit(props) {
     return (

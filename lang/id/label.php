@@ -19,15 +19,16 @@
  */
 
 return [
-    'add_new' => 'Tambah Baru',
-    'edit'    => 'Ubah',
-    'delete'  => 'Hapus',
-    'search'  => 'Cari...',
-    'back'    => 'Kembali',
-    'create'  => 'Tambah',
-    'update'  => 'Ubah',
-    'actions' => 'Tindakan',
-    'detail'  => 'Detail',
+    'add_new'  => 'Tambah Baru',
+    'delete'   => 'Hapus',
+    'search'   => 'Cari...',
+    'back'     => 'Kembali',
+    'create'   => 'Buat',
+    'store'    => 'Simpan',
+    'edit'     => 'Ubah',
+    'update'   => 'Perbaharui',
+    'actions'  => 'Tindakan',
+    'detail'   => 'Detail',
     'accounts' => 'Akun',
 
     'login'                      => 'Masuk',

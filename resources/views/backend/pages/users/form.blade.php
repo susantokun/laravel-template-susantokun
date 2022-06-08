@@ -40,7 +40,8 @@
         {{-- roles --}}
         <div class="col-span-3">
             <x-label>{{ __('user.roles') }}</x-label>
-            {!! Form::select('roles[]', $roles,[], array('class' => 'form-select block w-full mt-1','multiple')) !!}
+            {!! Form::select('roles[]', $roles, isset($user) ? $userRole: null, array('class' => 'form-select block w-full
+            mt-1','multiple')) !!}
             @error('roles')
             <p class="mt-1 text-xs font-medium text-danger">{{ $message }}</p>
             @enderror
@@ -57,7 +58,7 @@
                 </x-button-secondary>
             </a>
             <x-button-primary>
-                {{ __('label.create') }}
+                {{ isset($user) ? __('label.update') : __('label.store') }}
             </x-button-primary>
         </div>
     </div>

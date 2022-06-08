@@ -16,10 +16,11 @@ import {
     TrashIcon,
     ExclamationIcon,
     PencilAltIcon,
+    PlusIcon
 } from "@heroicons/react/outline";
 
 import TablePaginationControlled from "./reactTable/TablePaginationControlled";
-import { ButtonShow, ButtonEdit, ButtonDelete } from "./buttons/ButtonActions";
+import { ButtonShow, ButtonEdit, ButtonDelete, ButtonCreate } from "./buttons/ButtonActions";
 import { ButtonPrimary } from "./buttons/Button";
 
 export default function User(props) {
@@ -92,7 +93,7 @@ export default function User(props) {
                 },
             },
             {
-                Header: "Nama",
+                Header: "Name",
                 accessor: "name",
             },
             {
@@ -347,6 +348,10 @@ export default function User(props) {
                 </Dialog>
             </Transition>
             <div className="inline-flex items-center justify-between w-full">
+                <div className="inline-flex items-center gap-2">
+                    <ButtonPrimary path="/users/create" title="Buat Pengguna" />
+                    <ButtonCreate />
+                </div>
                 <input
                     onChange={(e) => setKeyword(e.target.value)}
                     onKeyDown={handleSearch}
@@ -354,7 +359,6 @@ export default function User(props) {
                     type="search"
                     className="w-full transition duration-300 bg-white border-gray-300 rounded-md shadow-sm form-input md:w-auto focus:ring disabled:cursor-not-allowed disabled:opacity-50 focus:border-primary-300 focus:ring-primary-200/50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-gray-600 dark:focus:ring-gray-800"
                 />
-                <ButtonPrimary path="/users/create" title="Tambah Baru" />
             </div>
             <div className="mt-4">
                 <TablePaginationControlled

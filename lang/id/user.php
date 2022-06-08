@@ -20,11 +20,14 @@
 
 return [
     'user' => 'Pengguna',
-    'create_title' => 'Tambah Pengguna',
-    'create_desc' => 'Silakan isi informasi berikut.',
-
     'index_title' => 'Kelola Pengguna',
     'index_desc' => 'Berikut adalah informasi data pengguna.',
+
+    'create_title' => 'Buat Pengguna',
+    'create_desc' => 'Silakan isi informasi pengguna berikut.',
+
+    'edit_title' => 'Ubah Pengguna',
+    'edit_desc' => 'Silakan ubah informasi pengguna berikut.',
 
     'name' => 'Nama',
     'email' => 'Email',
