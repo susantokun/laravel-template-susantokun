@@ -115,7 +115,7 @@ export default function User(props) {
                             </div>
                         );
                     });
-                    return <div className="list-disc list-inside">{roles}</div>;
+                    return <div className={roles.length > 1 ? 'list-disc list-inside' : 'list-none'}>{roles}</div>;
                 },
             },
             {
