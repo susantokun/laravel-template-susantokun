@@ -21,13 +21,16 @@
 return [
     'user' => 'Pengguna',
     'index_title' => 'Kelola Pengguna',
-    'index_desc' => 'Berikut adalah informasi data pengguna.',
+    'index_desc' => 'Berikut adalah data semua pengguna.',
 
     'create_title' => 'Buat Pengguna',
     'create_desc' => 'Silakan isi informasi pengguna berikut.',
 
     'edit_title' => 'Ubah Pengguna',
     'edit_desc' => 'Silakan ubah informasi pengguna berikut.',
+
+    'show_title' => 'Detail Pengguna',
+    'show_desc' => 'Berikut adalah detail informasi pengguna.',
 
     'name' => 'Nama',
     'email' => 'Email',

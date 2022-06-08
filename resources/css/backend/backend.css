@@ -4,6 +4,7 @@
 
 @import "./_colors.css";
 @import "./_form.css";
+@import "./_crud.css";
 
 /* fonts */
 @import "./fonts/_roboto.css";

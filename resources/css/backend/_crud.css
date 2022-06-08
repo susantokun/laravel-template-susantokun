@@ -1,0 +1,12 @@
+.show {
+    @apply mt-4 overflow-hidden rounded-lg shadow-md;
+    .show_group {
+        @apply gap-4 px-4 py-3 leading-5 bg-white md:grid md:grid-cols-6 odd:bg-secondary;
+        .show_label {
+            @apply mb-1 md:col-span-2 lg:col-span-1 md:mb-0;
+        }
+        .show_group_content {
+            @apply text-slate-600 md:col-span-4 lg:col-span-5;
+        }
+    }
+}

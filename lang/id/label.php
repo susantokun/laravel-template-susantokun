@@ -27,6 +27,7 @@ return [
     'store'    => 'Simpan',
     'edit'     => 'Ubah',
     'update'   => 'Perbaharui',
+    'show'     => 'Detail',
     'actions'  => 'Tindakan',
     'detail'   => 'Detail',
     'accounts' => 'Akun',

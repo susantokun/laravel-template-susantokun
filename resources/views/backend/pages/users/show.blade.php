@@ -1,42 +1,44 @@
 <x-backend-layout>
 
-    @section('title','Detail User | ')
+    @section('title',__('user.show_title').' | ')
 
-    <div class="">
-        <div class="inline-flex justify-end w-full">
-            <a href="{{ route('accounts.users.index') }}">
-                <x-button-secondary>
-                    {{ __('label.back') }}
-                </x-button-secondary>
-            </a>
-        </div>
-        <div class="p-4 mt-4 rounded-lg shadow-md bg-secondary">
+    {{-- header content --}}
+    <x-header-content title="user.show">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">{{ __('label.accounts') }}</li>
+            <li class="breadcrumb-item"><a href="{{ route('accounts.users.index') }}">{{ __('user.user') }}</a></li>
+            <li class="breadcrumb-item active">{{ __('label.show') }}</li>
+        </ol>
+    </x-header-content>
 
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Name:</strong>
-                    {{ $user->name }}
+    <div class="show">
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.name') }}</x-label>
+            <div class="show_group_content">{{ $user->name }}</div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.email') }}</x-label>
+            <div class="show_group_content">{{ $user->email }}</div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.roles') }}</x-label>
+            <div class="show_group_content">
+                @if(!empty($user->getRoleNames()))
+                @if ($user->getRoleNames()->count() > 1)
+                <div class="list-inside list-desc">
+                    @foreach ($user->getRoleNames() as $item)
+                    <div class="list-item">{{ $item }}</div>
+                    @endforeach
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Email:</strong>
-                    {{ $user->email }}
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Roles:</strong>
-                    @if(!empty($user->getRoleNames()))
-                    {{ $user->getRoleNames()->implode(', ') }}
-                    {{-- <div class="list-inside list-desc">
-                        @foreach ($user->getRoleNames() as $item)
-                        <div class="list-item">{{ $item }}</div>
-                        @endforeach
-                    </div> --}}
-                    @endif
-                </div>
+                @else
+                {{ $user->getRoleNames()->implode(', ') }}
+                @endif
+                @endif
             </div>
         </div>
+
     </div>
 </x-backend-layout>
