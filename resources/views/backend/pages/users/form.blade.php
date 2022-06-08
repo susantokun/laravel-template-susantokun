@@ -1,5 +1,5 @@
-<div class="p-6 mt-4 bg-white rounded-lg shadow-md">
-    <div class="grid grid-cols-6 gap-4">
+<div class="p-6 mt-4 overflow-hidden bg-white rounded-lg shadow-md">
+    <div class="grid gap-4 md:grid-cols-6">
 
         {{-- name --}}
         <div class="col-span-3">
@@ -49,8 +49,10 @@
 
     </div>
 
+    <div class="pb-4 border-b border-dashed border-secondary/90"></div>
+
     {{-- action --}}
-    <div class="mt-4 -mx-6 -mb-6 bg-secondary-300 dark:bg-secondary-700">
+    <div class="-mx-6 -mb-6 bg-secondary-300">
         <div class="px-6 py-4 space-x-1 text-right">
             <a href="{{ route('accounts.users.index') }}">
                 <x-button-secondary type="button">
