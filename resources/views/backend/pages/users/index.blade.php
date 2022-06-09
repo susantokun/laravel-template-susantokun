@@ -1,6 +1,6 @@
 <x-backend-layout>
 
-    @section('title','Users | ')
+    @section('title',__('user.index_title').' | ')
 
     <div class="w-full">
 
