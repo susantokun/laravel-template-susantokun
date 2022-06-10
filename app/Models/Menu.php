@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -30,5 +31,10 @@ class Menu extends Model
     public function childs()
     {
         return $this->hasMany(Menu::class, 'parent_id')->where('role_id', auth()->user()->roles->pluck('id'))->where('status', 1);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }

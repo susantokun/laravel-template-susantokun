@@ -80,8 +80,6 @@ class UserSeeder extends Seeder
             'roles.edit',
 
             'permissions.view',
-            'permissions.create',
-            'permissions.edit',
 
             'users.view',
             'users.create',

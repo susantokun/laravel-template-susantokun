@@ -37,5 +37,12 @@ return [
     'email' => 'Email',
     'password' => 'Kata Sandi',
     'confirmPassword' => 'Konfirmasi Kata Sandi',
-    'roles' => 'Peran'
+    'roles' => 'Peran',
+
+    'store_success' => 'Pengguna Berhasil Dibuat!',
+    'store_failed' => 'Pengguna Gagal Dibuat!',
+    'update_success' => 'Pengguna Berhasil Diubah!',
+    'update_failed' => 'Pengguna Gagal Diubah!',
+    'destroy_success' => 'Pengguna Berhasil Dihapus!',
+    'destroy_failed' => 'Pengguna Gagal Dihapus!',
 ];

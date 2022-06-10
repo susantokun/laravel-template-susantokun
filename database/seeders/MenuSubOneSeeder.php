@@ -82,6 +82,19 @@ class MenuSubOneSeeder extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ],
+            [
+                'id' => 11,
+                'role_id' => 2,
+                'parent_id' => 5,
+                'title' => 'Roles',
+                'route_name' => 'accounts.roles.index',
+                'route_group' => 'accounts.roles*',
+                'icon' => 'corner-down-right',
+                'order' => 0,
+                'status' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ],
         ]);
     }
 }

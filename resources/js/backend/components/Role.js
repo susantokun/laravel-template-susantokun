@@ -39,6 +39,7 @@ export default function Role(props) {
     const [roleName, setRoleName] = useState("");
     const [roleId, setRoleId] = useState("");
     const [keyword, setKeyword] = useState("");
+    const [indexDataDelete, setIndexDataDelete] = useState("");
 
     const handleSearch = (e) => {
         setKeyword(event.target.value);
@@ -46,6 +47,13 @@ export default function Role(props) {
 
     const closeModalDelete = () => {
         setIsOpen(false);
+    };
+
+    const openModalDelete = (getRoleId, getRoleName, getIndex) => {
+        setRoleId(getRoleId);
+        setRoleName(getRoleName);
+        setIndexDataDelete(getIndex);
+        setIsOpen(true);
     };
 
     const handleDelete = async () => {
@@ -56,15 +64,10 @@ export default function Role(props) {
                 if (res.data.status) {
                     setIsOpen(false);
                     toast.success(res.data.message);
-                    // const removeData = data.filter(
-                    //     (item, index) => index !== indexDataDelete
-                    // );
-                    // setDataUsers(removeData);
-                    // fetchAPIData({
-                    //     take: take,
-                    //     skip: skip,
-                    //     keyword: keyword,
-                    // });
+                    const removeData = dataRoles.filter(
+                        (item, index) => index !== indexDataDelete
+                    );
+                    setDataRoles(removeData);
                 } else {
                     setIsOpen(true);
                     toast.warn(res.data.message);
@@ -155,9 +158,9 @@ export default function Role(props) {
                 className: "text-center",
                 Cell: (row) => {
                     const { original, index } = row.row;
-                    let buttonShow = "";
-                    let buttonEdit = "";
-                    let buttonDelete = "";
+                    let buttonShow = <buttonShow disabled />;
+                    let buttonEdit = <ButtonEdit disabled />;
+                    let buttonDelete = <ButtonDelete disabled />;
                     roles.forEach((item) => {
                         if (
                             original.name !== "super-admin" &&
@@ -194,10 +197,8 @@ export default function Role(props) {
                                     onClick={() =>
                                         openModalDelete(
                                             original.id,
-                                            index,
-                                            original.email,
-                                            row.state.pageIndex,
-                                            row.state.pageSize
+                                            original.name,
+                                            index
                                         )
                                     }
                                 />
@@ -236,6 +237,16 @@ export default function Role(props) {
 
     return (
         <>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop
+                draggable={false}
+                pauseOnVisibilityChange
+                closeOnClick
+                pauseOnHover
+            />
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog
                     as="div"

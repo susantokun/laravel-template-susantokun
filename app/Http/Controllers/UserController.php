@@ -79,7 +79,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('accounts.users.index')->with('success', 'User Created Successfully!');
+        return redirect()->route('accounts.users.index')->with('success', __('user.store_success'));
     }
 
     public function show($id)
@@ -123,7 +123,7 @@ class UserController extends Controller
 
         $user->assignRole($request->input('roles'));
 
-        return redirect()->route('accounts.users.index')->with('success', 'User updated successfully');
+        return redirect()->route('accounts.users.index')->with('success', __('user.update_success'));
     }
 
     public function destroy($id)
@@ -132,7 +132,7 @@ class UserController extends Controller
         $user->delete();
         return response()->json([
             'status'  => true,
-            'message' => 'User Deleted Successfully!',
+            'message' => __('user.destroy_success'),
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +11,14 @@ use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:roles.view', ['only' => ['index', 'show']]);
+        $this->middleware('permission:roles.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:roles.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:roles.delete', ['only' => ['destroy']]);
+    }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -31,7 +40,16 @@ class RoleController extends Controller
 
     public function create()
     {
-        $permissions = Permission::get();
+        if (!auth()->user()->getRoleNames()->contains('super-admin')) {
+            $permissions = Permission::whereNotIn('name', [
+                'roles.delete',
+                'permissions.delete',
+                'configurations.delete',
+            ])->get();
+        } else {
+            $permissions = Permission::get();
+        }
+
         return view('backend.pages.roles.create', compact('permissions'));
     }
 
@@ -39,14 +57,14 @@ class RoleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
-            'permissions' => 'required',
+            // 'permissions' => 'required',
         ]);
 
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permissions'));
 
         return redirect()->route('accounts.roles.index')
-            ->with('success', 'Role created successfully');
+            ->with('success', __('role.store_success'));
     }
 
     public function show($id)
@@ -62,7 +80,15 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $permissions = Permission::get();
+        if (!auth()->user()->getRoleNames()->contains('super-admin')) {
+            $permissions = Permission::whereNotIn('name', [
+                'roles.delete',
+                'permissions.delete',
+                'configurations.delete',
+            ])->get();
+        } else {
+            $permissions = Permission::get();
+        }
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)
             ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
             ->all();
@@ -74,7 +100,7 @@ class RoleController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'permissions' => 'required',
+            // 'permissions' => 'required',
         ]);
 
         $role = Role::find($id);
@@ -84,13 +110,20 @@ class RoleController extends Controller
         $role->syncPermissions($request->input('permissions'));
 
         return redirect()->route('accounts.roles.index')
-            ->with('success', 'Role updated successfully');
+            ->with('success', __('role.update_success'));
     }
 
     public function destroy($id)
     {
-        DB::table("roles")->where('id', $id)->delete();
-        return redirect()->route('accounts.roles.index')
-            ->with('success', 'Role deleted successfully');
+        $menu = Menu::where('role_id', $id);
+        $menu->delete();
+
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        return response()->json([
+            'status'  => true,
+            'message' => __('role.destroy_success'),
+        ]);
     }
 }

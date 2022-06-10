@@ -107,6 +107,10 @@ export default function User(props) {
                 Cell: ({ row: { original, index } }) => {
                     let roles = [];
 
+                    if (original.roles.length < 1) {
+                        return (<span>-</span>)
+                    }
+
                     original.roles.forEach((item, index) => {
                         roles[index] = (
                             <div
@@ -139,11 +143,30 @@ export default function User(props) {
                 Cell: (row) => {
                     // Cell: ({ row: { original, index, state } }) => {
                     const { original, index } = row.row;
-                    let buttonShow = "";
-                    let buttonEdit = "";
-                    let buttonDelete = "";
+                    let buttonShow = <buttonShow disabled />;
+                    let buttonEdit = <ButtonEdit disabled />;
+                    let buttonDelete = <ButtonDelete disabled />;
                     auth.roles.forEach((role) => {
                         let rolesField = [];
+
+                        if (original.roles.length < 1) {
+                            buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
+                            buttonDelete = (
+                                <ButtonDelete
+                                    type="button"
+                                    onClick={() =>
+                                        openModalDelete(
+                                            original.id,
+                                            index,
+                                            original.email,
+                                            row.state.pageIndex,
+                                            row.state.pageSize
+                                        )
+                                    }
+                                />
+                            );
+                        }
+
                         original.roles.forEach((item, index) => {
                             rolesField[index] = item.name;
 

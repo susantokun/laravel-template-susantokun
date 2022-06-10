@@ -36,4 +36,11 @@ return [
     'name' => 'Nama',
     'guard' => 'Perlindungan',
     'permissions' => 'Izin',
+
+    'store_success' => 'Peran Berhasil Dibuat!',
+    'store_failed' => 'Peran Gagal Dibuat!',
+    'update_success' => 'Peran Berhasil Diubah!',
+    'update_failed' => 'Peran Gagal Diubah!',
+    'destroy_success' => 'Peran Berhasil Dihapus!',
+    'destroy_failed' => 'Peran Gagal Dihapus!',
 ];

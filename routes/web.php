@@ -27,11 +27,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::name('accounts.')->group(function() {
         Route::resource('users', UserController::class);
-        // Route::get('/users/{limit}/{skip}', [UserController::class, 'index'])->name('users.indexServerSide');
         Route::get('/users-basic', [UserController::class, 'basic'])->name('users.basic');
 
-        Route::resource('roles', RoleController::class);
-        Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
+        Route::group(['middleware' => 'role:super-admin|admin'], function () {
+            Route::resource('roles', RoleController::class);
+            Route::resource('permissions', PermissionController::class);
+        });
     });
 
 });
