@@ -10,3 +10,6 @@ users : roles list [DONE]
 users : permissions list [DONE]
 users : list [DONE]
 template: fix layouts [DONE]
+
+2022-06-10 :
+done crud users, roles, permissions
