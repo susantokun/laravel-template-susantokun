@@ -326,7 +326,7 @@ export default function Role(props) {
                     </div>
                 </Dialog>
             </Transition>
-            <div className="inline-flex items-center justify-between w-full">
+            <div className="inline-flex flex-col items-center justify-center w-full gap-3 md:flex-row md:justify-between">
                 <div className="inline-flex items-center gap-2">
                     <ButtonPrimary path="/roles/create" title="Buat Peran" />
                 </div>
