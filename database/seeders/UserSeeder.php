@@ -140,8 +140,8 @@ class UserSeeder extends Seeder
         $member1 = User::factory()->create([
             'username' => 'member',
             'first_name' => 'Member',
-            'last_name' => 'One',
-            'full_name' => 'Member One',
+            'last_name' => NULL,
+            'full_name' => 'Member',
             'email' => 'member@mail.com',
             'password' => bcrypt('password'),
             'phone' => '081906515912',
