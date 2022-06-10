@@ -8,7 +8,6 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import { useTable } from "react-table";
-import Moment from "react-moment";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import { Dialog, Transition } from "@headlessui/react";
@@ -122,19 +121,6 @@ export default function User(props) {
                         );
                     });
                     return <div className={roles.length > 1 ? 'list-disc list-inside' : 'list-none'}>{roles}</div>;
-                },
-            },
-            {
-                Header: "Created",
-                accessor: "created_at",
-                className: "truncate",
-                Cell: ({ row: { original, index } }) => {
-                    return (
-                        <Moment
-                            format="dddd, DD MMMM YYYY"
-                            date={original.created_at}
-                        />
-                    );
                 },
             },
             {

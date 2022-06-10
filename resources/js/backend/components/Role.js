@@ -8,7 +8,6 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import { useTable } from "react-table";
-import Moment from "react-moment";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import { Dialog, Transition } from "@headlessui/react";
@@ -138,18 +137,6 @@ export default function Role(props) {
                         <div className="list-disc list-inside">
                             {permissions}
                         </div>
-                    );
-                },
-            },
-            {
-                Header: "Created",
-                accessor: "created_at",
-                Cell: ({ row: { original, index } }) => {
-                    return (
-                        <Moment
-                            format="dddd, DD MMMM YYYY"
-                            date={original.created_at}
-                        />
                     );
                 },
             },
