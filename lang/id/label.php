@@ -31,8 +31,8 @@ return [
     'actions'    => 'Tindakan',
     'detail'     => 'Detail',
     'accounts'   => 'Akun',
-    'created_at' => 'Dibuat',
-    'updated_at' => 'Diperbaharui',
+    'created_at' => 'Dibuat Pada',
+    'updated_at' => 'Diperbaharui Pada',
     'created_by' => 'Dibuat Oleh',
     'updated_by' => 'Diperbaharui Oleh',
 
