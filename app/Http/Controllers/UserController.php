@@ -29,14 +29,31 @@ class UserController extends Controller
         if ($request->ajax()) {
             $take = $request->take;
             $skip = $request->skip;
+            $search = $request->search;
+            $orderBy = 'created_at';
+            $orderAsc = true;
 
-            $users = User::search($request->search);
-            $paginator = $users->paginate($take, '', $skip);
-            $paginator->load('roles');
-            $data = $paginator->getCollection();
+            // $users = User::search($request->search);
+            // $paginator = $users->paginate($take, '', $skip);
+            // $paginator->load('roles');
+            // $data = $paginator->getCollection();
+
+            $data = User::orderBy($orderBy, $orderAsc ? 'ASC' : 'DESC')
+            ->with(['roles' => function ($query) {
+                $query->select('id', 'name');
+            }])
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                ->OrWhereHas('roles', function ($query2) use ($search) {
+                    $query2->whereIn('name', ["{$search}"]);
+                });
+            })
+            ->take($take)
+            ->skip($skip)
+            ->get();
 
             $countAll = User::get()->count();
-            $countFilter = User::search($request->search)->get()->count();
+            $countFilter = $data->count();
 
             return response()->json([
                 'data' => $data,
