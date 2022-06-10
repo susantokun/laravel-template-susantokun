@@ -20,26 +20,32 @@ class RoleController extends Controller
             ]);
         }
 
-        return view('backend.pages.roles.index');
+        $can_roles_delete = auth()->user()->can('roles.delete');
+        $can_roles_edit = auth()->user()->can('roles.edit');
+
+        return view('backend.pages.roles.index', [
+            'can_roles_delete' => $can_roles_delete,
+            'can_roles_edit' => $can_roles_edit,
+        ]);
     }
 
     public function create()
     {
-        $permission = Permission::get();
-        return view('backend.pages.roles.create', compact('permission'));
+        $permissions = Permission::get();
+        return view('backend.pages.roles.create', compact('permissions'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
-            'permission' => 'required',
+            'permissions' => 'required',
         ]);
 
         $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        $role->syncPermissions($request->input('permissions'));
 
-        return redirect()->route('roles.index')
+        return redirect()->route('accounts.roles.index')
             ->with('success', 'Role created successfully');
     }
 
@@ -56,35 +62,35 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $permission = Permission::get();
+        $permissions = Permission::get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)
             ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
             ->all();
 
-        return view('backend.pages.roles.edit', compact('role', 'permission', 'rolePermissions'));
+        return view('backend.pages.roles.edit', compact('role', 'permissions', 'rolePermissions'));
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
-            'permission' => 'required',
+            'permissions' => 'required',
         ]);
 
         $role = Role::find($id);
         $role->name = $request->input('name');
         $role->save();
 
-        $role->syncPermissions($request->input('permission'));
+        $role->syncPermissions($request->input('permissions'));
 
-        return redirect()->route('roles.index')
+        return redirect()->route('accounts.roles.index')
             ->with('success', 'Role updated successfully');
     }
 
     public function destroy($id)
     {
         DB::table("roles")->where('id', $id)->delete();
-        return redirect()->route('roles.index')
+        return redirect()->route('accounts.roles.index')
             ->with('success', 'Role deleted successfully');
     }
 }

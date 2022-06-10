@@ -19,23 +19,21 @@
  */
 
 return [
-    'user' => 'Pengguna',
-    'users' => 'Pengguna',
-    'index_title' => 'Kelola Pengguna',
-    'index_desc' => 'Berikut adalah data semua pengguna.',
+    'role' => 'Peran',
+    'roles' => 'Peran',
+    'index_title' => 'Kelola Peran',
+    'index_desc' => 'Berikut adalah data semua peran.',
 
-    'create_title' => 'Buat Pengguna',
-    'create_desc' => 'Silakan isi informasi pengguna berikut.',
+    'create_title' => 'Buat Peran',
+    'create_desc' => 'Silakan isi informasi peran berikut.',
 
-    'edit_title' => 'Ubah Pengguna',
-    'edit_desc' => 'Silakan ubah informasi pengguna berikut.',
+    'edit_title' => 'Ubah Peran',
+    'edit_desc' => 'Silakan ubah informasi peran berikut.',
 
-    'show_title' => 'Detail Pengguna',
-    'show_desc' => 'Berikut adalah detail informasi pengguna.',
+    'show_title' => 'Detail Peran',
+    'show_desc' => 'Berikut adalah detail informasi peran.',
 
     'name' => 'Nama',
-    'email' => 'Email',
-    'password' => 'Kata Sandi',
-    'confirmPassword' => 'Konfirmasi Kata Sandi',
-    'roles' => 'Peran'
+    'guard' => 'Perlindungan',
+    'permissions' => 'Izin',
 ];

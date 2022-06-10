@@ -1,35 +1,39 @@
 <x-backend-layout>
 
-    @section('title','Detail User | ')
+    @section('title',__('role.show_title').' | ')
 
-    <div class="">
-        <div class="inline-flex justify-end w-full">
-            <a href="{{ route('accounts.roles.index') }}">
-                <x-button-secondary>
-                    {{ __('label.back') }}
-                </x-button-secondary>
-            </a>
-        </div>
-        <div class="p-4 mt-4 rounded-lg shadow-md bg-secondary">
+    {{-- header content --}}
+    <x-header-content title="role.show">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">{{ __('label.accounts') }}</li>
+            <li class="breadcrumb-item"><a href="{{ route('accounts.roles.index') }}">{{ __('role.role') }}</a></li>
+            <li class="breadcrumb-item active">{{ __('label.show') }}</li>
+        </ol>
+    </x-header-content>
 
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Name:</strong>
-                    {{ $role->name }}
+    <div class="show">
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('role.name') }}</x-label>
+            <div class="show_group_content">{{ $role->name }}</div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('role.roles') }}</x-label>
+            <div class="show_group_content">
+                @if(!empty($rolePermissions))
+                @if($rolePermissions->count() <> 1)
+                <div class="list-inside list-desc">
+                    @foreach ($rolePermissions as $item)
+                    <div class="list-item">{{ $item->name }}</div>
+                    @endforeach
                 </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Permissions:</strong>
-                    @if(!empty($rolePermissions))
-                    <div class="list-inside list-desc">
-                        @foreach ($rolePermissions as $v)
-                        <div class="list-item"> {{ $v->name }}</div>
-                        @endforeach
-                    </div>
-                    @endif
-                </div>
+                @else
+                {{ $rolePermissions[0]['name'] }}
+                @endif
+                @endif
             </div>
         </div>
+
     </div>
 </x-backend-layout>

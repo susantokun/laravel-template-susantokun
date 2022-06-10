@@ -12,9 +12,9 @@ export function ButtonCreate(props) {
 
 export function ButtonEdit(props) {
     return (
-        <a href={props.path} className="p-1.5 inline-flex items-center justify-center text-white rounded-md shadow-sm bg-warning focus:border-warning/60 focus:ring focus:ring-warning/10 focus:ring-opacity-50 hover:bg-warning/80">
+        <button {...props} className="p-1.5 inline-flex items-center justify-center text-white rounded-md shadow-sm bg-warning focus:border-warning/60 focus:ring focus:ring-warning/10 focus:ring-opacity-50 hover:bg-warning/80 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-warning">
            <Edit className="w-4 h-4" />
-        </a>
+        </button>
     );
 }
 

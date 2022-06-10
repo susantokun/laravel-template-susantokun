@@ -24,8 +24,21 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'configurations.create']);
         Permission::create(['name' => 'configurations.edit']);
         Permission::create(['name' => 'configurations.delete']);
-        Permission::create(['name' => 'configurations.publish']);
-        Permission::create(['name' => 'configurations.unpublish']);
+
+        Permission::create(['name' => 'roles.view']);
+        Permission::create(['name' => 'roles.create']);
+        Permission::create(['name' => 'roles.edit']);
+        Permission::create(['name' => 'roles.delete']);
+
+        Permission::create(['name' => 'permissions.view']);
+        Permission::create(['name' => 'permissions.create']);
+        Permission::create(['name' => 'permissions.edit']);
+        Permission::create(['name' => 'permissions.delete']);
+
+        Permission::create(['name' => 'users.view']);
+        Permission::create(['name' => 'users.create']);
+        Permission::create(['name' => 'users.edit']);
+        Permission::create(['name' => 'users.delete']);
 
         $superadminRole = Role::create(['name' => 'super-admin']);
         $superadminRole->givePermissionTo([
@@ -33,8 +46,21 @@ class UserSeeder extends Seeder
             'configurations.create',
             'configurations.edit',
             'configurations.delete',
-            'configurations.publish',
-            'configurations.unpublish',
+
+            'roles.view',
+            'roles.create',
+            'roles.edit',
+            'roles.delete',
+
+            'permissions.view',
+            'permissions.create',
+            'permissions.edit',
+            'permissions.delete',
+
+            'users.view',
+            'users.create',
+            'users.edit',
+            'users.delete',
         ]);
         $superAdmin = User::factory()->create([
             'name' => 'Administrator',
@@ -48,7 +74,19 @@ class UserSeeder extends Seeder
             'configurations.view',
             'configurations.create',
             'configurations.edit',
-            'configurations.publish',
+
+            'roles.view',
+            'roles.create',
+            'roles.edit',
+
+            'permissions.view',
+            'permissions.create',
+            'permissions.edit',
+
+            'users.view',
+            'users.create',
+            'users.edit',
+            'users.delete',
         ]);
 
         $admin1 = User::factory()->create([
@@ -66,9 +104,7 @@ class UserSeeder extends Seeder
         $admin2->assignRole($adminRole);
 
         $memberRole = Role::create(['name' => 'member']);
-        $memberRole->givePermissionTo([
-            'configurations.view',
-        ]);
+        $memberRole->givePermissionTo([]);
 
         $member1 = User::factory()->create([
             'name' => 'Adon',

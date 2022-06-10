@@ -15,7 +15,9 @@
         <div class="mt-4">
             <div
                 id="user"
-                data-roles="{{ auth()->user()->getRoleNames() }}"
+                data-auth="{{ auth()->user() }}"
+                data-can_users_delete="{{ $can_users_delete }}"
+                data-can_users_edit="{{ $can_users_edit }}"
             ></div>
         </div>
 

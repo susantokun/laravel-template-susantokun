@@ -27,14 +27,14 @@
             <x-label class="show_group_label">{{ __('user.roles') }}</x-label>
             <div class="show_group_content">
                 @if(!empty($user->getRoleNames()))
-                @if ($user->getRoleNames()->count() > 1)
+                @if ($user->getRoleNames()->count() <> 1)
                 <div class="list-inside list-desc">
                     @foreach ($user->getRoleNames() as $item)
                     <div class="list-item">{{ $item }}</div>
                     @endforeach
                 </div>
                 @else
-                {{ $user->getRoleNames()->implode(', ') }}
+                {{ $user->getRoleNames()[0] }}
                 @endif
                 @endif
             </div>

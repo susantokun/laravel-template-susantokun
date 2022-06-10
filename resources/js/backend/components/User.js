@@ -24,7 +24,9 @@ import { ButtonShow, ButtonEdit, ButtonDelete, ButtonCreate } from "./buttons/Bu
 import { ButtonPrimary } from "./buttons/Button";
 
 export default function User(props) {
-    const roles = JSON.parse(props.roles);
+    const auth = JSON.parse(props.auth);
+    const can_users_delete = props.can_users_delete;
+    const can_users_edit = props.can_users_edit;
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
@@ -140,36 +142,67 @@ export default function User(props) {
                     let buttonShow = "";
                     let buttonEdit = "";
                     let buttonDelete = "";
-                    roles.forEach((item) => {
-                        if (item === "super-admin") {
-                            buttonEdit = (
-                                <ButtonEdit
-                                    path={`/users/${original.id}/edit`}
-                                />
-                            );
-                            let roles = [];
-                            original.roles.forEach((item, index) => {
-                                roles[index] = item.name;
-                                if (roles.includes("super-admin")) {
-                                    buttonDelete = <ButtonDelete disabled />;
-                                } else {
-                                    buttonDelete = (
-                                        <ButtonDelete
-                                            type="button"
-                                            onClick={() =>
-                                                openModalDelete(
-                                                    original.id,
-                                                    index,
-                                                    original.email,
-                                                    row.state.pageIndex,
-                                                    row.state.pageSize
-                                                )
-                                            }
-                                        />
-                                    );
-                                }
-                            });
-                        }
+                    auth.roles.forEach((role) => {
+                        let rolesField = [];
+                        original.roles.forEach((item, index) => {
+                            rolesField[index] = item.name;
+
+                            if (can_users_edit && rolesField.includes("admin") && original.id === auth.id) {
+                                buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
+                            } else if (can_users_edit && (!rolesField.includes("admin") && !rolesField.includes("super-admin"))) {
+                                buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
+                            } else if (can_users_edit && role.name.includes("super-admin")) {
+                                buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
+                            } else {
+                                buttonEdit = <ButtonEdit disabled />;
+                            }
+
+                            // if (!role.name.includes("super-admin") && rolesField.includes("super-admin")) {
+                            //     buttonEdit = <ButtonEdit disabled />;
+                            // } else if (rolesField.includes("admin") && original.id === auth.id) {
+                            //     buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
+                            // } else if ((rolesField.includes("admin") && original.id !== auth.id) && !role.name.includes("super-admin")) {
+                            //     buttonEdit = <ButtonEdit disabled />;
+                            // } else {
+                            //     buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
+                            // }
+
+                            if (rolesField.includes("super-admin")) {
+                                buttonDelete = <ButtonDelete disabled />;
+                            } else if (rolesField.includes("admin") && original.id === auth.id && can_users_delete) {
+                                buttonDelete = (
+                                    <ButtonDelete
+                                        type="button"
+                                        onClick={() =>
+                                            openModalDelete(
+                                                original.id,
+                                                index,
+                                                original.email,
+                                                row.state.pageIndex,
+                                                row.state.pageSize
+                                            )
+                                        }
+                                    />
+                                );
+                            } else if ((rolesField.includes("admin") && original.id !== auth.id) && !role.name.includes("super-admin")) {
+                                buttonDelete = <ButtonDelete disabled />;
+                            } else {
+                                buttonDelete = (
+                                    <ButtonDelete
+                                        type="button"
+                                        onClick={() =>
+                                            openModalDelete(
+                                                original.id,
+                                                index,
+                                                original.email,
+                                                row.state.pageIndex,
+                                                row.state.pageSize
+                                            )
+                                        }
+                                    />
+                                );
+                            }
+                        });
                     });
                     buttonShow = <ButtonShow path={`/users/${original.id}`} />;
                     return (
@@ -246,14 +279,6 @@ export default function User(props) {
             setDeleteLoading(false);
         }, 1000);
     };
-
-    // const filterData = {
-    //     users: dataUsers.filter(
-    //         (item) =>
-    //             item.name.toLowerCase().includes(search.toLowerCase()) ||
-    //             item.email.toLowerCase().includes(search.toLowerCase())
-    //     ),
-    // };
 
     return (
         <>

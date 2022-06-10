@@ -26,29 +26,14 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        // $users = User::where('name', 'like', "%{$request->search}%")->get();
-
-        // $users = User::search($request->search)->get();
-
-        // return $users;
         if ($request->ajax()) {
             $take = $request->take;
             $skip = $request->skip;
 
-            $page = (int)$skip / (int)$take + (int)$take;
             $users = User::search($request->search);
             $paginator = $users->paginate($take, '', $skip);
             $paginator->load('roles');
             $data = $paginator->getCollection();
-
-            // $data = User::search($request->search);
-            // ->take($request->limit)
-            // ->with('roles')
-            // ->skip($request->skip)
-            // ->with(['roles' => function ($q) {
-            //     $q->with('permissions');
-            // }])
-            // ->get();
 
             $countAll = User::get()->count();
             $countFilter = User::search($request->search)->get()->count();
@@ -60,12 +45,22 @@ class UserController extends Controller
             ]);
         }
 
-        return view('backend.pages.users.index');
+        $can_users_delete = auth()->user()->can('users.delete');
+        $can_users_edit = auth()->user()->can('users.edit');
+
+        return view('backend.pages.users.index', [
+            'can_users_delete' => $can_users_delete,
+            'can_users_edit' => $can_users_edit,
+        ]);
     }
 
     public function create()
     {
-        $roles = Role::pluck('name', 'name')->all();
+        if (auth()->user()->getRoleNames()->contains('super-admin')) {
+            $roles = Role::pluck('name', 'name')->all();
+        } else {
+            $roles = Role::where('name', '!=', 'super-admin')->pluck('name', 'name')->all();
+        }
         return view('backend.pages.users.create', compact('roles'));
     }
 
@@ -96,7 +91,11 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::with('roles')->find($id);
-        $roles = Role::pluck('name', 'name')->all();
+        if (auth()->user()->getRoleNames()->contains('super-admin')) {
+            $roles = Role::pluck('name', 'name')->all();
+        } else {
+            $roles = Role::where('name', '!=', 'super-admin')->pluck('name', 'name')->all();
+        }
         $userRole = $user->roles->pluck('name', 'name')->all();
 
         return view('backend.pages.users.edit', compact('user', 'roles', 'userRole'));
