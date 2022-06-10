@@ -22,7 +22,7 @@ class User extends Authenticatable
     public function toSearchableArray()
     {
         return [
-            'name' => $this->name,
+            'full_name' => $this->full_name,
             'email' => $this->email,
         ];
     }
@@ -33,9 +33,20 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
+        'first_name',
+        'last_name',
+        'full_name',
         'email',
         'password',
+        'phone',
+        'image_name',
+        'image_file',
+        'status',
+        'last_login_at',
+        'last_login_ip',
+        'created_by',
+        'updated_by',
     ];
 
     /**

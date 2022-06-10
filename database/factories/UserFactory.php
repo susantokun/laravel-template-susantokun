@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -18,10 +18,22 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'username' => $this->faker->userName(),
+            'first_name' => $this->faker->name(),
+            'last_name' => $this->faker->name(),
+            'full_name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'phone' => $this->faker->phoneNumber(),
+            'image_name' => NULL,
+            'image_file' => NULL,
+            'status' => 'active',
+            'last_login_at' => NULL,
+            'last_login_ip' => NULL,
+            'created_by' => 'susantokun',
+            'updated_by' => 'susantokun',
+
+            'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ];
     }

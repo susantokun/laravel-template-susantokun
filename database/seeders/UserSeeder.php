@@ -63,11 +63,40 @@ class UserSeeder extends Seeder
             'users.delete',
         ]);
         $superAdmin = User::factory()->create([
-            'name' => 'Administrator',
-            'email' => 'admin@mail.com',
-            'password' => bcrypt('password')
+            'username' => 'susantokun',
+            'first_name' => 'Susantokun',
+            'last_name' => NULL,
+            'full_name' => 'Susantokun',
+            'email' => 'susantokun.com@gmail.com',
+            'password' => bcrypt('password'),
+            'phone' => '081906515912',
+            'image_name' => NULL,
+            'image_file' => NULL,
+            'status' => 'active',
+            'last_login_at' => NULL,
+            'last_login_ip' => NULL,
+            'created_by' => 'susantokun',
+            'updated_by' => 'susantokun',
         ]);
         $superAdmin->assignRole($superadminRole);
+
+        $superAdmin2 = User::factory()->create([
+            'username' => 'superadmin',
+            'first_name' => 'Super',
+            'last_name' => 'Administrator',
+            'full_name' => 'Super Administrator',
+            'email' => 'superadmin@mail.com',
+            'password' => bcrypt('password'),
+            'phone' => '081906515912',
+            'image_name' => NULL,
+            'image_file' => NULL,
+            'status' => 'active',
+            'last_login_at' => NULL,
+            'last_login_ip' => NULL,
+            'created_by' => 'susantokun',
+            'updated_by' => 'susantokun',
+        ]);
+        $superAdmin2->assignRole($superadminRole);
 
         $adminRole = Role::create(['name' => 'admin']);
         $adminRole->givePermissionTo([
@@ -88,26 +117,41 @@ class UserSeeder extends Seeder
         ]);
 
         $admin1 = User::factory()->create([
-            'name' => 'Susantokun',
-            'email' => 'susantokun@mail.com',
+            'username' => 'admin',
+            'first_name' => 'Admin',
+            'last_name' => NULL,
+            'full_name' => 'Administrator',
+            'email' => 'admin@mail.com',
             'password' => bcrypt('password'),
+            'phone' => '081906515912',
+            'image_name' => NULL,
+            'image_file' => NULL,
+            'status' => 'active',
+            'last_login_at' => NULL,
+            'last_login_ip' => NULL,
+            'created_by' => 'superadmin',
+            'updated_by' => 'superadmin',
         ]);
         $admin1->assignRole($adminRole);
-
-        $admin2 = User::factory()->create([
-            'name' => 'Ekstra',
-            'email' => 'ekstra@mail.com',
-            'password' => bcrypt('password'),
-        ]);
-        $admin2->assignRole($adminRole);
 
         $memberRole = Role::create(['name' => 'member']);
         $memberRole->givePermissionTo([]);
 
         $member1 = User::factory()->create([
-            'name' => 'Adon',
-            'email' => 'adon@mail.com',
+            'username' => 'member',
+            'first_name' => 'Member',
+            'last_name' => 'One',
+            'full_name' => 'Member One',
+            'email' => 'member@mail.com',
             'password' => bcrypt('password'),
+            'phone' => '081906515912',
+            'image_name' => NULL,
+            'image_file' => NULL,
+            'status' => 'active',
+            'last_login_at' => NULL,
+            'last_login_ip' => NULL,
+            'created_by' => 'admin',
+            'updated_by' => 'admin',
         ]);
         $member1->assignRole($memberRole);
     }
