@@ -28,16 +28,25 @@
             <div class="show_group_content">
                 @if(!empty($user->getRoleNames()))
                 @if ($user->getRoleNames()->count() <> 1)
-                <div class="list-inside list-desc">
-                    @foreach ($user->getRoleNames() as $item)
-                    <div class="list-item">{{ $item }}</div>
-                    @endforeach
-                </div>
-                @else
-                {{ $user->getRoleNames()[0] }}
-                @endif
-                @endif
+                    <div class="list-inside list-desc">
+                        @foreach ($user->getRoleNames() as $item)
+                        <div class="list-item">{{ $item }}</div>
+                        @endforeach
+                    </div>
+                    @else
+                    {{ $user->getRoleNames()[0] }}
+                    @endif
+                    @endif
             </div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('label.created_at') }}</x-label>
+            <div class="show_group_content">{{ \Carbon\Carbon::parse($user->created_at)->isoFormat('dddd, Do MMMM YYYY hh:mm a') }}</div>
+        </div>
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('label.updated_at') }}</x-label>
+            <div class="show_group_content">{{ \Carbon\Carbon::parse($user->updated_at)->isoFormat('dddd, Do MMMM YYYY hh:mm a') }}</div>
         </div>
 
     </div>

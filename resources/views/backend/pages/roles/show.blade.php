@@ -23,16 +23,25 @@
             <div class="show_group_content">
                 @if(!empty($rolePermissions))
                 @if($rolePermissions->count() <> 1)
-                <div class="list-inside list-desc">
-                    @foreach ($rolePermissions as $item)
-                    <div class="list-item">{{ $item->name }}</div>
-                    @endforeach
-                </div>
-                @else
-                {{ $rolePermissions[0]['name'] }}
-                @endif
-                @endif
+                    <div class="list-inside list-desc">
+                        @foreach ($rolePermissions as $item)
+                        <div class="list-item">{{ $item->name }}</div>
+                        @endforeach
+                    </div>
+                    @else
+                    {{ $rolePermissions[0]['name'] }}
+                    @endif
+                    @endif
             </div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('label.created_at') }}</x-label>
+            <div class="show_group_content">{{ \Carbon\Carbon::parse($role->created_at)->isoFormat('dddd, Do MMMM YYYY hh:mm a') }}</div>
+        </div>
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('label.updated_at') }}</x-label>
+            <div class="show_group_content">{{ \Carbon\Carbon::parse($role->updated_at)->isoFormat('dddd, Do MMMM YYYY hh:mm a') }}</div>
         </div>
 
     </div>

@@ -18,5 +18,14 @@
             <div class="show_group_content">{{ $permission->name }}</div>
         </div>
 
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('label.created_at') }}</x-label>
+            <div class="show_group_content">{{ \Carbon\Carbon::parse($permission->created_at)->isoFormat('dddd, Do MMMM YYYY hh:mm a') }}</div>
+        </div>
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('label.updated_at') }}</x-label>
+            <div class="show_group_content">{{ \Carbon\Carbon::parse($permission->updated_at)->isoFormat('dddd, Do MMMM YYYY hh:mm a') }}</div>
+        </div>
+
     </div>
 </x-backend-layout>
