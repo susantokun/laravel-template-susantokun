@@ -14,7 +14,7 @@
         <div class="col-span-3">
             <x-label>{{ __('role.permissions') }}</x-label>
             @foreach($permissions as $value)
-            <label>
+            <label class="cursor-pointer select-none">
                 {!! Form::checkbox('permissions[]', $value->id, isset($rolePermissions) ? in_array($value->id, $rolePermissions) ? true : false : false,
                 array('class'
                 =>
