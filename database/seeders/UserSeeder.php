@@ -20,48 +20,30 @@ class UserSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        Permission::create(['name' => 'configurations.view']);
-        Permission::create(['name' => 'configurations.create']);
-        Permission::create(['name' => 'configurations.edit']);
-        Permission::create(['name' => 'configurations.delete']);
+        Permission::create(['name' => 'configurations view']);
+        Permission::create(['name' => 'configurations create']);
+        Permission::create(['name' => 'configurations edit']);
+        Permission::create(['name' => 'configurations delete']);
 
-        Permission::create(['name' => 'roles.view']);
-        Permission::create(['name' => 'roles.create']);
-        Permission::create(['name' => 'roles.edit']);
-        Permission::create(['name' => 'roles.delete']);
+        Permission::create(['name' => 'roles view']);
+        Permission::create(['name' => 'roles view superadmin']);
+        Permission::create(['name' => 'roles create']);
+        Permission::create(['name' => 'roles edit']);
+        Permission::create(['name' => 'roles delete']);
 
-        Permission::create(['name' => 'permissions.view']);
-        Permission::create(['name' => 'permissions.create']);
-        Permission::create(['name' => 'permissions.edit']);
-        Permission::create(['name' => 'permissions.delete']);
+        Permission::create(['name' => 'permissions view']);
+        Permission::create(['name' => 'permissions create']);
+        Permission::create(['name' => 'permissions edit']);
+        Permission::create(['name' => 'permissions delete']);
 
-        Permission::create(['name' => 'users.view']);
-        Permission::create(['name' => 'users.create']);
-        Permission::create(['name' => 'users.edit']);
-        Permission::create(['name' => 'users.delete']);
+        Permission::create(['name' => 'users view']);
+        Permission::create(['name' => 'users view superadmin']);
+        Permission::create(['name' => 'users create']);
+        Permission::create(['name' => 'users edit']);
+        Permission::create(['name' => 'users delete']);
 
-        $superadminRole = Role::create(['name' => 'super-admin']);
-        $superadminRole->givePermissionTo([
-            'configurations.view',
-            'configurations.create',
-            'configurations.edit',
-            'configurations.delete',
-
-            'roles.view',
-            'roles.create',
-            'roles.edit',
-            'roles.delete',
-
-            'permissions.view',
-            'permissions.create',
-            'permissions.edit',
-            'permissions.delete',
-
-            'users.view',
-            'users.create',
-            'users.edit',
-            'users.delete',
-        ]);
+        $superadminRole = Role::create(['name' => 'superadmin']);
+        $superadminRole->givePermissionTo(Permission::all());
         $superAdmin = User::factory()->create([
             'username' => 'susantokun',
             'first_name' => 'Susantokun',
@@ -100,20 +82,20 @@ class UserSeeder extends Seeder
 
         $adminRole = Role::create(['name' => 'admin']);
         $adminRole->givePermissionTo([
-            'configurations.view',
-            'configurations.create',
-            'configurations.edit',
+            'configurations view',
+            'configurations create',
+            'configurations edit',
 
-            'roles.view',
-            'roles.create',
-            'roles.edit',
+            'roles view',
+            'roles create',
+            'roles edit',
 
-            'permissions.view',
+            'permissions view',
 
-            'users.view',
-            'users.create',
-            'users.edit',
-            'users.delete',
+            'users view',
+            'users create',
+            'users edit',
+            'users delete',
         ]);
 
         $admin1 = User::factory()->create([
