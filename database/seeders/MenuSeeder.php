@@ -15,6 +15,7 @@ class MenuSeeder extends Seeder
     public function run()
     {
         DB::table('menus')->insert([
+            // superadmin
             [
                 'id' => 1,
                 'role_id' => 1,
@@ -57,7 +58,7 @@ class MenuSeeder extends Seeder
 
             // admin
             [
-                'id' => 4,
+                'id' => 13,
                 'role_id' => 2,
                 'parent_id' => 0,
                 'title' => 'Dashboard',
@@ -70,7 +71,20 @@ class MenuSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 5,
+                'id' => 14,
+                'role_id' => 2,
+                'parent_id' => 0,
+                'title' => 'Settings',
+                'route_name' => 'settings*',
+                'route_group' => NULL,
+                'icon' => 'settings',
+                'order' => 998,
+                'status' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ],
+            [
+                'id' => 15,
                 'role_id' => 2,
                 'parent_id' => 0,
                 'title' => 'Accounts',
