@@ -48,6 +48,8 @@ export default function User(props) {
     const [pageCount, setPageCount] = useState(0);
     const fetchIdRef = useRef(0);
 
+    const avatarUI = "https://ui-avatars.com/api/?background=random&name=";
+
     const handleSearch = (e) => {
         if (e.key === 'Enter') {
             fetchAPIData({
@@ -97,7 +99,7 @@ export default function User(props) {
                 Header: "Profile",
                 Cell: ({ row: { original, index } }) => {
                     return <div className="flex flex-row items-center justify-start">
-                        <img className="w-10 h-10 overflow-hidden rounded-md shadow-sm shrink-0" src={`/storage/${original.image_file}`} />
+                        <img className="w-10 h-10 overflow-hidden rounded-md shadow-sm shrink-0" src={original.image_file ? `/storage/${original.image_file}` : `${avatarUI}${original.full_name}`} />
                         <div className="flex flex-col ml-2 text-left truncate">
                             <span>{original.full_name}</span>
                             <span className="font-medium">{original.username}</span>
@@ -145,7 +147,9 @@ export default function User(props) {
                     let buttonShow = <buttonShow disabled />;
                     let buttonEdit = <ButtonEdit disabled />;
                     let buttonDelete = <ButtonDelete disabled />;
-                    auth.roles.forEach((role) => {
+                    let roleAuth = [];
+                    auth.roles.forEach((role, index) => {
+                        roleAuth[index] = role.name;
                         let rolesField = [];
 
                         if (original.roles.length < 1) {
@@ -173,21 +177,11 @@ export default function User(props) {
                                 buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
                             } else if (can_users_edit && (!rolesField.includes("admin") && !rolesField.includes("super-admin"))) {
                                 buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
-                            } else if (can_users_edit && role.name.includes("super-admin")) {
+                            } else if (can_users_edit && roleAuth.includes("super-admin")) {
                                 buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
                             } else {
                                 buttonEdit = <ButtonEdit disabled />;
                             }
-
-                            // if (!role.name.includes("super-admin") && rolesField.includes("super-admin")) {
-                            //     buttonEdit = <ButtonEdit disabled />;
-                            // } else if (rolesField.includes("admin") && original.id === auth.id) {
-                            //     buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
-                            // } else if ((rolesField.includes("admin") && original.id !== auth.id) && !role.name.includes("super-admin")) {
-                            //     buttonEdit = <ButtonEdit disabled />;
-                            // } else {
-                            //     buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
-                            // }
 
                             if (rolesField.includes("super-admin")) {
                                 buttonDelete = <ButtonDelete disabled />;
