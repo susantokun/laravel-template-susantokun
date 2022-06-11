@@ -135,7 +135,7 @@ export default function Permission(props) {
                     roles.forEach((item) => {
                         if (
                             can_permissions_edit &&
-                            item.includes("super-admin")
+                            item.includes("superadmin")
                         ) {
                             buttonEdit = (
                                 <a href={`/permissions/${original.id}/edit`}>
@@ -146,7 +146,7 @@ export default function Permission(props) {
 
                         if (
                             can_permissions_delete &&
-                            item.includes("super-admin")
+                            item.includes("superadmin")
                         ) {
                             buttonDelete = (
                                 <ButtonDelete

@@ -13,24 +13,33 @@ class RoleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:roles.view', ['only' => ['index', 'show']]);
-        $this->middleware('permission:roles.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:roles.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:roles.delete', ['only' => ['destroy']]);
+        $this->middleware('permission:roles view', ['only' => ['index', 'show']]);
+        $this->middleware('permission:roles create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:roles edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:roles delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Role::with('permissions')->orderBy('id', 'desc')->get();
+            $auth_can_roles_view_superadmin = auth()->user()->can('roles view superadmin');
+            $superadmin = auth()->user()->getRoleNames()->contains('superadmin');
+
+            $data = Role::with('permissions')->orderBy('id', 'desc');
+
+            if ($superadmin || $auth_can_roles_view_superadmin) {
+                $data = $data;
+            } else {
+                $data->whereNotIn('name', ['superadmin']);
+            }
 
             return response()->json([
-                'data' => $data,
+                'data' => $data->get(),
             ]);
         }
 
-        $can_roles_delete = auth()->user()->can('roles.delete');
-        $can_roles_edit = auth()->user()->can('roles.edit');
+        $can_roles_delete = auth()->user()->can('roles delete');
+        $can_roles_edit = auth()->user()->can('roles edit');
 
         return view('backend.pages.roles.index', [
             'can_roles_delete' => $can_roles_delete,
@@ -40,11 +49,13 @@ class RoleController extends Controller
 
     public function create()
     {
-        if (!auth()->user()->getRoleNames()->contains('super-admin')) {
+        if (!auth()->user()->getRoleNames()->contains('superadmin')) {
             $permissions = Permission::whereNotIn('name', [
-                'roles.delete',
-                'permissions.delete',
-                'configurations.delete',
+                'roles delete',
+                'roles view superadmin',
+                'permissions delete',
+                'configurations delete',
+                'users view superadmin',
             ])->get();
         } else {
             $permissions = Permission::get();
@@ -69,7 +80,19 @@ class RoleController extends Controller
 
     public function show($id)
     {
-        $role = Role::find($id);
+        $auth_can_roles_view_superadmin = auth()->user()->can('roles view superadmin');
+        $user_can_roles_view_superadmin = Role::find($id)->getPermissionNames()->contains('roles view superadmin');
+        $superadmin = auth()->user()->getRoleNames()->contains('superadmin');
+        $admin = auth()->user()->getRoleNames()->contains('admin');
+
+        if (($user_can_roles_view_superadmin && $superadmin) || $auth_can_roles_view_superadmin) {
+            $role = Role::find($id);
+        } else if (!$user_can_roles_view_superadmin && ($admin || $superadmin) || $auth_can_roles_view_superadmin) {
+            $role = Role::find($id);
+        } else {
+            abort(401);
+        }
+
         $rolePermissions = Permission::join("role_has_permissions", "role_has_permissions.permission_id", "=", "permissions.id")
             ->where("role_has_permissions.role_id", $id)
             ->get();
@@ -80,11 +103,13 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        if (!auth()->user()->getRoleNames()->contains('super-admin')) {
+        if (!auth()->user()->getRoleNames()->contains('superadmin')) {
             $permissions = Permission::whereNotIn('name', [
-                'roles.delete',
-                'permissions.delete',
-                'configurations.delete',
+                'roles delete',
+                'roles view superadmin',
+                'permissions delete',
+                'configurations delete',
+                'users view superadmin',
             ])->get();
         } else {
             $permissions = Permission::get();

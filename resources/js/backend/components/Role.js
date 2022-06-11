@@ -150,9 +150,9 @@ export default function Role(props) {
                     let buttonDelete = <ButtonDelete disabled />;
                     roles.forEach((item) => {
                         if (
-                            original.name !== "super-admin" &&
+                            original.name !== "superadmin" &&
                             can_roles_edit &&
-                            (item.includes("super-admin") ||
+                            (item.includes("superadmin") ||
                                 item.includes("admin"))
                         ) {
                             buttonEdit = (
@@ -161,8 +161,8 @@ export default function Role(props) {
                                 </a>
                             );
                         } else if (
-                            original.name === "super-admin" &&
-                            item.includes("super-admin")
+                            original.name === "superadmin" &&
+                            item.includes("superadmin")
                         ) {
                             buttonEdit = (
                                 <a href={`/roles/${original.id}/edit`}>
@@ -174,9 +174,9 @@ export default function Role(props) {
                         }
 
                         if (
-                            original.name !== "super-admin" &&
+                            original.name !== "superadmin" &&
                             can_roles_delete &&
-                            item.includes("super-admin")
+                            item.includes("superadmin")
                         ) {
                             buttonDelete = (
                                 <ButtonDelete
@@ -320,7 +320,7 @@ export default function Role(props) {
 
                 <input
                     onChange={handleSearch}
-                    placeholder="Nama/Izin"
+                    placeholder="Nama"
                     type="search"
                     className="w-full transition duration-300 bg-white border-gray-300 rounded-md shadow-sm form-input md:w-auto focus:ring disabled:cursor-not-allowed disabled:opacity-50 focus:border-primary-300 focus:ring-primary-200/50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-gray-600 dark:focus:ring-gray-800"
                 />

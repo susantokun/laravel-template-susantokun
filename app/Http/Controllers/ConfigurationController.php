@@ -8,17 +8,14 @@ class ConfigurationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:configurations.*', ['only' => ['index', 'show']]);
-        $this->middleware('permission:configurations.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:configurations.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:configurations.delete', ['only' => ['destroy']]);
+        $this->middleware('permission:configurations view', ['only' => ['index', 'show']]);
+        $this->middleware('permission:configurations create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:configurations edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:configurations delete', ['only' => ['destroy']]);
     }
 
     public function general()
     {
-        $permissions = auth()->user()->getPermissionsViaRoles();
-        $can_publish = auth()->user()->hasPermissionTo('configurations.publish');
-        $can_unpublish = auth()->user()->hasPermissionTo('configurations.unpublish');
         $role = auth()->user()->getRoleNames()[0];
 
         $data = Configuration::where('status', 1)->first([

@@ -6,7 +6,6 @@ use Image;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +13,14 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:users view', ['only' => ['index', 'show']]);
+        $this->middleware('permission:users create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:users edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:users delete', ['only' => ['destroy']]);
+    }
+
     public function basic(Request $request)
     {
         $users = User::orderBy('id', 'desc')->get();
@@ -41,33 +48,49 @@ class UserController extends Controller
             // $paginator->load('roles');
             // $data = $paginator->getCollection();
 
+            $auth_can_users_view_superadmin = auth()->user()->can('users view superadmin');
+            $superadmin = auth()->user()->getRoleNames()->contains('superadmin');
+
             $data = User::orderBy($orderBy, $orderAsc ? 'ASC' : 'DESC')
             ->with(['roles' => function ($query) {
                 $query->select('id', 'name');
             }])
-            ->when($search, function ($query) use ($search) {
-                $query->orWhere('username', 'like', "%{$search}%")
-                ->orWhere('full_name', 'like', "%{$search}%")
-                ->orWhereHas('roles', function ($query2) use ($search) {
-                    $query2->whereIn('name', ["{$search}"]);
-                });
-            })
             ->take($take)
-            ->skip($skip)
-            ->get();
+            ->skip($skip);
+
+            if ($superadmin || $auth_can_users_view_superadmin) {
+                $data->when($search, function ($query) use ($search) {
+                    $query->where('username', 'like', "%{$search}%")
+                    ->orWhere('full_name', 'like', "%{$search}%")
+                    ->orWhereHas('roles', function ($query2) use ($search) {
+                        $query2->whereIn('name', ["{$search}"]);
+                    });
+                });
+            } else {
+                $data->whereHas('roles', function($q) {
+                    $q->whereNotIn('name', ['superadmin']);
+                })
+                ->when($search, function ($query) use ($search) {
+                    $query->where('username', 'like', "%{$search}%")
+                    ->orWhere('full_name', 'like', "%{$search}%")
+                    ->whereHas('roles', function ($query2) use ($search) {
+                        $query2->whereNotIn('name', ['superadmin'])->whereIn('name', ["{$search}"]);
+                    });
+                });
+            }
 
             $countAll = User::get()->count();
-            $countFilter = $data->count();
+            $countFilter = $data->get()->count();
 
             return response()->json([
-                'data' => $data,
+                'data' => $data->get(),
                 'count_total' => $countAll,
                 'count_filter' => $countFilter,
             ]);
         }
 
-        $can_users_delete = auth()->user()->can('users.delete');
-        $can_users_edit = auth()->user()->can('users.edit');
+        $can_users_delete = auth()->user()->can('users delete');
+        $can_users_edit = auth()->user()->can('users edit');
 
         return view('backend.pages.users.index', [
             'can_users_delete' => $can_users_delete,
@@ -77,10 +100,10 @@ class UserController extends Controller
 
     public function create()
     {
-        if (auth()->user()->getRoleNames()->contains('super-admin')) {
+        if (auth()->user()->getRoleNames()->contains('superadmin')) {
             $roles = Role::pluck('name', 'name')->all();
         } else {
-            $roles = Role::where('name', '!=', 'super-admin')->pluck('name', 'name')->all();
+            $roles = Role::where('name', '!=', 'superadmin')->pluck('name', 'name')->all();
         }
         return view('backend.pages.users.create', compact('roles'));
     }
@@ -131,17 +154,29 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::find($id);
+        $auth_can_users_view_superadmin = auth()->user()->can('users view superadmin');
+        $user_can_users_view_superadmin = User::find($id)->can('users view superadmin');
+        $superadmin = auth()->user()->getRoleNames()->contains('superadmin');
+        $admin = auth()->user()->getRoleNames()->contains('admin');
+
+        if (($user_can_users_view_superadmin && $superadmin) || $auth_can_users_view_superadmin) {
+            $user = User::find($id);
+        } else if (!$user_can_users_view_superadmin && ($admin || $superadmin) || $auth_can_users_view_superadmin) {
+            $user = User::find($id);
+        } else {
+            abort(401);
+        }
+
         return view('backend.pages.users.show', compact('user'));
     }
 
     public function edit($id)
     {
         $user = User::with('roles')->find($id);
-        if (auth()->user()->getRoleNames()->contains('super-admin')) {
+        if (auth()->user()->getRoleNames()->contains('superadmin')) {
             $roles = Role::pluck('name', 'name')->all();
         } else {
-            $roles = Role::where('name', '!=', 'super-admin')->pluck('name', 'name')->all();
+            $roles = Role::where('name', '!=', 'superadmin')->pluck('name', 'name')->all();
         }
         $userRole = $user->roles->pluck('name', 'name')->all();
 
@@ -162,13 +197,21 @@ class UserController extends Controller
             'roles' => 'required',
         ]);
 
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $input = $request->all();
         if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);
         } else {
             $input = Arr::except($input, array('password'));
         }
+
+        // $contents = Storage::get('file.jpg');
+
+        // if (Storage::disk('public')->exists(isset($user->image_file) ? $user->image_file : '')) {
+        //     dd('ok');
+        // } else {
+        //     dd('no');
+        // }
 
         if ($request->hasfile('image_file')) {
             $request->validate([
@@ -184,9 +227,11 @@ class UserController extends Controller
             $image_file_image->resize(512, 512, function ($constraint) {
                 $constraint->aspectRatio();
             });
-            if (Storage::disk('public')->exists($user->image_file)) {
+
+            if($user->image_file != ''  && $user->image_file != null){
                 Storage::disk('public')->delete($user->image_file);
             }
+
             Storage::disk('public')->put($image_file_path, (string) $image_file_image->encode());
             $input['image_file'] = $image_file_path;
         } else {

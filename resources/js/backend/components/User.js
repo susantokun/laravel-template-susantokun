@@ -175,15 +175,15 @@ export default function User(props) {
 
                             if (can_users_edit && rolesField.includes("admin") && original.id === auth.id) {
                                 buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
-                            } else if (can_users_edit && (!rolesField.includes("admin") && !rolesField.includes("super-admin"))) {
+                            } else if (can_users_edit && (!rolesField.includes("admin") && !rolesField.includes("superadmin"))) {
                                 buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
-                            } else if (can_users_edit && roleAuth.includes("super-admin")) {
+                            } else if (can_users_edit && roleAuth.includes("superadmin")) {
                                 buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
                             } else {
                                 buttonEdit = <ButtonEdit disabled />;
                             }
 
-                            if (rolesField.includes("super-admin")) {
+                            if (rolesField.includes("superadmin")) {
                                 buttonDelete = <ButtonDelete disabled />;
                             } else if (rolesField.includes("admin") && original.id === auth.id && can_users_delete) {
                                 buttonDelete = (
@@ -200,7 +200,7 @@ export default function User(props) {
                                         }
                                     />
                                 );
-                            } else if ((rolesField.includes("admin") && original.id !== auth.id) && !role.name.includes("super-admin")) {
+                            } else if ((rolesField.includes("admin") && original.id !== auth.id) && !role.name.includes("superadmin")) {
                                 buttonDelete = <ButtonDelete disabled />;
                             } else {
                                 buttonDelete = (

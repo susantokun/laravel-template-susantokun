@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('users', UserController::class);
         Route::get('/users-basic', [UserController::class, 'basic'])->name('users.basic');
 
-        Route::group(['middleware' => 'role:super-admin|admin'], function () {
+        Route::group(['middleware' => 'role:superadmin|admin'], function () {
             Route::resource('roles', RoleController::class);
             Route::resource('permissions', PermissionController::class);
         });

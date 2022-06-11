@@ -9,10 +9,10 @@ class PermissionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:permissions.view', ['only' => ['index', 'show']]);
-        $this->middleware('permission:permissions.create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:permissions.edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:permissions.delete', ['only' => ['destroy']]);
+        $this->middleware('permission:permissions view', ['only' => ['index', 'show']]);
+        $this->middleware('permission:permissions create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:permissions edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:permissions delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
@@ -25,8 +25,8 @@ class PermissionController extends Controller
             ]);
         }
 
-        $can_permissions_delete = auth()->user()->can('permissions.delete');
-        $can_permissions_edit = auth()->user()->can('permissions.edit');
+        $can_permissions_delete = auth()->user()->can('permissions delete');
+        $can_permissions_edit = auth()->user()->can('permissions edit');
 
         return view('backend.pages.permissions.index', [
             'can_permissions_delete' => $can_permissions_delete,
@@ -43,7 +43,7 @@ class PermissionController extends Controller
             'delete',
         ];
 
-        return view('backend.pages.permissions.create', compact('permissionsOperation'));
+        return view('backend..pages.permissions.create', compact('permissionsOperation'));
     }
 
     public function store(Request $request)
@@ -54,7 +54,7 @@ class PermissionController extends Controller
 
         if ($request->input('permissionsOperation')) {
             foreach ($request->input('permissionsOperation') as $value) {
-                Permission::create(['name' => $request->input('name').'.'.$value]);
+                Permission::create(['name' => $request->input('name').' '.$value]);
             }
         } else {
             Permission::create(['name' => $request->input('name')]);

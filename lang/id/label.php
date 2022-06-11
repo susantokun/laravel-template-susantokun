@@ -35,6 +35,7 @@ return [
     'updated_at' => 'Diperbaharui Pada',
     'created_by' => 'Dibuat Oleh',
     'updated_by' => 'Diperbaharui Oleh',
+    'optional' => 'Tidak Wajib',
 
     'login'                      => 'Masuk',
     'register'                   => 'Daftar',

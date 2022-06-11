@@ -13,7 +13,7 @@
         {{-- operation --}}
         @if (isset($permissionsOperation))
         <div class="col-span-3">
-            <x-label>{{ __('permission.permissionsOperation') }}</x-label>
+            <x-label>{{ __('permission.permissionsOperation') }} <span class="italic">({{ __('label.optional') }})</span></x-label>
             @foreach($permissionsOperation as $value)
             <label class="cursor-pointer select-none">
                 {!! Form::checkbox('permissionsOperation[]', $value, false,
