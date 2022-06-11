@@ -6,7 +6,7 @@
         <img
             alt="Laravel Template Susantokun"
             class="w-6"
-            src="{{ env('APP_URL_ASSET').'/'.$configuration->logo_file }}"
+            src="{{ '/storage/'.$configuration->logo_file }}"
         >
         <span class="hidden ml-3 text-lg text-white sidebar__title xl:block">
             {{ $configuration->title_short }}
