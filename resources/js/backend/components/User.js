@@ -94,8 +94,16 @@ export default function User(props) {
                 },
             },
             {
-                Header: "Name",
-                accessor: "name",
+                Header: "Profile",
+                Cell: ({ row: { original, index } }) => {
+                    return <div className="flex flex-row items-center justify-start">
+                        <img className="w-10 h-10 overflow-hidden rounded-md shadow-sm shrink-0" src={`/storage/${original.image_file}`} />
+                        <div className="flex flex-col ml-2 text-left truncate">
+                            <span>{original.full_name}</span>
+                            <span className="font-medium">{original.username}</span>
+                        </div>
+                    </div>;
+                },
             },
             {
                 Header: "Email",
@@ -122,6 +130,11 @@ export default function User(props) {
                     });
                     return <div className={roles.length > 1 ? 'list-disc list-inside' : 'list-none'}>{roles}</div>;
                 },
+            },
+            {
+                Header: "Status",
+                accessor: "status",
+                className: "text-center"
             },
             {
                 Header: "Actions",

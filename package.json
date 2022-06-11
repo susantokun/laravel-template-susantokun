@@ -1,6 +1,6 @@
 {
     "name": "laravel-template-susantokun",
-    "version": "0.1",
+    "version": "0.5",
     "private": true,
     "scripts": {
         "dev": "npm run development",
@@ -37,6 +37,7 @@
         "@headlessui/react": "^1.6.4",
         "@heroicons/react": "^1.0.6",
         "@popperjs/core": "^2.11.5",
+        "@tailwindcss/line-clamp": "^0.4.0",
         "dayjs": "^1.11.2",
         "feather-icons": "^4.29.0",
         "highlight.js": "^11.5.1",

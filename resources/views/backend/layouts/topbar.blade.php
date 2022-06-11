@@ -114,13 +114,13 @@
         >
             <img
                 alt="Rubick Tailwind HTML Admin Template"
-                src="{{ env('APP_URL_ASSET').'/images/profiles/avatar192.png' }}"
+                src="{{ env('APP_URL').'/storage/'.auth()->user()->image_file }}"
             >
         </div>
         <div class="w-56 dropdown-menu">
             <ul class="text-white dropdown-content bg-primary">
                 <li class="p-2">
-                    <div class="font-medium">{{ auth()->user()->name }}</div>
+                    <div class="font-medium">{{ auth()->user()->full_name }}</div>
                     <div class="text-xs text-white/70 mt-0.5 dark:text-slate-500">{{ auth()->user()->getRoleNames()->implode(', ') }}</div>
                 </li>
                 <li>

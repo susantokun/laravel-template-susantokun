@@ -21,3 +21,11 @@
 .form-group {
     @apply mt-4;
 }
+
+.form-file {
+    @apply block w-full px-0 py-0 mt-1 transition duration-300 bg-white border-gray-300 rounded-md shadow-sm focus:border-primary/60 focus:ring-primary/10 file:bg-primary/80 file:text-white hover:file:bg-primary/60 focus:ring disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.form-label {
+    @apply block text-sm font-medium text-gray-700;
+}

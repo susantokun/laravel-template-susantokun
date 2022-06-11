@@ -12,7 +12,7 @@
     </x-header-content>
 
     {{-- form edit --}}
-    {{ Form::model( $user, ['route' => ['accounts.users.update', $user->id], 'method' => 'PUT', 'role' => 'form'] ) }}
+    {{ Form::model( $user, ['route' => ['accounts.users.update', $user->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data'] ) }}
     @include('backend.pages.users.form')
     {{ Form::close() }}
 </x-backend-layout>

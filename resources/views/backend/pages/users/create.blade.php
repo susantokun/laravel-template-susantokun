@@ -12,7 +12,7 @@
     </x-header-content>
 
     {{-- form create --}}
-    {{ Form::open( array( 'route' => ['accounts.users.store'], 'role' => 'form' ) ) }}
+    {{ Form::open( array( 'route' => ['accounts.users.store'], 'enctype' => 'multipart/form-data' ) ) }}
     @include('backend.pages.users.form')
     {{ Form::close() }}
 </x-backend-layout>

@@ -14,13 +14,54 @@
     <div class="show">
 
         <div class="show_group">
-            <x-label class="show_group_label">{{ __('user.name') }}</x-label>
-            <div class="show_group_content">{{ $user->name }}</div>
+            <x-label class="show_group_label">{{ __('user.username') }}</x-label>
+            <div class="show_group_content">{{ $user->username }}</div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.first_name') }}</x-label>
+            <div class="show_group_content">{{ $user->first_name }}</div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.last_name') }}</x-label>
+            <div class="show_group_content">{{ $user->last_name }}</div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.full_name') }}</x-label>
+            <div class="show_group_content">{{ $user->full_name }}</div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.phone') }}</x-label>
+            <div class="show_group_content">{{ $user->phone }}</div>
         </div>
 
         <div class="show_group">
             <x-label class="show_group_label">{{ __('user.email') }}</x-label>
             <div class="show_group_content">{{ $user->email }}</div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.image_name') }}</x-label>
+            <div class="show_group_content">{{ $user->image_name }}</div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.image_file') }}</x-label>
+            <div class="show_group_content">
+                <img
+                    src="/storage/{{ $user->image_file }}"
+                    alt="{{ $user->image_name }}"
+                    class="w-24 h-24 rounded-md"
+                >
+            </div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.status') }}</x-label>
+            <div class="show_group_content">{{ $user->status }}</div>
         </div>
 
         <div class="show_group">
@@ -41,12 +82,34 @@
         </div>
 
         <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.last_login_at') }}</x-label>
+            <div class="show_group_content">
+                @if (isset($user->last_login_at))
+                {{ $user->last_login_at }}
+                @endif
+            </div>
+        </div>
+
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('user.last_login_ip') }}</x-label>
+            <div class="show_group_content">{{ $user->last_login_ip }}</div>
+        </div>
+
+        <div class="show_group">
             <x-label class="show_group_label">{{ __('label.created_at') }}</x-label>
-            <div class="show_group_content">{{ \Carbon\Carbon::parse($user->created_at)->isoFormat('dddd, Do MMMM YYYY hh:mm a') }}</div>
+            <div class="show_group_content">{{ $user->created_at }}</div>
+        </div>
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('label.created_by') }}</x-label>
+            <div class="show_group_content">{{ $user->created_by }}</div>
         </div>
         <div class="show_group">
             <x-label class="show_group_label">{{ __('label.updated_at') }}</x-label>
-            <div class="show_group_content">{{ \Carbon\Carbon::parse($user->updated_at)->isoFormat('dddd, Do MMMM YYYY hh:mm a') }}</div>
+            <div class="show_group_content">{{ $user->updated_at }}</div>
+        </div>
+        <div class="show_group">
+            <x-label class="show_group_label">{{ __('label.updated_by') }}</x-label>
+            <div class="show_group_content">{{ $user->updated_by }}</div>
         </div>
 
     </div>
