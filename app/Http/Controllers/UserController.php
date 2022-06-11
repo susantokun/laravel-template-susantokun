@@ -205,14 +205,6 @@ class UserController extends Controller
             $input = Arr::except($input, array('password'));
         }
 
-        // $contents = Storage::get('file.jpg');
-
-        // if (Storage::disk('public')->exists(isset($user->image_file) ? $user->image_file : '')) {
-        //     dd('ok');
-        // } else {
-        //     dd('no');
-        // }
-
         if ($request->hasfile('image_file')) {
             $request->validate([
                 'image_name'  => 'required',
