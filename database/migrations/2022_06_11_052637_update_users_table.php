@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('image_name')->nullable()->after('remember_token');
             $table->string('image_file')->nullable()->after('image_name');
             $table->string('status')->default('active')->after('image_file');
-            $table->datetime('last_login_at')->nullable()->after('status');
+            $table->timestamp('last_login_at')->nullable()->after('status');
             $table->string('last_login_ip')->nullable()->after('last_login_at');
             $table->unsignedBigInteger('created_by')->nullable()->after('created_at');
             $table->unsignedBigInteger('updated_by')->nullable()->after('updated_at');
