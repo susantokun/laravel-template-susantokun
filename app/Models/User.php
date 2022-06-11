@@ -74,11 +74,6 @@ class User extends Authenticatable
         ];
     }
 
-    public function imageFile(): Attribute
-    {
-        return Attribute::get(fn ($value) => isset($value) ? $value : 'images/no-profile.png');
-    }
-
     public function updatedBy(): Attribute
     {
         return Attribute::get(fn ($value) => isset(User::find($value)->username) ? User::find($value)->username : '-');
