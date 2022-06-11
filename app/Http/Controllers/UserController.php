@@ -88,13 +88,39 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'username' => 'required|unique:users,username',
+            'first_name' => 'required',
+            'last_name' => '',
+            'full_name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'password' => 'same:confirm-password',
+            'phone' => 'required',
+            'status' => 'required',
+            'roles' => 'required',
         ]);
 
         $input = $request->all();
+        if ($request->hasfile('image_file')) {
+            $request->validate([
+                'image_name'  => 'required',
+                'image_file'  => 'required|image|mimes:jpeg,png,jpg|max:3072',
+            ]);
+
+            $image_folder = 'images/profiles';
+            $image_file = $request->file('image_file');
+            $image_file_name = $request->username.".".$image_file->getClientOriginalExtension();
+            $image_file_path = $image_folder.'/'.$image_file_name;
+            $image_file_image = Image::make($image_file);
+            $image_file_image->resize(512, 512, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            Storage::disk('public')->put($image_file_path, (string) $image_file_image->encode());
+            $input['image_file'] = $image_file_path;
+        } else {
+            $input = Arr::except($input, array('image_file'));
+        }
+
+        $input['created_by'] = auth()->user()->id;
         $input['password'] = Hash::make($input['password']);
 
         $user = User::create($input);
@@ -167,7 +193,6 @@ class UserController extends Controller
             $input = Arr::except($input, array('image_file'));
         }
 
-        $input['last_login_ip'] = $request->getClientIp();
         $input['updated_by'] = auth()->user()->id;
 
         $user->update($input);
@@ -179,7 +204,12 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $user = User::where('id', $id);
+        $user = User::find($id);
+
+        if (Storage::disk('public')->exists($user->image_file)) {
+            Storage::disk('public')->delete($user->image_file);
+        }
+
         $user->delete();
         return response()->json([
             'status'  => true,
