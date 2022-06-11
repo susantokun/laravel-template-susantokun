@@ -75,8 +75,8 @@ class UserSeeder extends Seeder
             'status' => 'active',
             'last_login_at' => NULL,
             'last_login_ip' => NULL,
-            'created_by' => 'susantokun',
-            'updated_by' => 'susantokun',
+            'created_by' => NULL,
+            'updated_by' => NULL,
         ]);
         $superAdmin->assignRole($superadminRole);
 
@@ -93,8 +93,8 @@ class UserSeeder extends Seeder
             'status' => 'active',
             'last_login_at' => NULL,
             'last_login_ip' => NULL,
-            'created_by' => 'susantokun',
-            'updated_by' => 'susantokun',
+            'created_by' => 1,
+            'updated_by' => 1,
         ]);
         $superAdmin2->assignRole($superadminRole);
 
@@ -129,8 +129,8 @@ class UserSeeder extends Seeder
             'status' => 'active',
             'last_login_at' => NULL,
             'last_login_ip' => NULL,
-            'created_by' => 'superadmin',
-            'updated_by' => 'superadmin',
+            'created_by' => 2,
+            'updated_by' => 2,
         ]);
         $admin1->assignRole($adminRole);
 
@@ -150,8 +150,8 @@ class UserSeeder extends Seeder
             'status' => 'active',
             'last_login_at' => NULL,
             'last_login_ip' => NULL,
-            'created_by' => 'admin',
-            'updated_by' => 'admin',
+            'created_by' => 3,
+            'updated_by' => 3,
         ]);
         $member1->assignRole($memberRole);
     }
