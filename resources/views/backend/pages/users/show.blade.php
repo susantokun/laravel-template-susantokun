@@ -52,7 +52,13 @@
             <x-label class="show_group_label">{{ __('user.image_file') }}</x-label>
             <div class="show_group_content">
                 <img
-                    src="/storage/{{ $user->image_file }}"
+                    src="
+                    @if (isset($user->image_file))
+                        /storage/{{ $user->image_file }}
+                    @else
+                    {{ env('APP_URL_AVATAR_UI').$user->full_name }}
+                    @endif
+                    "
                     alt="{{ $user->image_name }}"
                     class="w-24 h-24 rounded-md"
                 >
