@@ -91,17 +91,17 @@ class User extends Authenticatable
 
     public function createdAt(): Attribute
     {
-        return Attribute::get(fn ($value) => Carbon::parse($value)->isoFormat('dddd, Do MMMM YYYY hh:mm a'));
+        return Attribute::get(fn ($value) => isset($value) ? Carbon::parse($value)->isoFormat('dddd, Do MMMM YYYY hh:mm:ss a') : '-');
     }
 
     public function updatedAt(): Attribute
     {
-        return Attribute::get(fn ($value) => Carbon::parse($value)->isoFormat('dddd, Do MMMM YYYY hh:mm a'));
+        return Attribute::get(fn ($value) => isset($value) ? Carbon::parse($value)->isoFormat('dddd, Do MMMM YYYY hh:mm:ss a') : '-');
     }
 
     public function lastLoginAt(): Attribute
     {
-        return Attribute::get(fn ($value) => Carbon::parse($value)->isoFormat('dddd, Do MMMM YYYY hh:mm a'));
+        return Attribute::get(fn ($value) => isset($value) ? Carbon::parse($value)->isoFormat('dddd, Do MMMM YYYY hh:mm:ss a') : '-');
     }
 
     // public function formLastLoginAtAttribute($value)
