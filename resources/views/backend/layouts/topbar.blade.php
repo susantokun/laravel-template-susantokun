@@ -118,7 +118,7 @@
                 @if (isset(auth()->user()->image_file))
                 {{ env('APP_URL').'/storage/'.auth()->user()->image_file }}
                 @else
-                {{env('APP_URL_AVATAR_UI').''.auth()->user()->full_name }}
+                {{env('APP_URL_AVATAR_UI').auth()->user()->full_name }}
                 @endif
                 "
             >
