@@ -28,6 +28,11 @@ class Menu extends Model
         ->orderBy('order', 'asc');
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(Menu::class)->select(['id','parent_id', 'title']);
+    }
+
     public function childs()
     {
         return $this->hasMany(Menu::class, 'parent_id')->where('role_id', auth()->user()->roles->pluck('id'))->where('status', 1);
@@ -35,6 +40,6 @@ class Menu extends Model
 
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class)->select(['id', 'name']);
     }
 }

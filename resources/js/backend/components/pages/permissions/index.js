@@ -18,27 +18,27 @@ import {
     PlusIcon,
 } from "@heroicons/react/outline";
 
-import TablePagination from "./reactTable/TablePagination";
+import TablePagination from "../../reactTable/TablePagination";
 import {
     ButtonShow,
     ButtonEdit,
     ButtonDelete,
     ButtonCreate,
-} from "./buttons/ButtonActions";
-import { ButtonPrimary } from "./buttons/Button";
+} from "../../buttons/ButtonActions";
+import { ButtonPrimary } from "../../buttons/Button";
 
-export default function Role(props) {
+export default function Permission(props) {
     const roles = JSON.parse(props.roles);
-    const can_roles_delete = props.can_roles_delete;
-    const can_roles_edit = props.can_roles_edit;
-    const [dataRoles, setDataRoles] = useState([]);
+    const can_permissions_delete = props.can_permissions_delete;
+    const can_permissions_edit = props.can_permissions_edit;
+    const [dataPermissions, setDataPermissions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
-    const [roleName, setRoleName] = useState("");
-    const [roleId, setRoleId] = useState("");
+    const [permissionId, setPermissionId] = useState("");
+    const [permissionName, setPermissionName] = useState("");
+    const [permissionIndex, setPermissionIndex] = useState("");
     const [keyword, setKeyword] = useState("");
-    const [indexDataDelete, setIndexDataDelete] = useState("");
 
     const handleSearch = (e) => {
         setKeyword(event.target.value);
@@ -48,25 +48,30 @@ export default function Role(props) {
         setIsOpen(false);
     };
 
-    const openModalDelete = (getRoleId, getRoleName, getIndex) => {
-        setRoleId(getRoleId);
-        setRoleName(getRoleName);
-        setIndexDataDelete(getIndex);
+    const openModalDelete = (getPermissionId, getPermissionName, getIndex) => {
+        setPermissionId(getPermissionId);
+        setPermissionName(getPermissionName);
+        setPermissionIndex(getIndex);
         setIsOpen(true);
     };
 
     const handleDelete = async () => {
         setDeleteLoading(true);
         await axios
-            .delete(`/roles/${roleId}`)
+            .delete(`/permissions/${permissionId}`)
             .then((res) => {
                 if (res.data.status) {
                     setIsOpen(false);
                     toast.success(res.data.message);
-                    const removeData = dataRoles.filter(
-                        (item, index) => index !== indexDataDelete
+                    const removeData = dataPermissions.filter(
+                        (item, index) => index !== permissionIndex
                     );
-                    setDataRoles(removeData);
+                    setDataPermissions(removeData);
+                    // fetchAPIData({
+                    //     take: take,
+                    //     skip: skip,
+                    //     keyword: keyword,
+                    // });
                 } else {
                     setIsOpen(true);
                     toast.warn(res.data.message);
@@ -81,13 +86,13 @@ export default function Role(props) {
         }, 1000);
     };
 
-    const getRoles = async () => {
+    const getPermissions = async () => {
         setIsLoading(true);
         await axios
-            .get(`/roles`)
+            .get(`/permissions`)
             .then((res) => {
                 const resData = res.data;
-                setDataRoles(resData.data);
+                setDataPermissions(resData.data);
             })
             .catch((err) => {
                 toast.error(err);
@@ -112,7 +117,7 @@ export default function Role(props) {
                 },
             },
             {
-                Header: "Nama",
+                Header: "Name",
                 accessor: "name",
             },
             {
@@ -120,62 +125,27 @@ export default function Role(props) {
                 accessor: "guard_name",
             },
             {
-                Header: "Permissions",
-                Cell: ({ row: { original, index } }) => {
-                    var permissions = [];
-                    original.permissions.forEach((item, index) => {
-                        permissions[index] = (
-                            <div
-                                className="flex flex-col md:list-item"
-                                key={item.name}
-                            >
-                                {item.name}
-                            </div>
-                        );
-                    });
-                    return (
-                        <div className="list-disc list-inside">
-                            {permissions}
-                        </div>
-                    );
-                },
-            },
-            {
                 Header: "Actions",
                 className: "text-center",
                 Cell: (row) => {
                     const { original, index } = row.row;
-                    let buttonShow = <buttonShow disabled />;
+                    let buttonShow = <ButtonShow disabled />;
                     let buttonEdit = <ButtonEdit disabled />;
                     let buttonDelete = <ButtonDelete disabled />;
                     roles.forEach((item) => {
                         if (
-                            original.name !== "superadmin" &&
-                            can_roles_edit &&
-                            (item.includes("superadmin") ||
-                                item.includes("admin"))
-                        ) {
-                            buttonEdit = (
-                                <a href={`/roles/${original.id}/edit`}>
-                                    <ButtonEdit />
-                                </a>
-                            );
-                        } else if (
-                            original.name === "superadmin" &&
+                            can_permissions_edit &&
                             item.includes("superadmin")
                         ) {
                             buttonEdit = (
-                                <a href={`/roles/${original.id}/edit`}>
+                                <a href={`/permissions/${original.id}/edit`}>
                                     <ButtonEdit />
                                 </a>
                             );
-                        } else {
-                            buttonEdit = <ButtonEdit disabled />;
                         }
 
                         if (
-                            original.name !== "superadmin" &&
-                            can_roles_delete &&
+                            can_permissions_delete &&
                             item.includes("superadmin")
                         ) {
                             buttonDelete = (
@@ -190,12 +160,14 @@ export default function Role(props) {
                                     }
                                 />
                             );
-                        } else {
-                            buttonDelete = <ButtonDelete disabled />;
                         }
                     });
+                    buttonShow = (
+                        <a href={`/permissions/${original.id}`}>
+                            <ButtonShow />
+                        </a>
+                    );
 
-                    buttonShow = <ButtonShow path={`/roles/${original.id}`} />;
                     return (
                         <div className="inline-flex gap-1">
                             {buttonShow}
@@ -210,15 +182,15 @@ export default function Role(props) {
     );
 
     const filterData = {
-        roles: dataRoles.filter((item) =>
+        permissions: dataPermissions.filter((item) =>
             item.name.toLowerCase().includes(keyword.toLowerCase())
         ),
     };
 
     useEffect(() => {
-        getRoles();
+        getPermissions();
         return () => {
-            setDataRoles([]);
+            setDataPermissions([]);
         };
     }, []);
 
@@ -276,7 +248,7 @@ export default function Role(props) {
                                     className="text-lg font-medium leading-6 text-gray-900"
                                 >
                                     <div className="mb-1 text-base font-normal truncate">
-                                        {roleName}
+                                        {permissionName}
                                     </div>
                                     <div className="text-xl">
                                         Yakin ingin dihapus?
@@ -315,7 +287,10 @@ export default function Role(props) {
             </Transition>
             <div className="inline-flex flex-col items-center justify-center w-full gap-3 md:flex-row md:justify-between">
                 <div className="inline-flex items-center gap-2">
-                    <ButtonPrimary path="/roles/create" title="Buat Peran" />
+                    <ButtonPrimary
+                        path="/permissions/create"
+                        title="Buat Izin"
+                    />
                 </div>
 
                 <input
@@ -328,7 +303,7 @@ export default function Role(props) {
             <div className="mt-4">
                 <TablePagination
                     columns={columns}
-                    data={filterData.roles}
+                    data={filterData.permissions}
                     loading={isLoading}
                 />
             </div>
@@ -336,8 +311,11 @@ export default function Role(props) {
     );
 }
 
-if (document.getElementById("role")) {
-    const propsContainer = document.getElementById("role");
+if (document.getElementById("permission")) {
+    const propsContainer = document.getElementById("permission");
     const props = Object.assign({}, propsContainer.dataset);
-    ReactDOM.render(<Role {...props} />, document.getElementById("role"));
+    ReactDOM.render(
+        <Permission {...props} />,
+        document.getElementById("permission")
+    );
 }

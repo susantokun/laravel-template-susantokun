@@ -18,9 +18,9 @@ import {
     PlusIcon
 } from "@heroicons/react/outline";
 
-import TablePaginationControlled from "./reactTable/TablePaginationControlled";
-import { ButtonShow, ButtonEdit, ButtonDelete, ButtonCreate } from "./buttons/ButtonActions";
-import { ButtonPrimary } from "./buttons/Button";
+import TablePaginationControlled from "../../reactTable/TablePaginationControlled";
+import { ButtonShow, ButtonEdit, ButtonDelete, ButtonCreate } from "../../buttons/ButtonActions";
+import { ButtonPrimary } from "../../buttons/Button";
 
 export default function User(props) {
     const auth = JSON.parse(props.auth);
@@ -31,7 +31,7 @@ export default function User(props) {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [userId, setUserId] = useState("");
     const [userEmail, setUserEmail] = useState("");
-    const [indexDataDelete, setIndexDataDelete] = useState("");
+    const [userIndex, setUserIndex] = useState("");
     const [search, setSearch] = useState("");
     const [keyword, setKeyword] = useState("");
 
@@ -72,7 +72,7 @@ export default function User(props) {
         getPageSize
     ) => {
         setUserId(getId);
-        setIndexDataDelete(getIndex);
+        setUserIndex(getIndex);
         setUserEmail(getEmail);
         setGetPageIndex(getPageIndex);
         setGetPageSize(getPageSize);
@@ -144,7 +144,7 @@ export default function User(props) {
                 Cell: (row) => {
                     // Cell: ({ row: { original, index, state } }) => {
                     const { original, index } = row.row;
-                    let buttonShow = <buttonShow disabled />;
+                    let buttonShow = <ButtonShow disabled />;
                     let buttonEdit = <ButtonEdit disabled />;
                     let buttonDelete = <ButtonDelete disabled />;
                     let roleAuth = [];
@@ -220,7 +220,11 @@ export default function User(props) {
                             }
                         });
                     });
-                    buttonShow = <ButtonShow path={`/users/${original.id}`} />;
+                    buttonShow = (
+                        <a href={`/users/${original.id}`}>
+                            <ButtonShow />
+                        </a>
+                    );
                     return (
                         <div className="inline-flex gap-1">
                             {buttonShow}
@@ -274,7 +278,7 @@ export default function User(props) {
                     setIsOpen(false);
                     toast.success(res.data.message);
                     // const removeData = data.filter(
-                    //     (item, index) => index !== indexDataDelete
+                    //     (item, index) => index !== userIndex
                     // );
                     // setDataUsers(removeData);
                     fetchAPIData({
@@ -396,7 +400,7 @@ export default function User(props) {
                 <input
                     onChange={(e) => setKeyword(e.target.value)}
                     onKeyDown={handleSearch}
-                    placeholder="Nama/Email"
+                    placeholder="Nama/Email/Peran"
                     type="search"
                     className="w-full transition duration-300 bg-white border-gray-300 rounded-md shadow-sm form-input md:w-auto focus:ring disabled:cursor-not-allowed disabled:opacity-50 focus:border-primary-300 focus:ring-primary-200/50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-gray-600 dark:focus:ring-gray-800"
                 />

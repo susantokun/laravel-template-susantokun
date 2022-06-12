@@ -22,3 +22,7 @@ html {
 .content {
     @apply flex flex-col justify-between flex-1 w-full min-w-0 overflow-hidden rounded-lg bg-slate-100;
 }
+
+a {
+    @apply focus:outline-none;
+}

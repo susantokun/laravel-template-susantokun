@@ -1,6 +1,6 @@
 {
     "name": "laravel-template-susantokun",
-    "version": "0.5",
+    "version": "0.8",
     "private": true,
     "scripts": {
         "dev": "npm run development",

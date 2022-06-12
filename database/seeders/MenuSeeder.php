@@ -58,7 +58,7 @@ class MenuSeeder extends Seeder
 
             // admin
             [
-                'id' => 13,
+                'id' => 14,
                 'role_id' => 2,
                 'parent_id' => 0,
                 'title' => 'Dashboard',
@@ -71,7 +71,7 @@ class MenuSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 14,
+                'id' => 15,
                 'role_id' => 2,
                 'parent_id' => 0,
                 'title' => 'Settings',
@@ -84,7 +84,7 @@ class MenuSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 15,
+                'id' => 16,
                 'role_id' => 2,
                 'parent_id' => 0,
                 'title' => 'Accounts',

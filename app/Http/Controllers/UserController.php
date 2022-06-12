@@ -62,6 +62,7 @@ class UserController extends Controller
                 $data->when($search, function ($query) use ($search) {
                     $query->where('username', 'like', "%{$search}%")
                     ->orWhere('full_name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
                     ->orWhereHas('roles', function ($query2) use ($search) {
                         $query2->whereIn('name', ["{$search}"]);
                     });

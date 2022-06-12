@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
@@ -32,6 +33,10 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('term-and-condition', [ConfigurationController::class, 'termAndCondition'])->name('termAndCondition');
             Route::put('term-and-condition/{code}', [ConfigurationController::class, 'termAndConditionUpdate'])->name('termAndConditionUpdate');
         });
+
+        Route::group(['middleware' => 'role:superadmin'], function () {
+            Route::resource('menus', MenuController::class);
+        });
     });
 
     Route::name('accounts.')->group(function() {
@@ -42,6 +47,27 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('roles', RoleController::class);
             Route::resource('permissions', PermissionController::class);
         });
+    });
+
+    Route::get('routes', function () {
+        $routeCollection = Route::getRoutes();
+
+        echo "<table style='width:100%'>";
+        echo "<tr>";
+        echo "<td width='10%'><h4>HTTP Method</h4></td>";
+        echo "<td width='10%'><h4>Route</h4></td>";
+        echo "<td width='10%'><h4>Name</h4></td>";
+        echo "<td width='70%'><h4>Corresponding Action</h4></td>";
+        echo "</tr>";
+        foreach ($routeCollection as $value) {
+            echo "<tr>";
+            echo "<td>" . $value->methods()[0] . "</td>";
+            echo "<td>" . $value->uri() . "</td>";
+            echo "<td>" . $value->getName() . "</td>";
+            echo "<td>" . $value->getActionName() . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
     });
 
 });

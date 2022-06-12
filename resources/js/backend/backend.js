@@ -20,8 +20,9 @@ import "./topbar";
 import "./mobile-menu";
 
 // components
-import "./components/User";
-import "./components/UserBasic";
-import "./components/Role";
-import "./components/Permission";
 import "./components/Notification";
+import "./components/pages/users";
+import "./components/pages/users/UserBasic";
+import "./components/pages/roles";
+import "./components/pages/permissions";
+import "./components/pages/menus";

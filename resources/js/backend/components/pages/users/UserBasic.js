@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import { useTable } from "react-table";
-import TablePagination from "./reactTable/TablePagination";
+import TablePagination from "../../reactTable/TablePagination";
 
 export default function UserBasic(props) {
     const [dataUsers, setDataUsers] = useState([]);

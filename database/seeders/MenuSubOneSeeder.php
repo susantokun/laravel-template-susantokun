@@ -32,6 +32,19 @@ class MenuSubOneSeeder extends Seeder
             [
                 'id' => 5,
                 'role_id' => 1,
+                'parent_id' => 2,
+                'title' => 'Menus',
+                'route_name' => 'settings.menus.index',
+                'route_group' => 'settings.menus*',
+                'icon' => 'corner-down-right',
+                'order' => 1,
+                'status' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ],
+            [
+                'id' => 6,
+                'role_id' => 1,
                 'parent_id' => 3,
                 'title' => 'Users',
                 'route_name' => 'accounts.users.index',
@@ -43,7 +56,7 @@ class MenuSubOneSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 6,
+                'id' => 7,
                 'role_id' => 1,
                 'parent_id' => 3,
                 'title' => 'Roles',
@@ -56,7 +69,7 @@ class MenuSubOneSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 7,
+                'id' => 8,
                 'role_id' => 1,
                 'parent_id' => 3,
                 'title' => 'Permissions',
@@ -68,11 +81,12 @@ class MenuSubOneSeeder extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ],
+
             // admin
             [
-                'id' => 16,
+                'id' => 17,
                 'role_id' => 2,
-                'parent_id' => 14,
+                'parent_id' => 15,
                 'title' => 'Configurations',
                 'route_name' => NULL,
                 'route_group' => 'settings.configurations*',
@@ -83,9 +97,9 @@ class MenuSubOneSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 17,
+                'id' => 18,
                 'role_id' => 2,
-                'parent_id' => 15,
+                'parent_id' => 16,
                 'title' => 'Users',
                 'route_name' => 'accounts.users.index',
                 'route_group' => 'accounts.users*',
@@ -96,9 +110,9 @@ class MenuSubOneSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s')
             ],
             [
-                'id' => 18,
+                'id' => 19,
                 'role_id' => 2,
-                'parent_id' => 15,
+                'parent_id' => 16,
                 'title' => 'Roles',
                 'route_name' => 'accounts.roles.index',
                 'route_group' => 'accounts.roles*',

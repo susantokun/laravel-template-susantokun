@@ -18,27 +18,27 @@ import {
     PlusIcon,
 } from "@heroicons/react/outline";
 
-import TablePagination from "./reactTable/TablePagination";
+import TablePagination from "../../reactTable/TablePagination";
 import {
     ButtonShow,
     ButtonEdit,
     ButtonDelete,
     ButtonCreate,
-} from "./buttons/ButtonActions";
-import { ButtonPrimary } from "./buttons/Button";
+} from "../../buttons/ButtonActions";
+import { ButtonPrimary } from "../../buttons/Button";
 
-export default function Permission(props) {
+export default function Menu(props) {
     const roles = JSON.parse(props.roles);
-    const can_permissions_delete = props.can_permissions_delete;
-    const can_permissions_edit = props.can_permissions_edit;
-    const [dataPermissions, setDataPermissions] = useState([]);
+    const can_menus_delete = props.can_menus_delete;
+    const can_menus_edit = props.can_menus_edit;
+    const [dataMenus, setDataMenus] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [menuId, setMenuId] = useState("");
+    const [menuTitle, setMenuTitle] = useState("");
+    const [menuIndex, setMenuIndex] = useState("");
     const [keyword, setKeyword] = useState("");
-    const [permissionId, setPermissionId] = useState("");
-    const [permissionName, setPermissionName] = useState("");
-    const [indexDataDelete, setIndexDataDelete] = useState("");
 
     const handleSearch = (e) => {
         setKeyword(event.target.value);
@@ -48,30 +48,28 @@ export default function Permission(props) {
         setIsOpen(false);
     };
 
-    const openModalDelete = (getPermissionId, getPermissionName, getIndex) => {
-        setPermissionId(getPermissionId);
-        setPermissionName(getPermissionName);
-        setIndexDataDelete(getIndex);
+    const openModalDelete = (getMenuId, getMenuTitle, getMenuIndex) => {
+        setMenuId(getMenuId);
+        setMenuTitle(getMenuTitle);
+        setMenuIndex(getMenuIndex);
         setIsOpen(true);
     };
 
     const handleDelete = async () => {
         setDeleteLoading(true);
         await axios
-            .delete(`/permissions/${permissionId}`)
+            .delete(`/menus/${menuId}`)
             .then((res) => {
                 if (res.data.status) {
                     setIsOpen(false);
                     toast.success(res.data.message);
-                    const removeData = dataPermissions.filter(
-                        (item, index) => index !== indexDataDelete
+                    const removeData = dataMenus.filter(
+                        (item, index) => index !== menuIndex
                     );
-                    setDataPermissions(removeData);
-                    // fetchAPIData({
-                    //     take: take,
-                    //     skip: skip,
-                    //     keyword: keyword,
-                    // });
+                    setDataMenus(removeData);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
                 } else {
                     setIsOpen(true);
                     toast.warn(res.data.message);
@@ -86,13 +84,13 @@ export default function Permission(props) {
         }, 1000);
     };
 
-    const getPermissions = async () => {
+    const getMenus = async () => {
         setIsLoading(true);
         await axios
-            .get(`/permissions`)
+            .get(`/menus`)
             .then((res) => {
                 const resData = res.data;
-                setDataPermissions(resData.data);
+                setDataMenus(resData.data);
             })
             .catch((err) => {
                 toast.error(err);
@@ -117,53 +115,56 @@ export default function Permission(props) {
                 },
             },
             {
-                Header: "Nama",
-                accessor: "name",
+                Header: "Name",
+                accessor: "title",
             },
             {
-                Header: "Guard",
-                accessor: "guard_name",
+                Header: "Parent",
+                Cell: (row) => {
+                    const { original, index } = row.row;
+                    let parentName = "";
+                    if (original.parent_id === 0) {
+                        parentName = "Menu Induk";
+                    } else {
+                        parentName = original.parent.title;
+                    }
+                    return parentName;
+                },
+            },
+            {
+                Header: "Role",
+                accessor: "role.name",
             },
             {
                 Header: "Actions",
                 className: "text-center",
                 Cell: (row) => {
                     const { original, index } = row.row;
-                    let buttonShow = <buttonShow disabled />;
+                    let buttonShow = <ButtonShow disabled />;
                     let buttonEdit = <ButtonEdit disabled />;
                     let buttonDelete = <ButtonDelete disabled />;
-                    roles.forEach((item) => {
-                        if (
-                            can_permissions_edit &&
-                            item.includes("superadmin")
-                        ) {
-                            buttonEdit = (
-                                <a href={`/permissions/${original.id}/edit`}>
-                                    <ButtonEdit />
-                                </a>
-                            );
-                        }
 
-                        if (
-                            can_permissions_delete &&
-                            item.includes("superadmin")
-                        ) {
-                            buttonDelete = (
-                                <ButtonDelete
-                                    type="button"
-                                    onClick={() =>
-                                        openModalDelete(
-                                            original.id,
-                                            original.name,
-                                            index
-                                        )
-                                    }
-                                />
-                            );
-                        }
-                    });
                     buttonShow = (
-                        <ButtonShow path={`/permissions/${original.id}`} />
+                        <a href={`/menus/${original.id}`}>
+                            <ButtonShow />
+                        </a>
+                    );
+                    buttonEdit = (
+                        <a href={`/menus/${original.id}/edit`}>
+                            <ButtonEdit />
+                        </a>
+                    );
+                    buttonDelete = (
+                        <ButtonDelete
+                            type="button"
+                            onClick={() =>
+                                openModalDelete(
+                                    original.id,
+                                    `${original.title} - ${original.role.name}`,
+                                    index
+                                )
+                            }
+                        />
                     );
 
                     return (
@@ -180,15 +181,15 @@ export default function Permission(props) {
     );
 
     const filterData = {
-        permissions: dataPermissions.filter((item) =>
-            item.name.toLowerCase().includes(keyword.toLowerCase())
+        menus: dataMenus.filter((item) =>
+            item.title.toLowerCase().includes(keyword.toLowerCase())
         ),
     };
 
     useEffect(() => {
-        getPermissions();
+        getMenus();
         return () => {
-            setDataPermissions([]);
+            setDataMenus([]);
         };
     }, []);
 
@@ -246,7 +247,7 @@ export default function Permission(props) {
                                     className="text-lg font-medium leading-6 text-gray-900"
                                 >
                                     <div className="mb-1 text-base font-normal truncate">
-                                        {permissionName}
+                                        {menuTitle}
                                     </div>
                                     <div className="text-xl">
                                         Yakin ingin dihapus?
@@ -285,15 +286,12 @@ export default function Permission(props) {
             </Transition>
             <div className="inline-flex flex-col items-center justify-center w-full gap-3 md:flex-row md:justify-between">
                 <div className="inline-flex items-center gap-2">
-                    <ButtonPrimary
-                        path="/permissions/create"
-                        title="Buat Izin"
-                    />
+                    <ButtonPrimary path="/menus/create" title="Buat Menu" />
                 </div>
 
                 <input
                     onChange={handleSearch}
-                    placeholder="Nama/Izin"
+                    placeholder="Nama"
                     type="search"
                     className="w-full transition duration-300 bg-white border-gray-300 rounded-md shadow-sm form-input md:w-auto focus:ring disabled:cursor-not-allowed disabled:opacity-50 focus:border-primary-300 focus:ring-primary-200/50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-gray-600 dark:focus:ring-gray-800"
                 />
@@ -301,7 +299,7 @@ export default function Permission(props) {
             <div className="mt-4">
                 <TablePagination
                     columns={columns}
-                    data={filterData.permissions}
+                    data={filterData.menus}
                     loading={isLoading}
                 />
             </div>
@@ -309,11 +307,8 @@ export default function Permission(props) {
     );
 }
 
-if (document.getElementById("permission")) {
-    const propsContainer = document.getElementById("permission");
+if (document.getElementById("menu")) {
+    const propsContainer = document.getElementById("menu");
     const props = Object.assign({}, propsContainer.dataset);
-    ReactDOM.render(
-        <Permission {...props} />,
-        document.getElementById("permission")
-    );
+    ReactDOM.render(<Menu {...props} />, document.getElementById("menu"));
 }
