@@ -42,6 +42,11 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'users edit']);
         Permission::create(['name' => 'users delete']);
 
+        Permission::create(['name' => 'menus view']);
+        Permission::create(['name' => 'menus create']);
+        Permission::create(['name' => 'menus edit']);
+        Permission::create(['name' => 'menus delete']);
+
         $superadminRole = Role::create(['name' => 'superadmin']);
         $superadminRole->givePermissionTo(Permission::all());
         $superAdmin = User::factory()->create([
