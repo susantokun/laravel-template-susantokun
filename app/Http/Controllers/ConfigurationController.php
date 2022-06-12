@@ -28,21 +28,15 @@ class ConfigurationController extends Controller
     public function generalUpdate(Request $request, $id)
     {
         $this->validate($request, [
-            // 'code' => 'required|unique:configurations,code,' . $id,
             'title' => 'required',
             'title_short' => 'required',
             'desc' => 'required',
             'slogan' => 'required',
             'author' => 'required',
-            // 'facivon_name' => 'required',
-            // 'favicon_file' => 'required',
-            // 'logo_name' => 'required',
-            // 'logo_file' => 'required',
             'keywords' => 'required',
             'metatext' => 'required',
             'place_of_birth' => 'required',
             'date_of_birth' => 'required',
-            // 'api_key' => 'required',
             'status' => 'required',
         ]);
 
@@ -57,7 +51,7 @@ class ConfigurationController extends Controller
 
             $favicon_folder = 'images/favicons';
             $favicon_file = $request->file('favicon_file');
-            $favicon_file_name = $configuration->code.".".$favicon_file->getClientOriginalExtension();
+            $favicon_file_name = str()->slug($configuration->code)."-favicon.".$favicon_file->getClientOriginalExtension();
             $favicon_file_path = $favicon_folder.'/'.$favicon_file_name;
             $favicon_file_favicon = Image::make($favicon_file);
             $favicon_file_favicon->resize(32, 32, function ($constraint) {
@@ -82,7 +76,7 @@ class ConfigurationController extends Controller
 
             $logo_folder = 'images/logos';
             $logo_file = $request->file('logo_file');
-            $logo_file_name = $configuration->code.".".$logo_file->getClientOriginalExtension();
+            $logo_file_name = str()->slug($configuration->code)."-logo.".$logo_file->getClientOriginalExtension();
             $logo_file_path = $logo_folder.'/'.$logo_file_name;
             $logo_file_logo = Image::make($logo_file);
             $logo_file_logo->resize(32, 32, function ($constraint) {
