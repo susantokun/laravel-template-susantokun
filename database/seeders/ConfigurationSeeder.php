@@ -43,6 +43,8 @@ class ConfigurationSeeder extends Seeder
                     'privacy_policy'     => '<p>I am Privacy Policy</p>',
                     'term_and_condition' => '<p>I am Term And Condition</p>',
                     'status'             => 1,
+                    'created_by'         => 1,
+                    'updated_by'         => 1,
                     'created_at'         => date('Y-m-d H:i:s'),
                     'updated_at'         => date('Y-m-d H:i:s')
                 ]

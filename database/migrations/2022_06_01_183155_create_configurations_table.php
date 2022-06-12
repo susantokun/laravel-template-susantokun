@@ -43,6 +43,8 @@ return new class extends Migration
             $table->text('term_and_condition');
 
             $table->boolean('status')->default(0);
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

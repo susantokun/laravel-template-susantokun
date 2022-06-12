@@ -23,14 +23,14 @@
 
         @if (session()->has('success'))
         <div
-            id="notificationDelete"
+            id="notification"
             data-message="{{ session()->get('success') }}"
             data-status="success"
         ></div>
         @endif
         @if (session()->has('error'))
         <div
-            id="notificationDelete"
+            id="notification"
             data-message="{{ session()->get('error') }}"
             data-status="error"
         ></div>

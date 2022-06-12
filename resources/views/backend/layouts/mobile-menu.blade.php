@@ -8,7 +8,7 @@
             <img
                 alt="Laravel Template Susantokun"
                 class="w-6"
-                src="{{ env('APP_URL_ASSET').'/'.$configuration->logo_file }}"
+                src="{{ '/storage/'.$configuration->logo_file }}"
             >
             <span class="block ml-3 text-lg text-white menu__title">
                 {{ $configuration->title_short }}

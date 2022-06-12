@@ -1,6 +1,6 @@
 <div class="col-span-3">
     {{ Form::label(__($label), null, ['class' => 'form-label']) }}
-    {{ Form::text($name, $value, array_merge(['class' => 'form-input block w-full mt-1'], $attributes)) }}
+    {{ Form::text($name, $value, array_merge(['class' => 'form-input block w-full mt-1 disabled:bg-secondary'], $attributes)) }}
     @error($name)
     <p class="mt-1 text-xs font-medium text-danger">{{ $message }}</p>
     @enderror

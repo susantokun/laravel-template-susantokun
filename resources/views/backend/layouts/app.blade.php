@@ -27,7 +27,7 @@
 
     <link
         rel="shortcut icon"
-        href="{{ env('APP_URL_ASSET').'/'.$configuration->favicon }}"
+        href="{{ '/storage/'.$configuration->favicon_file }}"
     />
 
     <title>@yield('title'){{ env('APP_NAME') }}</title>
@@ -48,6 +48,7 @@
 
 <body>
     <div class="flex flex-col min-h-screen p-3 md:flex-row md:p-5">
+
         @include('backend.layouts.sidebar')
         @include('backend.layouts.mobile-menu')
         <div class="flex flex-1 w-full pl-0 overflow-x-hidden md:pl-5">

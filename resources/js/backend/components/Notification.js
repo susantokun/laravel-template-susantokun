@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 
-export default function NotificationDelete(props) {
+export default function Notification(props) {
     const { message, status } = props;
     useEffect(() => {
         if (status === "success") {
@@ -28,8 +28,8 @@ export default function NotificationDelete(props) {
     );
 }
 
-if (document.getElementById("notificationDelete")) {
-    const propsContainer = document.getElementById("notificationDelete");
+if (document.getElementById("notification")) {
+    const propsContainer = document.getElementById("notification");
     const props = Object.assign({}, propsContainer.dataset);
-    ReactDOM.render(<NotificationDelete {...props} />, document.getElementById("notificationDelete"));
+    ReactDOM.render(<Notification {...props} />, document.getElementById("notification"));
 }
