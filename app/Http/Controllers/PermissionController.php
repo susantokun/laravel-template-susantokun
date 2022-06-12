@@ -43,7 +43,7 @@ class PermissionController extends Controller
             'delete',
         ];
 
-        return view('backend..pages.permissions.create', compact('permissionsOperation'));
+        return view('backend.pages.permissions.create', compact('permissionsOperation'));
     }
 
     public function store(Request $request)
