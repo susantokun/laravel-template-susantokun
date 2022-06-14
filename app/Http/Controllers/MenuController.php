@@ -144,7 +144,33 @@ class MenuController extends Controller
         $menuInduk = [ 0 => 'Menu Induk' ];
         $parents = array_merge($menuInduk, $parent);
 
-        return view('backend.pages.menus.edit', compact('menu', 'roles', 'parents'));
+        $routeCollection = Route::getRoutes();
+
+        $routes = [];
+        foreach ($routeCollection as $key => $value) {
+            if ($value->methods()[0] == 'GET') {
+                $routes[$value->getName()] = $value->getName();
+            }
+        }
+        $routes = Arr::except($routes, array(
+            'ignition.healthCheck',
+            'ignition.executeSolution',
+            'ignition.updateConfig',
+            'register',
+            'login',
+            'password.request',
+            'password.email',
+            'password.reset',
+            'password.update',
+            'verification.notice',
+            'verification.verify',
+            'verification.send',
+            'password.confirm',
+            'logout',
+            null
+        ));
+
+        return view('backend.pages.menus.edit', compact('menu', 'roles', 'parents', 'routes'));
     }
 
     public function update(Request $request, $id)
