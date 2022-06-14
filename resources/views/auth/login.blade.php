@@ -1,4 +1,7 @@
 <x-frontend-layout>
+
+    @section('title',__('label.login').' | ')
+
     <x-auth-card>
         <x-slot name="logo">
             <div class="flex flex-col items-center justify-center text-white">

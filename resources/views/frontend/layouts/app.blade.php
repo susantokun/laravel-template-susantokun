@@ -33,7 +33,7 @@
         href="{{ env('APP_URL_ASSET').'/images/icons/favicon.png' }}"
     />
 
-    @yield('head')
+    <title>@yield('title'){{ env('APP_NAME') }}</title>
 
     <!-- Styles -->
     <link
