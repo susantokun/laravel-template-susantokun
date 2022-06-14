@@ -35,7 +35,7 @@ return [
     'updated_at' => 'Diperbaharui Pada',
     'created_by' => 'Dibuat Oleh',
     'updated_by' => 'Diperbaharui Oleh',
-    'optional' => 'Tidak Wajib',
+    'optional'   => 'Tidak Wajib',
 
     'login'                      => 'Masuk',
     'register'                   => 'Daftar',
@@ -62,5 +62,7 @@ return [
     'current_image' => 'Gambar saat ini',
     'blank_image'   => 'kosongkan jika tidak ingin mengganti gambar.',
 
-    'warning_error' => "<strong>Aduh!</strong> Ada beberapa masalah dengan input Anda.",
+    'warning_error'    => "<strong>Aduh!</strong> Ada beberapa masalah dengan input Anda.",
+    'get_data_success' => 'berhasil diambil!',
+    'get_data_failed'  => 'berhasil diambil!'
 ];

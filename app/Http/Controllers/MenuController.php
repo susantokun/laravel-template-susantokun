@@ -141,6 +141,7 @@ class MenuController extends Controller
 
         // nanti pake js ketika perannya admin maka kondisi role_id = selected
         $parent = Menu::pluck('title', 'id')->all();
+        $menus = Menu::all();
         $menuInduk = [ 0 => 'Menu Induk' ];
         $parents = array_merge($menuInduk, $parent);
 
@@ -170,7 +171,7 @@ class MenuController extends Controller
             null
         ));
 
-        return view('backend.pages.menus.edit', compact('menu', 'roles', 'parents', 'routes'));
+        return view('backend.pages.menus.edit', compact('menu', 'menus', 'roles', 'parents', 'routes'));
     }
 
     public function update(Request $request, $id)

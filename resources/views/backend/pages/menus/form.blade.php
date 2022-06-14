@@ -1,7 +1,13 @@
 <div class="p-6 mt-4 overflow-hidden bg-white rounded-lg shadow-md">
     <div class="grid gap-4 md:grid-cols-6">
-        {{ Form::formSelect('menu.role_id', 'role_id', $roles) }}
-        {{ Form::formSelect('menu.parent_id', 'parent_id', $parents) }}
+        {{-- {{ Form::formSelect('menu.role_id', 'role_id', $roles) }}
+        {{ Form::formSelect('menu.parent_id', 'parent_id', $parents) }} --}}
+
+        <div
+            class="col-span-6"
+            id="menuForm"
+        ></div>
+
         {{ Form::formText('menu.title', 'title') }}
         {{ Form::formSelect('menu.route_name', 'route_name', $routes) }}
         {{ Form::formText('menu.route_group', 'route_group', null, ['placeholder' => 'kosongkan jika menu induk']) }}

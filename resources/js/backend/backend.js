@@ -26,3 +26,4 @@ import "./components/pages/users/UserBasic";
 import "./components/pages/roles";
 import "./components/pages/permissions";
 import "./components/pages/menus";
+import "./components/pages/menus/Form";
