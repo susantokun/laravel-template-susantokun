@@ -64,6 +64,8 @@ class UserSeeder extends Seeder
             'last_login_ip' => NULL,
             'created_by' => NULL,
             'updated_by' => NULL,
+            'created_at' => "2022-06-14 20:30:00",
+            'updated_at' => "2022-06-14 20:30:00",
         ]);
         $superAdmin->assignRole($superadminRole);
 
@@ -82,6 +84,8 @@ class UserSeeder extends Seeder
             'last_login_ip' => NULL,
             'created_by' => 1,
             'updated_by' => 1,
+            'created_at' => "2022-06-14 20:31:00",
+            'updated_at' => "2022-06-14 20:31:00",
         ]);
         $superAdmin2->assignRole($superadminRole);
 
@@ -118,6 +122,8 @@ class UserSeeder extends Seeder
             'last_login_ip' => NULL,
             'created_by' => 2,
             'updated_by' => 2,
+            'created_at' => "2022-06-14 20:32:00",
+            'updated_at' => "2022-06-14 20:32:00",
         ]);
         $admin1->assignRole($adminRole);
 
@@ -139,6 +145,8 @@ class UserSeeder extends Seeder
             'last_login_ip' => NULL,
             'created_by' => 3,
             'updated_by' => 3,
+            'created_at' => "2022-06-14 20:33:00",
+            'updated_at' => "2022-06-14 20:33:00",
         ]);
         $member1->assignRole($memberRole);
     }

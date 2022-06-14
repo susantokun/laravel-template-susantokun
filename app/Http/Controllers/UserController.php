@@ -41,7 +41,7 @@ class UserController extends Controller
             $skip = $request->skip;
             $search = $request->search;
             $orderBy = 'created_at';
-            $orderAsc = true;
+            $orderAsc = false;
 
             // $users = User::search($request->search);
             // $paginator = $users->paginate($take, '', $skip);
