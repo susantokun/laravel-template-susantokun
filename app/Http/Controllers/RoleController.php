@@ -53,9 +53,16 @@ class RoleController extends Controller
             $permissions = Permission::whereNotIn('name', [
                 'roles delete',
                 'roles view superadmin',
+                'permissions view',
+                'permissions create',
+                'permissions edit',
                 'permissions delete',
                 'configurations delete',
                 'users view superadmin',
+                'menus view',
+                'menus create',
+                'menus edit',
+                'menus delete',
             ])->get();
         } else {
             $permissions = Permission::get();
@@ -107,9 +114,16 @@ class RoleController extends Controller
             $permissions = Permission::whereNotIn('name', [
                 'roles delete',
                 'roles view superadmin',
+                'permissions view',
+                'permissions create',
+                'permissions edit',
                 'permissions delete',
                 'configurations delete',
                 'users view superadmin',
+                'menus view',
+                'menus create',
+                'menus edit',
+                'menus delete',
             ])->get();
         } else {
             $permissions = Permission::get();
