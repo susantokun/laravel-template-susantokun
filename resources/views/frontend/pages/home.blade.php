@@ -12,7 +12,7 @@
         </div>
         <div class="">
             @if (Route::has('login'))
-            <div class="top-0 right-0 items-center justify-center hidden gap-2 px-6 py-4 sm:inline-flex">
+            <div class="top-0 right-0 inline-flex items-center justify-center gap-2 px-6 py-4">
                 @auth
                 <a
                     href="{{ url('/dashboard') }}"
