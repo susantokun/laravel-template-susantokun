@@ -30,8 +30,8 @@ class UserFactory extends Factory
             'status' => 'active',
             'last_login_at' => NULL,
             'last_login_ip' => NULL,
-            'created_by' => 'susantokun',
-            'updated_by' => 'susantokun',
+            'created_by' => 1,
+            'updated_by' => 1,
 
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
