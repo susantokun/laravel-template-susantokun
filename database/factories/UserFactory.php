@@ -17,14 +17,18 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $first_name = $this->faker->firstName();
+        $last_name = $this->faker->lastName();
+        $full_name = $first_name.' '.$last_name;
+
         return [
-            'username' => $this->faker->userName(),
-            'first_name' => $this->faker->name(),
-            'last_name' => $this->faker->name(),
-            'full_name' => $this->faker->name(),
+            'username' => $this->faker->unique()->userName(),
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'full_name' => $full_name,
             'email' => $this->faker->unique()->safeEmail(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'phone' => $this->faker->phoneNumber(),
+            'phone' => NULL,
             'image_name' => NULL,
             'image_file' => NULL,
             'status' => 'active',
