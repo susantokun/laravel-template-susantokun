@@ -4,7 +4,7 @@
 
     <x-auth-card>
         <x-slot name="logo">
-            <div class="flex flex-col items-center justify-center text-white">
+            <div class="flex flex-col items-center justify-center text-slate-800">
                 <a href="/">
                     <x-application-logo class="w-20 h-20 fill-current" />
                 </a>
