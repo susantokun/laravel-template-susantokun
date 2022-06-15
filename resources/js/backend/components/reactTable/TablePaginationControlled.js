@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import { useTable, usePagination } from "react-table";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import NumberFormat from 'react-number-format';
+import NumberFormat from "react-number-format";
 
 function TablePaginationControlled({
     columns,
@@ -12,7 +12,7 @@ function TablePaginationControlled({
     pageCount: controlledPageCount,
     countFilter,
     countTotal,
-    keyword
+    keyword,
 }) {
     const {
         getTableProps,
@@ -36,12 +36,41 @@ function TablePaginationControlled({
         {
             columns,
             data,
-            initialState: { pageIndex: 0 },
+            initialState: {
+                pageIndex: 0,
+                // sortBy: [
+                //     {
+                //         id: 'email',
+                //         desc: true
+                //     }
+                // ]
+            },
             manualPagination: true,
             pageCount: controlledPageCount,
         },
-        usePagination
+        usePagination,
     );
+
+    const tableStateUpdateRef = useRef(false);
+
+    useEffect(() => {
+        tableStateUpdateRef.current = true;
+        fetchData({ pageIndex, pageSize, keyword });
+    }, [fetchData, pageIndex, pageSize]);
+
+    useEffect(() => {
+        gotoPage(0);
+    }, [gotoPage]);
+
+    useEffect(() => {
+        if (!tableStateUpdateRef.current) {
+            gotoPage(0);
+        }
+    }, [data, gotoPage]);
+
+    useEffect(() => {
+        tableStateUpdateRef.current = false;
+    }, [data]);
 
     const goNextPage = (e) => {
         e.preventDefault();
@@ -53,9 +82,9 @@ function TablePaginationControlled({
         gotoPage(pageIndex - 1);
     };
 
-    useEffect(() => {
-        fetchData({ pageIndex, pageSize, keyword });
-    }, [fetchData, pageIndex, pageSize]);
+    const countFilterStart = pageIndex * pageSize + 1;
+    const countFilterEnd =
+        (pageIndex + 1) * pageSize - (pageSize - countFilter);
 
     return (
         <div className="flex flex-col w-full">
@@ -70,6 +99,7 @@ function TablePaginationControlled({
                             canPreviousPage,
                             countFilter,
                             countTotal,
+                            controlledPageCount
                         },
                         null,
                         2
@@ -85,9 +115,12 @@ function TablePaginationControlled({
                                     <th
                                         {...column.getHeaderProps()}
                                         className={`${
-                                                    column.className ?? ""
-                                                } px-4 py-1 text-base font-semibold text-gray-800 border border-secondary bg-secondary dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200`}
+                                            column.className ?? ""
+                                        } px-4 py-1 text-base font-semibold text-gray-800 border border-secondary bg-secondary dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200`}
                                     >
+                                        {/* <th {...column.getHeaderProps(column.getSortByToggleProps())} className={`${
+                                            column.className ?? ""
+                                        } px-4 py-1 text-base font-semibold text-gray-800 border border-secondary bg-secondary dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200`}> */}
                                         {column.render("Header")}
                                         <span>
                                             {column.isSorted
@@ -163,10 +196,26 @@ function TablePaginationControlled({
                   decimalSeparator="," /></strong>{" "}
                                 halaman
                             </span> */}
+                            {/* <span>
+                                Menampilkan <strong>{countFilter}</strong> dari{" "}
+                                <strong><NumberFormat value={countTotal} displayType="text" thousandSeparator="." decimalSeparator="," /></strong> data
+                            </span> */}
+
                             <span>
-                                Menampilkan <strong>{data.length}</strong> dari{" "}
-                                <strong><NumberFormat value={countFilter} displayType="text" thousandSeparator="."
-                  decimalSeparator="," /></strong> data
+                                Menampilkan{" "}
+                                <strong>
+                                    {countFilterStart}-{countFilterEnd}
+                                </strong>{" "}
+                                dari{" "}
+                                <strong>
+                                    <NumberFormat
+                                        value={countTotal}
+                                        displayType="text"
+                                        thousandSeparator="."
+                                        decimalSeparator=","
+                                    />
+                                </strong>{" "}
+                                data
                             </span>
                         </div>
                     </div>
@@ -194,8 +243,20 @@ function TablePaginationControlled({
 
             <div className="block text-sm md:hidden">
                 <span>
-                    Menampilkan <strong>{data.length}</strong> dari{" "}
-                    <strong><NumberFormat value={countFilter} displayType="text" thousandSeparator="." decimalSeparator="," /></strong> data
+                    Menampilkan{" "}
+                    <strong>
+                        {countFilterStart}-{countFilterEnd}
+                    </strong>{" "}
+                    dari{" "}
+                    <strong>
+                        <NumberFormat
+                            value={countTotal}
+                            displayType="text"
+                            thousandSeparator="."
+                            decimalSeparator=","
+                        />
+                    </strong>{" "}
+                    data
                 </span>
             </div>
         </div>

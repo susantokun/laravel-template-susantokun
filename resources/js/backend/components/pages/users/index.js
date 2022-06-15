@@ -246,7 +246,7 @@ export default function User(props) {
             );
             const data = await response.data;
             setDataUsers(data.data);
-            setPageCount(Math.ceil(data.count_filter / take));
+            setPageCount(Math.ceil(data.count_total / take));
             setCountFilter(data.count_filter);
             setCountTotal(data.count_total);
             setIsLoading(false);

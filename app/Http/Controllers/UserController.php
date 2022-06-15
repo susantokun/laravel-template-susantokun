@@ -54,11 +54,12 @@ class UserController extends Controller
             $data = User::orderBy($orderBy, $orderAsc ? 'ASC' : 'DESC')
             ->with(['roles' => function ($query) {
                 $query->select('id', 'name');
-            }])
-            ->take($take)
-            ->skip($skip);
+            }]);
+
+            $countAll = $data->get()->count();
 
             if ($superadmin || $auth_can_users_view_superadmin) {
+                $countAll = $data->get()->count();
                 $data->when($search, function ($query) use ($search) {
                     $query->where('username', 'like', "%{$search}%")
                     ->orWhere('full_name', 'like', "%{$search}%")
@@ -67,6 +68,10 @@ class UserController extends Controller
                         $query2->whereIn('name', ["{$search}"]);
                     });
                 });
+                if ($data->get()->count() > 0) {
+                    $countAll = $data->get()->count();
+                }
+                $data->take($take)->skip($skip);
             } else {
                 $data->whereHas('roles', function($q) {
                     $q->whereNotIn('name', ['superadmin']);
@@ -78,9 +83,12 @@ class UserController extends Controller
                         $query2->whereNotIn('name', ['superadmin'])->whereIn('name', ["{$search}"]);
                     });
                 });
+                if ($data->get()->count() > 0) {
+                    $countAll = $data->get()->count();
+                }
+                $data->take($take)->skip($skip);
             }
 
-            $countAll = User::get()->count();
             $countFilter = $data->get()->count();
 
             return response()->json([
