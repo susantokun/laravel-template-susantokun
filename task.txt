@@ -18,3 +18,8 @@ done crud users, roles, permissions
 1. Gunakan pageIndex dan pageSize di server side users
 2. Tambah fitur sorting
 3. Coba lihat react-tale v8
+
+2022-07-15 :
+1. ketika hapus data user error
+  -> filesystem (harus ada image_file)
+  -> modal tidak mau otomatis hide
