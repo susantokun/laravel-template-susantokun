@@ -1,19 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import { useTable, usePagination } from "react-table";
-import { useEffect, useRef } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import NumberFormat from "react-number-format";
+import NumberFormat from 'react-number-format';
 
-function TablePaginationControlled({
-    columns,
-    data,
-    fetchData,
-    loading,
-    pageCount: controlledPageCount,
-    countFilter,
-    countTotal,
-    keyword,
-}) {
+function TableBasic({ columns, data, loading = true }) {
     const {
         getTableProps,
         getTableBodyProps,
@@ -23,54 +13,22 @@ function TablePaginationControlled({
 
         canPreviousPage,
         canNextPage,
-
-        pageOptions,
-        pageCount,
+        // pageOptions,
+        // pageCount,
         gotoPage,
-
         nextPage,
         previousPage,
         setPageSize,
+        // eslint-disable-next-line no-unused-vars
         state: { pageIndex, pageSize },
     } = useTable(
         {
             columns,
             data,
-            initialState: {
-                pageIndex: 0,
-                // sortBy: [
-                //     {
-                //         id: 'email',
-                //         desc: true
-                //     }
-                // ]
-            },
-            manualPagination: true,
-            pageCount: controlledPageCount,
+            initialState: { pageIndex: 0, pageSize: 10 },
         },
-        usePagination,
+        usePagination
     );
-
-    const tableStateUpdateRef = useRef(false);
-
-    useEffect(() => {
-        tableStateUpdateRef.current = true;
-        fetchData({ pageIndex, pageSize, keyword });
-    }, [fetchData, pageIndex, pageSize]);
-
-    useEffect(() => {
-        gotoPage(0);
-    }, [gotoPage]);
-
-    useEffect(() => {
-        if (!tableStateUpdateRef.current) {
-            gotoPage(0);
-        }
-    }, [data, gotoPage]);
-
-    useEffect(() => {
-        tableStateUpdateRef.current = false;
-    }, [data]);
 
     const goNextPage = (e) => {
         e.preventDefault();
@@ -82,32 +40,25 @@ function TablePaginationControlled({
         gotoPage(pageIndex - 1);
     };
 
-    const countFilterStart = pageIndex * pageSize + 1;
-    const countFilterEnd =
-        (pageIndex + 1) * pageSize - (pageSize - countFilter);
-
     return (
         <div className="flex flex-col w-full">
             {/* <pre>
                 <code>
-                    {JSON.stringify(
-                        {
-                            pageIndex,
-                            pageSize,
-                            pageCount,
-                            canNextPage,
-                            canPreviousPage,
-                            countFilter,
-                            countTotal,
-                            controlledPageCount
-                        },
-                        null,
-                        2
-                    )}
+                {JSON.stringify(
+                    {
+                    pageIndex,
+                    pageSize,
+                    pageCount,
+                    canNextPage,
+                    canPreviousPage,
+                    },
+                    null,
+                    2,
+                )}
                 </code>
             </pre> */}
-            <div className="flex flex-col overflow-hidden overflow-x-auto border rounded-md shadow-sm border-primary/30">
-                <table {...getTableProps()} className="w-auto">
+            <div className="flex flex-col overflow-hidden overflow-x-auto border rounded-md shadow-sm border-primary/300">
+                <table {...getTableProps()} className="w-full">
                     <thead>
                         {headerGroups.map((headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -115,20 +66,10 @@ function TablePaginationControlled({
                                     <th
                                         {...column.getHeaderProps()}
                                         className={`${
-                                            column.className ?? ""
-                                        } px-4 py-1 text-base font-semibold text-gray-800 border border-secondary bg-secondary dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200`}
+                                                    column.className ?? ""
+                                                } px-4 py-1 text-base font-semibold text-gray-800 border border-secondary bg-secondary dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200`}
                                     >
-                                        {/* <th {...column.getHeaderProps(column.getSortByToggleProps())} className={`${
-                                            column.className ?? ""
-                                        } px-4 py-1 text-base font-semibold text-gray-800 border border-secondary bg-secondary dark:border-gray-600 dark:bg-gray-900 dark:text-gray-200`}> */}
                                         {column.render("Header")}
-                                        <span>
-                                            {column.isSorted
-                                                ? column.isSortedDesc
-                                                    ? " 🔽"
-                                                    : " 🔼"
-                                                : ""}
-                                        </span>
                                     </th>
                                 ))}
                             </tr>
@@ -182,7 +123,7 @@ function TablePaginationControlled({
                             setPageSize(Number(e.target.value));
                         }}
                     >
-                        {[5, 10, 20, 50, 100, 200].map((pageSize) => (
+                        {[5, 10, 20].map((pageSize) => (
                             <option key={pageSize} value={pageSize}>
                                 Tampil {pageSize}
                             </option>
@@ -190,32 +131,10 @@ function TablePaginationControlled({
                     </select>
                     <div className="rounded-md text-sm 2xl:text-base transition duration-300 focus:outline-none py-1.5 tracking-wide inline-flex items-center justify-center px-1">
                         <div className="hidden text-sm md:block">
-                            {/* <span>
-                                Menampilkan <strong>{pageIndex + 1}</strong>{" "}
-                                dari <strong><NumberFormat value={pageOptions.length} displayType="text" thousandSeparator="."
-                  decimalSeparator="," /></strong>{" "}
-                                halaman
-                            </span> */}
-                            {/* <span>
-                                Menampilkan <strong>{countFilter}</strong> dari{" "}
-                                <strong><NumberFormat value={countTotal} displayType="text" thousandSeparator="." decimalSeparator="," /></strong> data
-                            </span> */}
-
                             <span>
-                                Menampilkan{" "}
-                                <strong>
-                                    {countFilterStart}-{countFilterEnd}
-                                </strong>{" "}
-                                dari{" "}
-                                <strong>
-                                    <NumberFormat
-                                        value={countTotal}
-                                        displayType="text"
-                                        thousandSeparator="."
-                                        decimalSeparator=","
-                                    />
-                                </strong>{" "}
-                                data
+                                Menampilkan <strong>{page.length}</strong> dari{" "}
+                                <strong><NumberFormat value={data.length} displayType="text" thousandSeparator="."
+                  decimalSeparator="," /></strong> data
                             </span>
                         </div>
                     </div>
@@ -224,7 +143,6 @@ function TablePaginationControlled({
                     {" "}
                     <button
                         className="bg-primary/60 focus:ring-primary/20 hover:bg-primary/70 shadow-primary/30 active:bg-primary/60 dark:focus:ring-gray-800 dark:shadow-primary/30 rounded-md border border-transparent px-3 py-1.5 text-sm font-medium shadow-md transition duration-300 focus:outline-none focus:ring disabled:cursor-not-allowed disabled:opacity-50 2xl:text-base text-white tracking-wide inline-flex items-center justify-center"
-                        // onClick={() => goNextPage()}
                         onClick={(e) => goPreviousPage(e)}
                         disabled={!canPreviousPage}
                     >
@@ -232,7 +150,6 @@ function TablePaginationControlled({
                     </button>
                     <button
                         className="bg-primary/60 focus:ring-primary/20 hover:bg-primary/70 shadow-primary/30 active:bg-primary/60 dark:focus:ring-gray-800 dark:shadow-primary/30 rounded-md border border-transparent px-3 py-1.5 text-sm font-medium shadow-md transition duration-300 focus:outline-none focus:ring disabled:cursor-not-allowed disabled:opacity-50 2xl:text-base text-white tracking-wide inline-flex items-center justify-center"
-                        // onClick={() => nextPage()}
                         onClick={(e) => goNextPage(e)}
                         disabled={!canNextPage}
                     >
@@ -243,24 +160,13 @@ function TablePaginationControlled({
 
             <div className="block text-sm md:hidden">
                 <span>
-                    Menampilkan{" "}
-                    <strong>
-                        {countFilterStart}-{countFilterEnd}
-                    </strong>{" "}
-                    dari{" "}
-                    <strong>
-                        <NumberFormat
-                            value={countTotal}
-                            displayType="text"
-                            thousandSeparator="."
-                            decimalSeparator=","
-                        />
-                    </strong>{" "}
-                    data
+                    Menampilkan <strong>{page.length}</strong> dari{" "}
+                    <strong><NumberFormat value={data.length} displayType="text" thousandSeparator="."
+                  decimalSeparator="," /></strong> data
                 </span>
             </div>
         </div>
     );
 }
 
-export default TablePaginationControlled;
+export default TableBasic;

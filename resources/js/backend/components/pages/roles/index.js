@@ -18,7 +18,7 @@ import {
     PlusIcon,
 } from "@heroicons/react/outline";
 
-import TablePagination from "../../reactTable/TablePagination";
+import TableBasic from "../../reactTable/TableBasic";
 import {
     ButtonShow,
     ButtonEdit,
@@ -330,7 +330,7 @@ export default function Role(props) {
                 />
             </div>
             <div className="mt-4">
-                <TablePagination
+                <TableBasic
                     columns={columns}
                     data={filterData.roles}
                     loading={isLoading}

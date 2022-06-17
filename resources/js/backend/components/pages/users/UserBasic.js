@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import ReactDOM from "react-dom";
 import { useTable } from "react-table";
-import TablePagination from "../../reactTable/TablePagination";
+import TableBasic from "../../reactTable/TableBasic";
 
 export default function UserBasic(props) {
     const [dataUsers, setDataUsers] = useState([]);
@@ -70,7 +70,7 @@ export default function UserBasic(props) {
         <>
             <form>
                 <div className="mt-4">
-                    <TablePagination
+                    <TableBasic
                         columns={columns}
                         data={dataUsers}
                         loading={isLoading}

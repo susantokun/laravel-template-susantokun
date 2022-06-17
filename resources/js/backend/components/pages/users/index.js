@@ -15,50 +15,40 @@ import {
     TrashIcon,
     ExclamationIcon,
     PencilAltIcon,
-    PlusIcon
+    PlusIcon,
 } from "@heroicons/react/outline";
-
-import TablePaginationControlled from "../../reactTable/TablePaginationControlled";
-import { ButtonShow, ButtonEdit, ButtonDelete, ButtonCreate } from "../../buttons/ButtonActions";
+import TableControlled from "../../reactTable/TableControlled";
+import {
+    ButtonShow,
+    ButtonEdit,
+    ButtonDelete,
+    ButtonCreate,
+} from "../../buttons/ButtonActions";
 import { ButtonPrimary } from "../../buttons/Button";
 
 export default function User(props) {
     const auth = JSON.parse(props.auth);
     const can_users_delete = props.can_users_delete;
     const can_users_edit = props.can_users_edit;
-    const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [userId, setUserId] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [userIndex, setUserIndex] = useState("");
-    const [search, setSearch] = useState("");
-    const [keyword, setKeyword] = useState("");
+    const [dataUsers, setDataUsers] = useState([]);
 
-    const [countFilter, setCountFilter] = useState(0);
-    const [countTotal, setCountTotal] = useState(0);
-
+    const fetchIdRef = useRef(0);
+    const [pageCount, setPageCount] = useState(0);
     const [getPageIndex, setGetPageIndex] = useState(0);
     const [getPageSize, setGetPageSize] = useState(0);
-
-    const [take, setTake] = useState(0);
-    const [skip, setSkip] = useState(0);
-
-    const [dataUsers, setDataUsers] = useState([]);
-    const [pageCount, setPageCount] = useState(0);
-    const fetchIdRef = useRef(0);
+    const [loading, setLoading] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [dataFrom, setDataFrom] = useState(0);
+    const [dataTo, setDataTo] = useState(0);
+    const [dataTotal, setDataTotal] = useState(0);
+    const dataPageSize = 10;
 
     const avatarUI = "https://ui-avatars.com/api/?background=random&name=";
-
-    const handleSearch = (e) => {
-        if (e.key === 'Enter') {
-            fetchAPIData({
-            take: take,
-            skip: skip,
-            keyword: keyword,
-        });
-        }
-    };
 
     const closeModalDelete = () => {
         setIsOpen(false);
@@ -74,8 +64,6 @@ export default function User(props) {
         setUserId(getId);
         setUserIndex(getIndex);
         setUserEmail(getEmail);
-        setGetPageIndex(getPageIndex);
-        setGetPageSize(getPageSize);
         setIsOpen(true);
     };
 
@@ -83,7 +71,7 @@ export default function User(props) {
         () => [
             {
                 Header: "No.",
-                accessor: "#",
+                accessor: "created_at",
                 className: "text-center",
                 Cell: (row) => {
                     return (
@@ -98,13 +86,24 @@ export default function User(props) {
             {
                 Header: "Profile",
                 Cell: ({ row: { original, index } }) => {
-                    return <div className="flex flex-row items-center justify-start">
-                        <img className="w-10 h-10 overflow-hidden rounded-md shadow-sm shrink-0" src={original.image_file ? `/storage/${original.image_file}` : `${avatarUI}${original.full_name}`} />
-                        <div className="flex flex-col ml-2 text-left truncate">
-                            <span>{original.full_name}</span>
-                            <span className="font-medium">{original.username}</span>
+                    return (
+                        <div className="flex flex-row items-center justify-start">
+                            <img
+                                className="w-10 h-10 overflow-hidden rounded-md shadow-sm shrink-0"
+                                src={
+                                    original.image_file
+                                        ? `/storage/${original.image_file}`
+                                        : `${avatarUI}${original.full_name}`
+                                }
+                            />
+                            <div className="flex flex-col ml-2 text-left truncate">
+                                <span>{original.full_name}</span>
+                                <span className="font-medium">
+                                    {original.username}
+                                </span>
+                            </div>
                         </div>
-                    </div>;
+                    );
                 },
             },
             {
@@ -116,27 +115,38 @@ export default function User(props) {
                 Cell: ({ row: { original, index } }) => {
                     let roles = [];
 
-                    if (original.roles.length < 1) {
-                        return (<span>-</span>)
+                    if (!original.roles || !original.roles.length) {
+                        return <span>-</span>;
                     }
 
-                    original.roles.forEach((item, index) => {
-                        roles[index] = (
-                            <div
-                                className="flex flex-col md:list-item"
-                                key={item.name}
-                            >
-                                {item.name}
-                            </div>
-                        );
-                    });
-                    return <div className={roles.length > 1 ? 'list-disc list-inside' : 'list-none'}>{roles}</div>;
+                    original.roles &&
+                        original.roles.forEach((item, index) => {
+                            roles[index] = (
+                                <div
+                                    className="flex flex-col md:list-item"
+                                    key={item.name}
+                                >
+                                    {item.name}
+                                </div>
+                            );
+                        });
+                    return (
+                        <div
+                            className={
+                                roles.length > 1
+                                    ? "list-disc list-inside"
+                                    : "list-none"
+                            }
+                        >
+                            {roles}
+                        </div>
+                    );
                 },
             },
             {
                 Header: "Status",
                 accessor: "status",
-                className: "text-center"
+                className: "text-center",
             },
             {
                 Header: "Actions",
@@ -152,8 +162,12 @@ export default function User(props) {
                         roleAuth[index] = role.name;
                         let rolesField = [];
 
-                        if (original.roles.length < 1) {
-                            buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
+                        if (!original.roles.length) {
+                            buttonEdit = (
+                                <a href={`/users/${original.id}/edit`}>
+                                    <ButtonEdit />
+                                </a>
+                            );
                             buttonDelete = (
                                 <ButtonDelete
                                     type="button"
@@ -173,19 +187,46 @@ export default function User(props) {
                         original.roles.forEach((item, index) => {
                             rolesField[index] = item.name;
 
-                            if (can_users_edit && rolesField.includes("admin") && original.id === auth.id) {
-                                buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
-                            } else if (can_users_edit && (!rolesField.includes("admin") && !rolesField.includes("superadmin"))) {
-                                buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
-                            } else if (can_users_edit && roleAuth.includes("superadmin")) {
-                                buttonEdit = (<a href={`/users/${original.id}/edit`}><ButtonEdit /></a>);
+                            if (
+                                can_users_edit &&
+                                rolesField.includes("admin") &&
+                                original.id === auth.id
+                            ) {
+                                buttonEdit = (
+                                    <a href={`/users/${original.id}/edit`}>
+                                        <ButtonEdit />
+                                    </a>
+                                );
+                            } else if (
+                                can_users_edit &&
+                                !rolesField.includes("admin") &&
+                                !rolesField.includes("superadmin")
+                            ) {
+                                buttonEdit = (
+                                    <a href={`/users/${original.id}/edit`}>
+                                        <ButtonEdit />
+                                    </a>
+                                );
+                            } else if (
+                                can_users_edit &&
+                                roleAuth.includes("superadmin")
+                            ) {
+                                buttonEdit = (
+                                    <a href={`/users/${original.id}/edit`}>
+                                        <ButtonEdit />
+                                    </a>
+                                );
                             } else {
                                 buttonEdit = <ButtonEdit disabled />;
                             }
 
                             if (rolesField.includes("superadmin")) {
                                 buttonDelete = <ButtonDelete disabled />;
-                            } else if (rolesField.includes("admin") && original.id === auth.id && can_users_delete) {
+                            } else if (
+                                rolesField.includes("admin") &&
+                                original.id === auth.id &&
+                                can_users_delete
+                            ) {
                                 buttonDelete = (
                                     <ButtonDelete
                                         type="button"
@@ -200,7 +241,11 @@ export default function User(props) {
                                         }
                                     />
                                 );
-                            } else if ((rolesField.includes("admin") && original.id !== auth.id) && !role.name.includes("superadmin")) {
+                            } else if (
+                                rolesField.includes("admin") &&
+                                original.id !== auth.id &&
+                                !role.name.includes("superadmin")
+                            ) {
                                 buttonDelete = <ButtonDelete disabled />;
                             } else {
                                 buttonDelete = (
@@ -238,36 +283,66 @@ export default function User(props) {
         []
     );
 
-    const fetchAPIData = async ({ take, skip, keyword }) => {
+    const handleSearch = (e) => {
+        if (e.key === "Enter") {
+            fetchAPIData({
+                pageIndex: getPageIndex,
+                pageSize: getPageSize,
+                search: searchTerm,
+                orderBy: '',
+                orderType: 'DESC',
+            });
+        }
+    };
+
+    const fetchAPIData = async ({
+        pageIndex,
+        pageSize,
+        search,
+        orderBy,
+        orderType,
+    }) => {
         try {
-            setIsLoading(true);
-            const response = await axios.get(
-                `/users?take=${take}&skip=${skip}&search=${keyword}`
-            );
-            const data = await response.data;
-            setDataUsers(data.data);
-            setPageCount(Math.ceil(data.count_total / take));
-            setCountFilter(data.count_filter);
-            setCountTotal(data.count_total);
-            setIsLoading(false);
+            setLoading(true);
+            const reqData = await axios.get(
+                `/api/users?page=${pageIndex}&per_page=${pageSize}&order_by=${orderBy}&order_type=${orderType}&search=${search}`
+            ).then((res) => res.data);
+
+            const resData = await reqData.data;
+            if (reqData.status) {
+                setDataUsers(resData.data);
+                setPageCount(Math.ceil(resData.total / resData.per_page));
+                setDataFrom(resData.from || 0);
+                setDataTo(resData.to || 0);
+                setDataTotal(resData.total || 0);
+                setLoading(false);
+            } else {
+                console.log(reqData.message);
+            }
+
         } catch (e) {
             console.log("Error while fetching", e);
         }
     };
 
-    const fetchData = useCallback(({ pageSize, pageIndex, keyword }) => {
-        const fetchId = ++fetchIdRef.current;
-        setIsLoading(true);
-        if (fetchId === fetchIdRef.current) {
-            setTake(pageSize);
-            setSkip(pageSize * pageIndex);
-            fetchAPIData({
-                take: pageSize,
-                skip: pageSize * pageIndex,
-                keyword: keyword,
-            });
-        }
-    }, []);
+    const fetchData = useCallback(
+        ({ pageIndex, pageSize, searchTerm, sortBy }) => {
+            const fetchId = ++fetchIdRef.current;
+            setLoading(true);
+            if (fetchId === fetchIdRef.current) {
+                setGetPageIndex(pageIndex + 1);
+                setGetPageSize(pageSize);
+                fetchAPIData({
+                    pageIndex: pageIndex + 1,
+                    pageSize: pageSize,
+                    search: searchTerm,
+                    orderBy: sortBy[0]?.id || '',
+                    orderType: sortBy[0]?.desc ? 'ASC' : 'DESC',
+                });
+            }
+        },
+        []
+    );
 
     const handleDelete = async () => {
         setDeleteLoading(true);
@@ -398,23 +473,25 @@ export default function User(props) {
                     <ButtonCreate />
                 </div>
                 <input
-                    onChange={(e) => setKeyword(e.target.value)}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleSearch}
-                    placeholder="Nama/Email/Peran"
+                    placeholder="Email/Peran"
                     type="search"
                     className="w-full transition duration-300 bg-white border-gray-300 rounded-md shadow-sm form-input md:w-auto focus:ring disabled:cursor-not-allowed disabled:opacity-50 focus:border-primary-300 focus:ring-primary-200/50 dark:border-gray-600 dark:bg-gray-800 dark:focus:border-gray-600 dark:focus:ring-gray-800"
                 />
             </div>
             <div className="mt-4">
-                <TablePaginationControlled
-                    columns={columns}
-                    data={dataUsers}
-                    fetchData={fetchData}
-                    loading={isLoading}
+                <TableControlled
+                    dataFrom={dataFrom}
+                    dataTo={dataTo}
+                    dataTotal={dataTotal}
+                    dataPageSize={dataPageSize}
+                    searchTerm={searchTerm}
                     pageCount={pageCount}
-                    countFilter={countFilter}
-                    countTotal={countTotal}
-                    keyword={keyword}
+                    fetchData={fetchData}
+                    columns={columns}
+                    loading={loading}
+                    data={dataUsers}
                 />
             </div>
         </>

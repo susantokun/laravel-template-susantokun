@@ -34,70 +34,8 @@ class UserController extends Controller
         return view('backend.pages.users.userBasic', compact('users'));
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->ajax()) {
-            $take = $request->take;
-            $skip = $request->skip;
-            $search = $request->search;
-            $orderBy = 'created_at';
-            $orderAsc = false;
-
-            // $users = User::search($request->search);
-            // $paginator = $users->paginate($take, '', $skip);
-            // $paginator->load('roles');
-            // $data = $paginator->getCollection();
-
-            $auth_can_users_view_superadmin = auth()->user()->can('users view superadmin');
-            $superadmin = auth()->user()->getRoleNames()->contains('superadmin');
-
-            $data = User::orderBy($orderBy, $orderAsc ? 'ASC' : 'DESC')
-            ->with(['roles' => function ($query) {
-                $query->select('id', 'name');
-            }]);
-
-            $countAll = $data->get()->count();
-
-            if ($superadmin || $auth_can_users_view_superadmin) {
-                $countAll = $data->get()->count();
-                $data->when($search, function ($query) use ($search) {
-                    $query->where('username', 'like', "%{$search}%")
-                    ->orWhere('full_name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhereHas('roles', function ($query2) use ($search) {
-                        $query2->whereIn('name', ["{$search}"]);
-                    });
-                });
-                if ($data->get()->count() > 0) {
-                    $countAll = $data->get()->count();
-                }
-                $data->take($take)->skip($skip);
-            } else {
-                $data->whereHas('roles', function($q) {
-                    $q->whereNotIn('name', ['superadmin']);
-                })
-                ->when($search, function ($query) use ($search) {
-                    $query->where('username', 'like', "%{$search}%")
-                    ->orWhere('full_name', 'like', "%{$search}%")
-                    ->whereHas('roles', function ($query2) use ($search) {
-                        $query2->whereNotIn('name', ['superadmin'])->whereIn('name', ["{$search}"]);
-                    });
-                });
-                if ($data->get()->count() > 0) {
-                    $countAll = $data->get()->count();
-                }
-                $data->take($take)->skip($skip);
-            }
-
-            $countFilter = $data->get()->count();
-
-            return response()->json([
-                'data' => $data->get(),
-                'count_total' => $countAll,
-                'count_filter' => $countFilter,
-            ]);
-        }
-
         $can_users_delete = auth()->user()->can('users delete');
         $can_users_edit = auth()->user()->can('users edit');
 
@@ -140,8 +78,8 @@ class UserController extends Controller
 
             $image_folder = 'images/profiles';
             $image_file = $request->file('image_file');
-            $image_file_name = $request->username.".".$image_file->getClientOriginalExtension();
-            $image_file_path = $image_folder.'/'.$image_file_name;
+            $image_file_name = $request->username . "." . $image_file->getClientOriginalExtension();
+            $image_file_path = $image_folder . '/' . $image_file_name;
             $image_file_image = Image::make($image_file);
             $image_file_image->resize(512, 512, function ($constraint) {
                 $constraint->aspectRatio();
@@ -222,14 +160,14 @@ class UserController extends Controller
 
             $image_folder = 'images/profiles';
             $image_file = $request->file('image_file');
-            $image_file_name = $request->username.".".$image_file->getClientOriginalExtension();
-            $image_file_path = $image_folder.'/'.$image_file_name;
+            $image_file_name = $request->username . "." . $image_file->getClientOriginalExtension();
+            $image_file_path = $image_folder . '/' . $image_file_name;
             $image_file_image = Image::make($image_file);
             $image_file_image->resize(512, 512, function ($constraint) {
                 $constraint->aspectRatio();
             });
 
-            if($user->image_file != ''  && $user->image_file != null){
+            if ($user->image_file != ''  && $user->image_file != null) {
                 Storage::disk('public')->delete($user->image_file);
             }
 
