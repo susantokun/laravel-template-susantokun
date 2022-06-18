@@ -352,14 +352,12 @@ export default function User(props) {
                 if (res.data.status) {
                     setIsOpen(false);
                     toast.success(res.data.message);
-                    // const removeData = data.filter(
-                    //     (item, index) => index !== userIndex
-                    // );
-                    // setDataUsers(removeData);
                     fetchAPIData({
-                        take: take,
-                        skip: skip,
-                        keyword: keyword,
+                        pageIndex: getPageIndex,
+                        pageSize: getPageSize,
+                        search: searchTerm,
+                        orderBy: '',
+                        orderType: 'DESC',
                     });
                 } else {
                     setIsOpen(true);
