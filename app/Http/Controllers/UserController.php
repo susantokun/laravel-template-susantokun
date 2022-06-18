@@ -190,8 +190,10 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if (Storage::disk('public')->exists($user->image_file)) {
-            Storage::disk('public')->delete($user->image_file);
+        if ($user->image_file) {
+            if (Storage::disk('public')->exists( $user->image_file)) {
+                Storage::disk('public')->delete($user->image_file);
+            }
         }
 
         $user->delete();
