@@ -14,16 +14,16 @@
         @if (isset($permissionsOperation))
         <div class="col-span-3">
             <x-label>{{ __('permission.permissionsOperation') }} <span class="italic">({{ __('label.optional') }})</span></x-label>
-            @foreach($permissionsOperation as $value)
-            <label class="cursor-pointer select-none">
-                {!! Form::checkbox('permissionsOperation[]', $value, false,
-                array('class'
-                =>
-                'form-checkbox','multiple')) !!}
-                {{ $value }}
-                <br />
-            </label>
-            @endforeach
+            <div class="mt-1">
+                @foreach($permissionsOperation as $value)
+                <label class="cursor-pointer select-none">
+                    {!! Form::checkbox('permissionsOperation[]', $value, false,
+                    array('class' => 'form-checkbox','multiple')) !!}
+                    {{ $value }}
+                    <br />
+                </label>
+                @endforeach
+            </div>
 
             @error('permissions')
             <p class="mt-1 text-xs font-medium text-danger">{{ $message }}</p>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\VerifyEmailController;
@@ -27,6 +28,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', function (Request $request) { return $request->user(); });
 
     Route::get('roles', [RoleController::class, 'index'])->name('api.roles.index');
+    Route::get('permissions', [PermissionController::class, 'index'])->name('api.permissions.index');
     Route::get('menus', [MenuController::class, 'index'])->name('api.menus.index');
     Route::get('menus-select', [MenuController::class, 'menuSelect'])->name('api.menus.select');
     Route::get('users', [UserController::class, 'index'])->name('api.users.index');

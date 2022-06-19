@@ -33,16 +33,8 @@ class PermissionController extends Controller
         $this->middleware('permission:permissions delete', ['only' => ['destroy']]);
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->ajax()) {
-            $data = Permission::orderBy('created_at', 'desc')->get();
-
-            return response()->json([
-                'data' => $data,
-            ]);
-        }
-
         $can_permissions_delete = auth()->user()->can('permissions delete');
         $can_permissions_edit = auth()->user()->can('permissions edit');
 
