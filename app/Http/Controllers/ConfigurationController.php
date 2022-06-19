@@ -97,7 +97,7 @@ class ConfigurationController extends Controller
             $logo_file_name = str()->slug($configuration->code)."-logo.".$logo_file->getClientOriginalExtension();
             $logo_file_path = $logo_folder.'/'.$logo_file_name;
             $logo_file_logo = Image::make($logo_file);
-            $logo_file_logo->resize(32, 32, function ($constraint) {
+            $logo_file_logo->resize(512, 512, function ($constraint) {
                 $constraint->aspectRatio();
             });
 
