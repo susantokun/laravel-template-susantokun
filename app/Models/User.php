@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, Searchable, FormAccessible;
 
@@ -60,6 +60,14 @@ class User extends Authenticatable
         'created_by' => 'integer',
         'updated_by' => 'integer',
     ];
+
+    public function markEmailAsVerified()
+    {
+        return $this->forceFill([
+            'email_verified_at' => $this->freshTimestamp(),
+            'status' => 'active',
+        ])->save();
+    }
 
     public function searchableAs()
     {
