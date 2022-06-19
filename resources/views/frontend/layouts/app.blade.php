@@ -30,7 +30,7 @@
 
     <link
         rel="shortcut icon"
-        href="{{ env('APP_URL_ASSET').'/images/icons/favicon.png' }}"
+        href="{{ '/storage/'.$configuration->favicon_file }}"
     />
 
     <title>@yield('title'){{ env('APP_NAME') }}</title>
