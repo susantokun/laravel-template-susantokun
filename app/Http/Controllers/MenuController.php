@@ -1,5 +1,23 @@
 <?php
 
+/*
+ * |==============================================================|
+ * | Please DO NOT modify this information :                      |
+ * |--------------------------------------------------------------|
+ * | Author          : Susantokun
+ * | Email           : admin@susantokun.com
+ * | Filename        : MenuController.php
+ * | Instagram       : @susantokun
+ * | Blog            : http://www.susantokun.com
+ * | Info            : http://info.susantokun.com
+ * | Demo            : http://demo.susantokun.com
+ * | Youtube         : http://youtube.com/susantokun
+ * | File Created    : Friday, 3rd June 2022 1:29:42 pm
+ * | Last Modified   : Sunday, 19th June 2022 5:54:54 pm
+ * | HISTORY         :
+ * |==============================================================|
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
@@ -18,26 +36,8 @@ class MenuController extends Controller
         $this->middleware('permission:menus delete', ['only' => ['destroy']]);
     }
 
-    // public function index(Request $request)
-    // {
-    //     $roleId = auth()->user()->roles->pluck('id');
-    //     $menus = Menu::where('parent_id', 0)->whereIn('role_id', $roleId)->where('status', 1)->with('sub_menu')->has('sub_menu')->orderBy('order', 'asc')->get();
-
-    //     return response([
-    //         'menus' => $menus,
-    //     ]);
-    // }
-
     public function index(Request $request)
     {
-        // $data = Menu::orderBy('created_at', 'desc')->get();
-
-        // $data = Menu::with('sub_menu')->orderBy('id', 'desc')->get();
-
-        // return response()->json([
-        //     $menus
-        // ]);
-
 
         if ($request->ajax()) {
             $data = Menu::with(['parent', 'role'])->orderBy('id', 'desc')->get();

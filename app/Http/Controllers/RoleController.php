@@ -1,9 +1,26 @@
 <?php
 
+/*
+ * |==============================================================|
+ * | Please DO NOT modify this information :                      |
+ * |--------------------------------------------------------------|
+ * | Author          : Susantokun
+ * | Email           : admin@susantokun.com
+ * | Filename        : RoleController.php
+ * | Instagram       : @susantokun
+ * | Blog            : http://www.susantokun.com
+ * | Info            : http://info.susantokun.com
+ * | Demo            : http://demo.susantokun.com
+ * | Youtube         : http://youtube.com/susantokun
+ * | File Created    : Friday, 3rd June 2022 1:29:42 pm
+ * | Last Modified   : Sunday, 19th June 2022 5:55:57 pm
+ * | HISTORY         :
+ * |==============================================================|
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;

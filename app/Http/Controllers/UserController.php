@@ -1,5 +1,23 @@
 <?php
 
+/*
+ * |==============================================================|
+ * | Please DO NOT modify this information :                      |
+ * |--------------------------------------------------------------|
+ * | Author          : Susantokun
+ * | Email           : admin@susantokun.com
+ * | Filename        : UserController.php
+ * | Instagram       : @susantokun
+ * | Blog            : http://www.susantokun.com
+ * | Info            : http://info.susantokun.com
+ * | Demo            : http://demo.susantokun.com
+ * | Youtube         : http://youtube.com/susantokun
+ * | File Created    : Friday, 3rd June 2022 1:29:42 pm
+ * | Last Modified   : Sunday, 19th June 2022 5:56:07 pm
+ * | HISTORY         :
+ * |==============================================================|
+ */
+
 namespace App\Http\Controllers;
 
 use Image;

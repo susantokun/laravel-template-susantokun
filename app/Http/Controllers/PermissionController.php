@@ -1,5 +1,23 @@
 <?php
 
+/*
+ * |==============================================================|
+ * | Please DO NOT modify this information :                      |
+ * |--------------------------------------------------------------|
+ * | Author          : Susantokun
+ * | Email           : admin@susantokun.com
+ * | Filename        : PermissionController.php
+ * | Instagram       : @susantokun
+ * | Blog            : http://www.susantokun.com
+ * | Info            : http://info.susantokun.com
+ * | Demo            : http://demo.susantokun.com
+ * | Youtube         : http://youtube.com/susantokun
+ * | File Created    : Friday, 3rd June 2022 1:29:42 pm
+ * | Last Modified   : Sunday, 19th June 2022 5:55:48 pm
+ * | HISTORY         :
+ * |==============================================================|
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

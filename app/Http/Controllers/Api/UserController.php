@@ -1,5 +1,23 @@
 <?php
 
+/*
+ * |==============================================================|
+ * | Please DO NOT modify this information :                      |
+ * |--------------------------------------------------------------|
+ * | Author          : Susantokun
+ * | Email           : admin@susantokun.com
+ * | Filename        : UserController.php
+ * | Instagram       : @susantokun
+ * | Blog            : http://www.susantokun.com
+ * | Info            : http://info.susantokun.com
+ * | Demo            : http://demo.susantokun.com
+ * | Youtube         : http://youtube.com/susantokun
+ * | File Created    : Friday, 17th June 2022 10:23:56 am
+ * | Last Modified   : Sunday, 19th June 2022 5:54:38 pm
+ * | HISTORY         :
+ * |==============================================================|
+ */
+
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
