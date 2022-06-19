@@ -49,7 +49,7 @@
 </head>
 
 <body>
-    <div class="font-sans antialiased text-gray-900 dark:text-white bg-slate-100 dark:bg-slate-800">
+    <div class="font-sans antialiased text-gray-900 bg-slate-100">
         {{ $slot }}
     </div>
 </body>

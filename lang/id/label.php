@@ -53,6 +53,8 @@ return [
     'ready_to_leave'             => 'Siap untuk keluar?',
     'ready_to_leave_description' => 'Pilih :logout di bawah ini jika Anda siap untuk mengakhiri sesi Anda saat ini.',
     'cancel'                     => 'Batal',
+    'or_continue_with'           => 'atau lanjutkan dengan',
+    'login_to_your_account'      => 'Masuk ke akun Anda!',
 
     'manage'       => 'Kelola',
     'profile'      => 'Profil',
