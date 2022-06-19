@@ -33,9 +33,18 @@ class RoleController extends BaseController
      */
     public function index()
     {
-        $roles = Role::get(['id', 'name']);
+        $auth_can_roles_view_superadmin = auth()->user()->can('roles view superadmin');
+        $superadmin = auth()->user()->getRoleNames()->contains('superadmin');
 
-        return $this->sendResponse($roles, __('role.roles') .' '. __('label.get_data_success'));
+        $data = Role::with('permissions')->orderBy('id', 'desc');
+
+        if ($superadmin || $auth_can_roles_view_superadmin) {
+            $data = $data;
+        } else {
+            $data->whereNotIn('name', ['superadmin']);
+        }
+
+        return $this->sendResponse($data->get(['id', 'name', 'guard_name']), __('role.roles') .' '. __('label.get_data_success'));
     }
 
     /**

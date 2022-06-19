@@ -36,25 +36,8 @@ class RoleController extends Controller
         $this->middleware('permission:roles delete', ['only' => ['destroy']]);
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->ajax()) {
-            $auth_can_roles_view_superadmin = auth()->user()->can('roles view superadmin');
-            $superadmin = auth()->user()->getRoleNames()->contains('superadmin');
-
-            $data = Role::with('permissions')->orderBy('id', 'desc');
-
-            if ($superadmin || $auth_can_roles_view_superadmin) {
-                $data = $data;
-            } else {
-                $data->whereNotIn('name', ['superadmin']);
-            }
-
-            return response()->json([
-                'data' => $data->get(),
-            ]);
-        }
-
         $can_roles_delete = auth()->user()->can('roles delete');
         $can_roles_edit = auth()->user()->can('roles edit');
 
