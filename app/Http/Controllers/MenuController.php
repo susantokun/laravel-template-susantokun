@@ -36,17 +36,8 @@ class MenuController extends Controller
         $this->middleware('permission:menus delete', ['only' => ['destroy']]);
     }
 
-    public function index(Request $request)
+    public function index()
     {
-
-        if ($request->ajax()) {
-            $data = Menu::with(['parent', 'role'])->orderBy('id', 'desc')->get();
-
-            return response()->json([
-                'data' => $data,
-            ]);
-        }
-
         $can_menus_delete = auth()->user()->can('menus delete');
         $can_menus_edit = auth()->user()->can('menus edit');
 
@@ -58,19 +49,7 @@ class MenuController extends Controller
 
     public function create()
     {
-        if (auth()->user()->getRoleNames()->contains('superadmin')) {
-            $roles = Role::pluck('name', 'id')->all();
-        } else {
-            $roles = Role::where('name', '!=', 'superadmin')->pluck('name', 'id')->all();
-        }
-
-        // nanti pake js ketika perannya admin maka kondisi role_id = selected
-        $parent = Menu::whereIn('role_id', auth()->user()->roles()->get()->pluck('id', 'id'))->pluck('title', 'id')->all();
-        $menuInduk = [ 0 => 'Menu Induk' ];
-        $parents = array_merge($menuInduk, $parent);
-
         $routeCollection = Route::getRoutes();
-
         $routes = [];
         foreach ($routeCollection as $key => $value) {
             if ($value->methods()[0] == 'GET') {
@@ -92,10 +71,15 @@ class MenuController extends Controller
             'verification.send',
             'password.confirm',
             'logout',
+            'verify',
+            'api.users.index',
+            'api.roles.index',
+            'api.menus.index',
+            'api.menus.select',
             null
         ));
 
-        return view('backend.pages.menus.create', compact('roles', 'parents', 'routes'));
+        return view('backend.pages.menus.create', compact( 'routes'));
     }
 
     public function store(Request $request)
@@ -133,20 +117,8 @@ class MenuController extends Controller
     public function edit($id)
     {
         $menu = Menu::find($id);
-        if (auth()->user()->getRoleNames()->contains('superadmin')) {
-            $roles = Role::pluck('name', 'id')->all();
-        } else {
-            $roles = Role::where('name', '!=', 'superadmin')->pluck('name', 'id')->all();
-        }
-
-        // nanti pake js ketika perannya admin maka kondisi role_id = selected
-        $parent = Menu::pluck('title', 'id')->all();
-        $menus = Menu::all();
-        $menuInduk = [ 0 => 'Menu Induk' ];
-        $parents = array_merge($menuInduk, $parent);
 
         $routeCollection = Route::getRoutes();
-
         $routes = [];
         foreach ($routeCollection as $key => $value) {
             if ($value->methods()[0] == 'GET') {
@@ -168,10 +140,15 @@ class MenuController extends Controller
             'verification.send',
             'password.confirm',
             'logout',
+            'verify',
+            'api.users.index',
+            'api.roles.index',
+            'api.menus.index',
+            'api.menus.select',
             null
         ));
 
-        return view('backend.pages.menus.edit', compact('menu', 'menus', 'roles', 'parents', 'routes'));
+        return view('backend.pages.menus.edit', compact('menu', 'routes'));
     }
 
     public function update(Request $request, $id)

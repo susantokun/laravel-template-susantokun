@@ -26,12 +26,15 @@ use App\Http\Controllers\Api\BaseController as BaseController;
 
 class MenuController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function __construct()
+    {
+        $this->middleware('permission:menus view', ['only' => ['index', 'show']]);
+        $this->middleware('permission:menus create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:menus edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:menus delete', ['only' => ['destroy']]);
+    }
+
+    public function menuSelect(Request $request)
     {
         $role = $request->role;
 
@@ -45,6 +48,18 @@ class MenuController extends BaseController
         $parents = array_merge($menuInduk, $parent);
 
         return $this->sendResponse($parents, __('menu.menus') .' '. __('label.get_data_success'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $data = Menu::with(['parent', 'role'])->orderBy('id', 'desc')->get();
+
+        return $this->sendResponse($data, __('menu.menus') .' '. __('label.get_data_success'));
     }
 
     /**

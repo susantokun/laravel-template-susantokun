@@ -26,7 +26,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->name('verify');
     Route::get('user', function (Request $request) { return $request->user(); });
 
-    Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
-    Route::get('menus', [MenuController::class, 'index'])->name('menus.index');
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('roles', [RoleController::class, 'index'])->name('api.roles.index');
+    Route::get('menus', [MenuController::class, 'index'])->name('api.menus.index');
+    Route::get('menus-select', [MenuController::class, 'menuSelect'])->name('api.menus.select');
+    Route::get('users', [UserController::class, 'index'])->name('api.users.index');
 });

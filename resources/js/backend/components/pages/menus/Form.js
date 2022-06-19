@@ -15,8 +15,7 @@ export default function Form(props) {
     }
 
     const getMenus = async (roleId = '') => {
-        console.log('roleId: ', roleId);
-        const reqData = await axios.get(`/api/menus?role=${roleId}`);
+        const reqData = await axios.get(`/api/menus-select?role=${roleId}`);
         const resData = await reqData.data
         if (resData.status) {
             setDataMenus(resData.data)

@@ -87,7 +87,7 @@ export default function Menu(props) {
     const getMenus = async () => {
         setIsLoading(true);
         await axios
-            .get(`/menus`)
+            .get(`/api/menus`)
             .then((res) => {
                 const resData = res.data;
                 setDataMenus(resData.data);
