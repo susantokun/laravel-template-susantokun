@@ -18,6 +18,8 @@ import "./dropdown";
 import "./sidebar";
 import "./topbar";
 import "./mobile-menu";
+import "./tippy";
+import "./sidebar-tooltip";
 
 // components
 import "./components/Notification";

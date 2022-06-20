@@ -8,6 +8,20 @@
     @include media-breakpoint-down(md) {
         @apply hidden;
     }
+    &.sidebar__simple {
+        width: 85px;
+        .sidebar_menu {
+            .sidebar_menu__title {
+                @apply hidden;
+                .sidebar_menu__sub_icon {
+                    @apply hidden;
+                }
+            }
+            &:not(.sidebar_menu__active) .sidebar_menu__icon:before {
+                @apply hidden;
+            }
+        }
+    }
     .sidebar__devider {
         @apply w-full h-px bg-white/[0.08] z-10 relative dark:bg-white/[0.07];
     }
