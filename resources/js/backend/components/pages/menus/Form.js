@@ -34,7 +34,7 @@ export default function Form(props) {
         <div className="grid gap-4 md:grid-cols-6">
             <div className="col-span-3">
                 <label className="form-label">Peran</label>
-                <select className="block w-full mt-1 form-select" onChange={(e) => getMenus(e.target.value)}>
+                <select className="block w-full mt-1 form-select" name="role_id" onChange={(e) => getMenus(e.target.value)}>
                     {dataRoles.map((item) => (
                         <option key={item.id} value={item.id}>{item.name}</option>
                     ))}
@@ -42,7 +42,7 @@ export default function Form(props) {
             </div>
             <div className="col-span-3">
                 <label className="form-label">Menu Induk</label>
-                <select className="block w-full mt-1 form-select">
+                <select className="block w-full mt-1 form-select" name="parent_id">
                     {dataMenus.map((item, index) => (
                         <option key={index} value={index}>{item}</option>
                     ))}
