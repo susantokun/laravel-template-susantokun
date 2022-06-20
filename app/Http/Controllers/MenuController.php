@@ -74,6 +74,7 @@ class MenuController extends Controller
             'verify',
             'api.users.index',
             'api.roles.index',
+            'api.permissions.index',
             'api.menus.index',
             'api.menus.select',
             null
