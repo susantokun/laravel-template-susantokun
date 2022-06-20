@@ -87,7 +87,7 @@ export default function User(props) {
                 Header: "Profile",
                 Cell: ({ row: { original, index } }) => {
                     return (
-                        <div className="inline-flex flex-row items-center justify-start w-40">
+                        <div className="flex flex-row items-center justify-start w-40">
                             <img
                                 className="w-10 h-10 overflow-hidden rounded-md shadow-sm shrink-0"
                                 src={
