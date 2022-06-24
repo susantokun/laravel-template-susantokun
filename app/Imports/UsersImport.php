@@ -52,7 +52,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithUpserts, WithValidatio
         return [
             'username' => [
                 'required', 'string', 'min:4', 'max:30',
-                Rule::notIn(['superadmin', 'admin', 'member'])
+                Rule::notIn(['superadmin', 'admin', 'member', 'susantokun'])
             ],
             'first_name' => [
                 'required', 'string', 'min:2', 'max:191'
@@ -78,6 +78,29 @@ class UsersImport implements ToModel, WithHeadingRow, WithUpserts, WithValidatio
                 'required', 'string',
                 Rule::in(['member', 'admin'])
             ],
+        ];
+    }
+
+    public function customValidationMessages()
+    {
+        return [
+            'username.not_in' => ':attribute sudah ada yang menggunakan.',
+            'email.not_in' => ':attribute sudah ada yang menggunakan.',
+        ];
+    }
+
+    public function customValidationAttributes()
+    {
+        return [
+            'username' => __('user.userame'),
+            'first_name' => __('user.first_name'),
+            'last_name' => __('user.last_name'),
+            'full_name' => __('user.full_name'),
+            'phone' => __('user.phone'),
+            'email' => __('user.email'),
+            'password' => __('user.password'),
+            'status' => __('user.status'),
+            'role' => __('role.role'),
         ];
     }
 }

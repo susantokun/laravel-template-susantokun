@@ -100,7 +100,8 @@ class UserController extends Controller
 
     public function importExample()
     {
-        return $this->redirect('/storage/documents/excel/example-users.xls');
+        $file_path = public_path('storage/documents/excel/example-users.xlsx');
+        return response()->download($file_path);
     }
 
     public function index()
