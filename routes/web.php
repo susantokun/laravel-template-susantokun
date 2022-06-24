@@ -40,8 +40,11 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::name('accounts.')->group(function() {
-        Route::resource('users', UserController::class);
         Route::get('/users-basic', [UserController::class, 'basic'])->name('users.basic');
+        Route::resource('users', UserController::class);
+        Route::get('users-export', [UserController::class, 'export'])->name('users.export');
+        Route::post('users-import', [UserController::class, 'import'])->name('users.import');
+        Route::get('users-import-example', [UserController::class, 'importExample'])->name('users.import.example');
 
         Route::group(['middleware' => 'role:superadmin|admin'], function () {
             Route::resource('roles', RoleController::class);
