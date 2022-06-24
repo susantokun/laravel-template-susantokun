@@ -98,12 +98,6 @@ class UserController extends Controller
         }
     }
 
-    public function importExample()
-    {
-        $file_path = public_path('storage/documents/excel/example-users.xlsx');
-        return response()->download($file_path);
-    }
-
     public function index()
     {
         $can_users_delete = auth()->user()->can('users delete');

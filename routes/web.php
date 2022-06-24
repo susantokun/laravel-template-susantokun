@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ConfigurationController;
 
@@ -44,13 +45,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('users', UserController::class);
         Route::get('users-export', [UserController::class, 'export'])->name('users.export');
         Route::post('users-import', [UserController::class, 'import'])->name('users.import');
-        Route::get('users-import-example', [UserController::class, 'importExample'])->name('users.import.example');
 
         Route::group(['middleware' => 'role:superadmin|admin'], function () {
             Route::resource('roles', RoleController::class);
             Route::resource('permissions', PermissionController::class);
         });
     });
+
+    Route::get('download', DownloadController::class)->name('download');
 
     Route::get('routes', function () {
         $routeCollection = Route::getRoutes();

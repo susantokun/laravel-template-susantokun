@@ -72,6 +72,7 @@ export default function User(props) {
     const [importFileSize, setImportFileSize] = useState(0);
     const [importErrors, setImportErrors] = useState([]);
     const [importError, setImportError] = useState("");
+    const [isDownload, setIsDownload] = useState(false);
 
     const avatarUI = "https://ui-avatars.com/api/?background=random&name=";
 
@@ -93,8 +94,8 @@ export default function User(props) {
     };
 
     const onTypeError = (err) => {
-        setImportError(err)
-    }
+        setImportError(err);
+    };
 
     const closeModalDelete = () => {
         setIsOpen(false);
@@ -471,6 +472,14 @@ export default function User(props) {
         setImportLoading(false);
     };
 
+    const handleDownloadExample = () => {
+        setIsDownload(true);
+        window.location.href = "download?name=example-users.xlsx";
+        setTimeout(() => {
+            setIsDownload(false);
+        }, 2000);
+    };
+
     return (
         <>
             <ToastContainer
@@ -578,10 +587,9 @@ export default function User(props) {
                     </p>
 
                     <div className="my-3">
-                        <ButtonImportExample
-                            path="/users-import-example"
-                            title="Unduh Format Excel"
-                        />
+                        <ButtonImportExample disabled={isDownload} onClick={handleDownloadExample}>
+                            {isDownload ? "Mengunduh..." : "Unduh Format Excel"}
+                        </ButtonImportExample>
                     </div>
 
                     {importErrors.length ? (
