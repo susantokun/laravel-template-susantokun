@@ -614,24 +614,22 @@ export default function User(props) {
                             classes="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none"
                             onTypeError={onTypeError}
                         >
-                            <>
-                                {importFileName ? (
-                                    <div className="flex flex-col items-center justify-center">
-                                        <DocumentIcon className="w-10 h-10 mb-1" />
-                                        {importFileName} {importFileSize}
-                                    </div>
-                                ) : (
-                                    <div className="flex items-center space-x-2">
-                                        <span className="font-medium text-gray-600">
-                                            Drop files to Attach, or
-                                            <span className="text-blue-600 underline">
-                                                {" "}
-                                                browse
-                                            </span>
+                            {importFileName ? (
+                                <div className="flex flex-col items-center justify-center">
+                                    <DocumentIcon className="w-10 h-10 mb-1" />
+                                    {importFileName} {importFileSize}
+                                </div>
+                            ) : (
+                                <div className="flex items-center space-x-2">
+                                    <span className="font-medium text-gray-600">
+                                        Drop files to Attach, or
+                                        <span className="text-blue-600 underline">
+                                            {" "}
+                                            browse
                                         </span>
-                                    </div>
-                                )}
-                            </>
+                                    </span>
+                                </div>
+                            )}
                         </FileUploader>
                     </div>
                 </div>
