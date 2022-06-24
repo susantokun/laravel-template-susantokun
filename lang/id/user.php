@@ -54,4 +54,6 @@ return [
     'update_failed' => 'Pengguna Gagal Diubah!',
     'destroy_success' => 'Pengguna Berhasil Dihapus!',
     'destroy_failed' => 'Pengguna Gagal Dihapus!',
+    'import_success' => 'Pengguna Berhasil Diimport!',
+    'import_failed' => 'Pengguna Gagal Diimport!',
 ];
