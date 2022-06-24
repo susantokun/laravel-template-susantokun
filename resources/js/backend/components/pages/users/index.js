@@ -6,7 +6,7 @@ import React, {
     useCallback,
     Fragment,
 } from "react";
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 import { useTable } from "react-table";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -40,7 +40,8 @@ import {
 import { ButtonPrimary } from "../../buttons/Button";
 import Modal from "../../Modal";
 import { FileUploader } from "react-drag-drop-files";
-const fileTypes = ["JPG", "PNG", "GIF"];
+
+const fileTypes = ["XLSX"];
 
 export default function User(props) {
     const auth = JSON.parse(props.auth);
@@ -68,14 +69,32 @@ export default function User(props) {
     const [importLoading, setImportLoading] = useState(false);
     const [importFile, setImportFile] = useState("");
     const [importFileName, setImportFileName] = useState("");
+    const [importFileSize, setImportFileSize] = useState(0);
     const [importErrors, setImportErrors] = useState([]);
     const [importError, setImportError] = useState("");
 
     const avatarUI = "https://ui-avatars.com/api/?background=random&name=";
 
+    const humanFileSize = (size) => {
+        var i = Math.floor(Math.log(size) / Math.log(1024));
+        return (
+            (size / Math.pow(1024, i)).toFixed(2) * 1 +
+            " " +
+            ["B", "kB", "MB", "GB", "TB"][i]
+        );
+    };
+
     const handleChange = (file) => {
         setImportFile(file);
-      };
+        setImportFileName(file.name);
+        setImportFileSize(humanFileSize(file.size));
+        setImportErrors([]);
+        setImportError("");
+    };
+
+    const onTypeError = (err) => {
+        setImportError(err)
+    }
 
     const closeModalDelete = () => {
         setIsOpen(false);
@@ -588,33 +607,32 @@ export default function User(props) {
                     )}
 
                     <div className="w-full">
-                        <label className="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
-                            {importFileName ? (
-                                <div className="flex flex-col items-center justify-center">
-                                    <DocumentIcon className="w-10 h-10 mb-1" />
-                                    {importFileName}
-                                </div>
-                            ) : (
-                                <span className="flex items-center space-x-2">
-                                    <span className="font-medium text-gray-600">
-                                        Drop files to Attach, or
-                                        <span className="text-blue-600 underline">
-                                            {" "}
-                                            browse
+                        <FileUploader
+                            handleChange={handleChange}
+                            name="file"
+                            types={fileTypes}
+                            classes="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none"
+                            onTypeError={onTypeError}
+                        >
+                            <>
+                                {importFileName ? (
+                                    <div className="flex flex-col items-center justify-center">
+                                        <DocumentIcon className="w-10 h-10 mb-1" />
+                                        {importFileName} {importFileSize}
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center space-x-2">
+                                        <span className="font-medium text-gray-600">
+                                            Drop files to Attach, or
+                                            <span className="text-blue-600 underline">
+                                                {" "}
+                                                browse
+                                            </span>
                                         </span>
-                                    </span>
-                                </span>
-                            )}
-                            <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
-                            <input
-                                type="file"
-                                onChange={(e) => [
-                                    setImportFile(e.target.files[0]),
-                                    setImportFileName(e.target.files[0].name),
-                                ]}
-                                className="hidden"
-                            />
-                        </label>
+                                    </div>
+                                )}
+                            </>
+                        </FileUploader>
                     </div>
                 </div>
 
@@ -626,10 +644,7 @@ export default function User(props) {
                     >
                         {importLoading ? "Proses..." : "Ya, import data ini!"}
                     </ButtonSubmit>
-                    <ButtonCancel
-                        type="button"
-                        onClick={closeModalImport}
-                    >
+                    <ButtonCancel type="button" onClick={closeModalImport}>
                         Batal
                     </ButtonCancel>
                 </div>
