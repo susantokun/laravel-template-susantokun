@@ -98,7 +98,7 @@
                             <x-button class="inline-flex items-center justify-center w-full">
                                 {{ __('label.login') }}
                             </x-button>
-                            <div class="flex items-center justify-center w-full my-4">
+                            {{-- <div class="flex items-center justify-center w-full my-4">
                                 <div class="w-10 h-px bg-slate-200 grow"></div>
                                 <div class="mx-2 text-sm grow-0 text-slate-600">{{ __('label.or_continue_with') }}</div>
                                 <div class="w-10 h-px bg-slate-200 grow"></div>
@@ -131,7 +131,7 @@
                                         ></i>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </form>
 
