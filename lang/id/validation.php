@@ -134,7 +134,12 @@ return [
         ],
     ],
 
-    'attributes' => array(
+    'attributes' => [
+        'username' => 'Nama Pengguna',
+        'first_name' => 'Nama Depan',
+        'last_name' => 'Nama Belakang',
+        'full_name' => 'Nama Lengkap',
+        'phone' => 'Telepon',
 
         'wedding_id' => 'Undangan',
         'file' => 'File',
@@ -215,5 +220,5 @@ return [
         'to_payment_type' => 'Metode pembayaran',
         'to_payment_name' => 'Nama akun',
         'to_payment_number' => 'Nomor akun',
-    ),
+    ],
 ];
