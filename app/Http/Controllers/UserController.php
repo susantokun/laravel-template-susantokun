@@ -23,11 +23,15 @@ namespace App\Http\Controllers;
 use Image;
 use App\Models\User;
 use Illuminate\Support\Arr;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Validators\ValidationException as ExcelValidationException;
 
 class UserController extends Controller
 {
@@ -50,6 +54,53 @@ class UserController extends Controller
         }
 
         return view('backend.pages.users.userBasic', compact('users'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+    public function import()
+    {
+        try {
+            request()->validate([
+                'file' => ['required', 'mimes:xlsx'],
+            ]);
+            $import = Excel::import(new UsersImport, request()->file('file'));
+            if ($import) {
+                return response()->json([
+                    'status' => true,
+                    'message' => __('user.import_success')
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => __('user.import_failed')
+                ]);
+            }
+        } catch (ExcelValidationException $e) {
+            $errors = $e->failures();
+
+            return response()->json([
+                'status' => false,
+                'message' => __('user.import_failed'),
+                'errors' => $errors
+            ]);
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => __('user.import_failed'),
+                'error' => $error
+            ]);
+        }
+    }
+
+    public function importExample()
+    {
+        return $this->redirect('/storage/documents/excel/example-users.xls');
     }
 
     public function index()
@@ -209,7 +260,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         if ($user->image_file) {
-            if (Storage::disk('public')->exists( $user->image_file)) {
+            if (Storage::disk('public')->exists($user->image_file)) {
                 Storage::disk('public')->delete($user->image_file);
             }
         }
