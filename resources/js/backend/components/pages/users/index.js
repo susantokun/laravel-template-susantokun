@@ -6,16 +6,20 @@ import React, {
     useCallback,
     Fragment,
 } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { useTable } from "react-table";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition, Menu } from "@headlessui/react";
 import {
     TrashIcon,
     ExclamationIcon,
     PencilAltIcon,
     PlusIcon,
+    UploadIcon as UploadIconOutline,
+    DownloadIcon as DownloadIconOutline,
+    DocumentIcon,
+    CloudUploadIcon,
 } from "@heroicons/react/outline";
 import TableControlled from "../../reactTable/TableControlled";
 import {
@@ -23,8 +27,20 @@ import {
     ButtonEdit,
     ButtonDelete,
     ButtonCreate,
+    ButtonSubmit,
+    ButtonCancel,
 } from "../../buttons/ButtonActions";
+import { MenuButton, ButtonImportExample } from "../../buttons/Button";
+import {
+    ChevronDownIcon,
+    ChevronUpIcon,
+    UploadIcon as UploadIconSolid,
+    DownloadIcon as DownloadIconSolid,
+} from "@heroicons/react/solid";
 import { ButtonPrimary } from "../../buttons/Button";
+import Modal from "../../Modal";
+import { FileUploader } from "react-drag-drop-files";
+const fileTypes = ["JPG", "PNG", "GIF"];
 
 export default function User(props) {
     const auth = JSON.parse(props.auth);
@@ -48,10 +64,33 @@ export default function User(props) {
     const [dataTotal, setDataTotal] = useState(0);
     const dataPageSize = 10;
 
+    const [isOpenImport, setIsOpenImport] = useState(false);
+    const [importLoading, setImportLoading] = useState(false);
+    const [importFile, setImportFile] = useState("");
+    const [importFileName, setImportFileName] = useState("");
+    const [importErrors, setImportErrors] = useState([]);
+    const [importError, setImportError] = useState("");
+
     const avatarUI = "https://ui-avatars.com/api/?background=random&name=";
+
+    const handleChange = (file) => {
+        setImportFile(file);
+      };
 
     const closeModalDelete = () => {
         setIsOpen(false);
+    };
+
+    const closeModalImport = () => {
+        setIsOpenImport(false);
+        setImportFile("");
+        setImportFileName("");
+        setImportErrors([]);
+        setImportError("");
+    };
+
+    const openModalImport = () => {
+        setIsOpenImport(true);
     };
 
     const openModalDelete = (
@@ -289,8 +328,8 @@ export default function User(props) {
                 pageIndex: getPageIndex,
                 pageSize: getPageSize,
                 search: searchTerm,
-                orderBy: '',
-                orderType: 'DESC',
+                orderBy: "",
+                orderType: "DESC",
             });
         }
     };
@@ -304,9 +343,11 @@ export default function User(props) {
     }) => {
         try {
             setLoading(true);
-            const reqData = await axios.get(
-                `/api/users?page=${pageIndex}&per_page=${pageSize}&order_by=${orderBy}&order_type=${orderType}&search=${search}`
-            ).then((res) => res.data);
+            const reqData = await axios
+                .get(
+                    `/api/users?page=${pageIndex}&per_page=${pageSize}&order_by=${orderBy}&order_type=${orderType}&search=${search}`
+                )
+                .then((res) => res.data);
 
             const resData = await reqData.data;
             if (reqData.status) {
@@ -319,7 +360,6 @@ export default function User(props) {
             } else {
                 console.log(reqData.message);
             }
-
         } catch (e) {
             console.log("Error while fetching", e);
         }
@@ -336,8 +376,8 @@ export default function User(props) {
                     pageIndex: pageIndex + 1,
                     pageSize: pageSize,
                     search: searchTerm,
-                    orderBy: sortBy[0]?.id || '',
-                    orderType: sortBy[0]?.desc ? 'ASC' : 'DESC',
+                    orderBy: sortBy[0]?.id || "",
+                    orderType: sortBy[0]?.desc ? "ASC" : "DESC",
                 });
             }
         },
@@ -356,8 +396,8 @@ export default function User(props) {
                         pageIndex: getPageIndex,
                         pageSize: getPageSize,
                         search: searchTerm,
-                        orderBy: '',
-                        orderType: 'DESC',
+                        orderBy: "",
+                        orderType: "DESC",
                     });
                 } else {
                     setIsOpen(true);
@@ -371,6 +411,45 @@ export default function User(props) {
         setTimeout(() => {
             setDeleteLoading(false);
         }, 1000);
+    };
+
+    const handleImport = async () => {
+        setImportLoading(true);
+        const formData = new FormData();
+        formData.append("file", importFile);
+        const reqData = await axios.post("/users-import", formData);
+        const resData = await reqData.data;
+        if (resData.status === true) {
+            setIsOpenImport(false);
+            setImportFile("");
+            setImportFileName("");
+            setImportErrors([]);
+            setImportError("");
+            toast.success(resData.message);
+            setImportLoading(false);
+            fetchAPIData({
+                pageIndex: getPageIndex,
+                pageSize: getPageSize,
+                search: searchTerm,
+                orderBy: "",
+                orderType: "DESC",
+            });
+        } else if (resData.status === "error") {
+            setIsOpenImport(true);
+            setImportFile("");
+            setImportFileName("");
+            setImportErrors([]);
+            setImportError(resData.error);
+            toast.error(resData.message);
+        } else {
+            setIsOpenImport(true);
+            setImportFile("");
+            setImportFileName("");
+            setImportErrors(resData.errors);
+            setImportError("");
+            toast.warn(resData.message);
+        }
+        setImportLoading(false);
     };
 
     return (
@@ -465,10 +544,177 @@ export default function User(props) {
                     </div>
                 </Dialog>
             </Transition>
+
+            <Modal isOpen={isOpenImport} closeModal={closeModalImport}>
+                <Dialog.Title
+                    as="h3"
+                    className="text-xl font-medium leading-6 text-gray-900"
+                >
+                    <div className="text-xl">Import Data</div>
+                </Dialog.Title>
+                <div className="w-full mt-2">
+                    <p className="text-sm text-gray-500">
+                        Silakan unduh terlebih dahulu format excel untuk import
+                        data!
+                    </p>
+
+                    <div className="my-3">
+                        <ButtonImportExample
+                            path="/users-import-example"
+                            title="Unduh Format Excel"
+                        />
+                    </div>
+
+                    {importErrors.length ? (
+                        <div className="px-4 py-2 my-3 border rounded-lg border-danger/60 bg-danger/30">
+                            <ul className="flex flex-col justify-start w-full text-left list-disc list-inside">
+                                {importErrors.map((item, index) => (
+                                    <li key={index} className="list-item">
+                                        Baris{" "}
+                                        <span className="font-medium">
+                                            {item.row}
+                                        </span>
+                                        : {item.errors[0]}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : null}
+
+                    {importError && (
+                        <div className="px-4 py-2 my-3 break-all border rounded-lg border-danger/60 bg-danger/30">
+                            {importError}
+                        </div>
+                    )}
+
+                    <div className="w-full">
+                        <label className="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+                            {importFileName ? (
+                                <div className="flex flex-col items-center justify-center">
+                                    <DocumentIcon className="w-10 h-10 mb-1" />
+                                    {importFileName}
+                                </div>
+                            ) : (
+                                <span className="flex items-center space-x-2">
+                                    <span className="font-medium text-gray-600">
+                                        Drop files to Attach, or
+                                        <span className="text-blue-600 underline">
+                                            {" "}
+                                            browse
+                                        </span>
+                                    </span>
+                                </span>
+                            )}
+                            <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
+                            <input
+                                type="file"
+                                onChange={(e) => [
+                                    setImportFile(e.target.files[0]),
+                                    setImportFileName(e.target.files[0].name),
+                                ]}
+                                className="hidden"
+                            />
+                        </label>
+                    </div>
+                </div>
+
+                <div className="inline-flex items-center gap-2 mt-4">
+                    <ButtonSubmit
+                        type="button"
+                        disabled={importLoading}
+                        onClick={handleImport}
+                    >
+                        {importLoading ? "Proses..." : "Ya, import data ini!"}
+                    </ButtonSubmit>
+                    <ButtonCancel
+                        type="button"
+                        onClick={closeModalImport}
+                    >
+                        Batal
+                    </ButtonCancel>
+                </div>
+            </Modal>
             <div className="inline-flex flex-col items-center justify-center w-full gap-3 md:flex-row md:justify-between">
                 <div className="inline-flex items-center gap-2">
                     <ButtonPrimary path="/users/create" title="Buat Pengguna" />
-                    <ButtonCreate />
+
+                    <Menu as="div" className="relative inline-block text-left">
+                        <MenuButton>
+                            <PlusIcon
+                                className="w-5 h-5 text-primary hover:text-primary/80"
+                                aria-hidden="true"
+                            />
+                        </MenuButton>
+                        <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                        >
+                            <Menu.Items className="absolute left-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <div className="px-1 py-1">
+                                    <Menu.Item>
+                                        {({ active }) => (
+                                            <a
+                                                href="/users-export"
+                                                className={`${
+                                                    active
+                                                        ? "bg-primary/50 text-white"
+                                                        : "text-gray-900"
+                                                } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                            >
+                                                {active ? (
+                                                    <DownloadIconOutline
+                                                        className="w-5 h-5 mr-2 text-primary/40"
+                                                        aria-hidden="true"
+                                                    />
+                                                ) : (
+                                                    <DownloadIconSolid
+                                                        className="w-5 h-5 mr-2 text-primary/40"
+                                                        aria-hidden="true"
+                                                    />
+                                                )}
+                                                Export Excel
+                                            </a>
+                                        )}
+                                    </Menu.Item>
+                                </div>
+                                <div className="px-1 py-1">
+                                    <Menu.Item>
+                                        {({ active }) => (
+                                            <button
+                                                tyoe="button"
+                                                onClick={() =>
+                                                    openModalImport()
+                                                }
+                                                className={`${
+                                                    active
+                                                        ? "bg-primary/50 text-white"
+                                                        : "text-gray-900"
+                                                } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                            >
+                                                {active ? (
+                                                    <UploadIconOutline
+                                                        className="w-5 h-5 mr-2 text-primary/40"
+                                                        aria-hidden="true"
+                                                    />
+                                                ) : (
+                                                    <UploadIconSolid
+                                                        className="w-5 h-5 mr-2 text-primary/40"
+                                                        aria-hidden="true"
+                                                    />
+                                                )}
+                                                Import Excel
+                                            </button>
+                                        )}
+                                    </Menu.Item>
+                                </div>
+                            </Menu.Items>
+                        </Transition>
+                    </Menu>
                 </div>
                 <input
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -497,7 +743,8 @@ export default function User(props) {
 }
 
 if (document.getElementById("user")) {
-    const propsContainer = document.getElementById("user");
-    const props = Object.assign({}, propsContainer.dataset);
-    ReactDOM.render(<User {...props} />, document.getElementById("user"));
+    const container = document.getElementById("user");
+    const root = createRoot(container);
+    const props = Object.assign({}, container.dataset);
+    root.render(<User {...props} />);
 }

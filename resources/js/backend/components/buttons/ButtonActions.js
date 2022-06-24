@@ -34,5 +34,21 @@ export function ButtonDelete(props) {
     );
 }
 
+export function ButtonSubmit(props) {
+    return (
+        <button {...props} className="inline-flex justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md text-primary/90 bg-primary/20 hover:bg-primary/30 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary/50">
+           {props.children}
+        </button>
+    );
+}
 
-export default { ButtonShow, ButtonEdit, ButtonDelete}
+export function ButtonCancel(props) {
+    return (
+        <button {...props} className="inline-flex justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md text-slate-900 bg-secondary/40 hover:bg-secondary/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary/50">
+           {props.children}
+        </button>
+    );
+}
+
+
+export default { ButtonShow, ButtonEdit, ButtonDelete, ButtonSubmit, ButtonCancel}

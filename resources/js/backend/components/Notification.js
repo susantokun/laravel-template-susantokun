@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 
@@ -29,7 +29,7 @@ export default function Notification(props) {
 }
 
 if (document.getElementById("notification")) {
-    const propsContainer = document.getElementById("notification");
-    const props = Object.assign({}, propsContainer.dataset);
-    ReactDOM.render(<Notification {...props} />, document.getElementById("notification"));
+    const container = document.getElementById("notification");
+    const root = createRoot(container);
+    root.render(<Notification {...props} />, document.getElementById("notification"));
 }

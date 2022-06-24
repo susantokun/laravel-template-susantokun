@@ -6,7 +6,7 @@ import React, {
     useCallback,
     Fragment,
 } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import { useTable } from "react-table";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -339,9 +339,9 @@ export default function Role(props) {
         </>
     );
 }
-
 if (document.getElementById("role")) {
-    const propsContainer = document.getElementById("role");
-    const props = Object.assign({}, propsContainer.dataset);
-    ReactDOM.render(<Role {...props} />, document.getElementById("role"));
+    const container = document.getElementById("role");
+    const root = createRoot(container);
+    const props = Object.assign({}, container.dataset);
+    root.render(<Role {...props} />);
 }
