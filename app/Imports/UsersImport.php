@@ -84,15 +84,15 @@ class UsersImport implements ToModel, WithHeadingRow, WithUpserts, WithValidatio
     public function customValidationMessages()
     {
         return [
-            'username.not_in' => ':attribute sudah ada yang menggunakan.',
-            'email.not_in' => ':attribute sudah ada yang menggunakan.',
+            'username.not_in' => ':attribute tidak dapat digunakan.',
+            'email.not_in' => ':attribute tidak dapat digunakan.',
         ];
     }
 
     public function customValidationAttributes()
     {
         return [
-            'username' => __('user.userame'),
+            'username' => __('user.username'),
             'first_name' => __('user.first_name'),
             'last_name' => __('user.last_name'),
             'full_name' => __('user.full_name'),
