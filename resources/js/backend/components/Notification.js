@@ -31,5 +31,6 @@ export default function Notification(props) {
 if (document.getElementById("notification")) {
     const container = document.getElementById("notification");
     const root = createRoot(container);
-    root.render(<Notification {...props} />, document.getElementById("notification"));
+    const props = Object.assign({}, container.dataset);
+    root.render(<Notification {...props} />);
 }
