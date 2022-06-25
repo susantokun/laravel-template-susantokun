@@ -16,7 +16,11 @@ class DownloadController extends Controller
     public function __invoke(Request $request)
     {
         if ($request->name) {
-            return Storage::disk('public')->download('documents/excel/'.$request->name);
+            $file = 'documents/excel/'.$request->name;
+            if (Storage::disk('public')->exists($file)) {
+                return Storage::disk('public')->download($file);
+            }
+            abort(404);
         }
         abort(404);
     }
