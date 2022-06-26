@@ -79,5 +79,5 @@ if (document.getElementById("menuForm")) {
     const container = document.getElementById("menuForm");
     const root = createRoot(container);
     const props = Object.assign({}, container.dataset);
-    root.render(<MenuForm {...props} />, container);
+    root.render(<MenuForm {...props} />);
 }

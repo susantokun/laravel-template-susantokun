@@ -310,5 +310,5 @@ if (document.getElementById("menu")) {
     const container = document.getElementById("menu");
     const root = createRoot(container);
     const props = Object.assign({}, container.dataset);
-    root.render(<Menu {...props} />, container);
+    root.render(<Menu {...props} />);
 }

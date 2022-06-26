@@ -343,5 +343,5 @@ if (document.getElementById("role")) {
     const container = document.getElementById("role");
     const root = createRoot(container);
     const props = Object.assign({}, container.dataset);
-    root.render(<Role {...props} />, container);
+    root.render(<Role {...props} />);
 }

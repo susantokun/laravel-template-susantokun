@@ -85,5 +85,5 @@ if (document.getElementById("userBasic")) {
     const container = document.getElementById("userBasic");
     const root = createRoot(container);
     const props = Object.assign({}, container.dataset);
-    root.render(<UserBasic {...props} />, container);
+    root.render(<UserBasic {...props} />);
 }
