@@ -76,8 +76,7 @@ export default function MenuForm(props) {
 }
 
 if (document.getElementById("menuForm")) {
-    const container = document.getElementById("menuForm");
-    const root = createRoot(container);
-    const props = Object.assign({}, container.dataset);
+    const root = createRoot(document.getElementById("menuForm"))
+    const props = Object.assign({}, document.getElementById("menuForm").dataset);
     root.render(<MenuForm {...props} />);
 }

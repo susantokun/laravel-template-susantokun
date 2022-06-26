@@ -13,11 +13,11 @@
         </x-header-content>
 
         <div class="mt-4">
-            {{-- <div
-                id="file_manager"
+            <div
+                id="fileManager"
                 data-can_file_managers_delete="{{ $can_file_managers_delete }}"
                 data-can_file_managers_edit="{{ $can_file_managers_edit }}"
-            ></div> --}}
+            ></div>
         </div>
 
         @if (session()->has('success'))

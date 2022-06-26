@@ -293,8 +293,8 @@ export default function FileManager(props) {
         </>
     );
 }
-if (document.getElementById("file_manager")) {
-    const container = document.getElementById("file_manager");
+if (document.getElementById("fileManager")) {
+    const container = document.getElementById("fileManager");
     const root = createRoot(container);
     const props = Object.assign({}, container.dataset);
     root.render(<FileManager {...props} />);
