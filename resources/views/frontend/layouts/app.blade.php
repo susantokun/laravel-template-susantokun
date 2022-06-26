@@ -33,7 +33,8 @@
         href="{{ '/storage/'.$configuration->favicon_file }}"
     />
 
-    <title>@yield('title'){{ env('APP_NAME') }}</title>
+    {{-- <title>@yield('title'){{ env('APP_NAME') }}</title> --}}
+    @yield('head')
 
     <!-- Styles -->
     <link
