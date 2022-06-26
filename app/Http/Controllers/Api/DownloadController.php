@@ -20,6 +20,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\FileManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Api\BaseController as BaseController;
@@ -38,10 +39,16 @@ class DownloadController extends BaseController
         $user = auth()->user();
         if ($request->permission_download) {
             if ($user->can($request->permission_download)) {
-                $file_path = $request->file_path;
-                if ($file_path) {
-                    if (Storage::disk('public')->exists($file_path)) {
-                        return $this->sendResponse( Storage::disk('public')->url($file_path), 'File berhasil diunduh!');
+                $code = $request->code;
+                if ($code) {
+                    $file_manager = FileManager::where('code', $code)->first();
+                    if ($file_manager) {
+                        $file_path = $file_manager->path;
+                        if (Storage::disk('public')->exists($file_path)) {
+                            return $this->sendResponse( Storage::disk('public')->url($file_path), 'File berhasil diunduh!');
+                        } else {
+                            return $this->sendError(null, 'File tidak ditemukan!', 200);
+                        }
                     } else {
                         return $this->sendError(null, 'File tidak ditemukan!', 200);
                     }

@@ -478,7 +478,7 @@ export default function User(props) {
     const handleDownloadExample = async () => {
         setIsDownload(true);
         const reqData = await axios.post("api/download", {
-            file_path: "documents/excel/example-users.xlsx",
+            code: "users_download_example",
             permission_download: can_users_download ? "users download" : false,
         });
         const resData = await reqData.data;

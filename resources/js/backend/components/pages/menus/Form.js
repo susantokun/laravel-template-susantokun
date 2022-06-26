@@ -33,8 +33,8 @@ export default function MenuForm(props) {
     }, []);
 
     const handleChange = (event) => {
-        setRoleSelected(event.target.value)
-    }
+        setRoleSelected(event.target.value);
+    };
 
     return (
         <div className="grid gap-4 md:grid-cols-6">
@@ -43,7 +43,10 @@ export default function MenuForm(props) {
                 <select
                     className="block w-full mt-1 form-select"
                     name="role_id"
-                    onChange={(e) => [getMenus(e.target.value), setRoleSelected(e.target.value)]}
+                    onChange={(e) => [
+                        getMenus(e.target.value),
+                        setRoleSelected(e.target.value),
+                    ]}
                     value={roleSelected}
                 >
                     {dataRoles.map((item) => (
@@ -61,9 +64,9 @@ export default function MenuForm(props) {
                     onChange={(e) => setMenuSelected(e.target.value)}
                     value={menuSelected}
                 >
-                    {dataMenus.map((item, index) => (
-                        <option key={index} value={index}>
-                            {item}
+                    {dataMenus.map((item) => (
+                        <option key={item.id} value={item.id}>
+                            {item.title}
                         </option>
                     ))}
                 </select>

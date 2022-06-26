@@ -49,6 +49,7 @@
         "react-feather": "^2.0.10",
         "react-moment": "^1.1.2",
         "react-number-format": "^4.9.3",
+        "react-select": "^5.3.2",
         "react-table": "^7.8.0",
         "react-toastify": "^9.0.3",
         "tiny-slider": "^2.9.4",

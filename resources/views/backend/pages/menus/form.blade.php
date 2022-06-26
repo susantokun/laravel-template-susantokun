@@ -7,11 +7,12 @@
             class="col-span-6"
             id="menuForm"
             data-role_selected={{ $menu->role_id ?? 3 }}
-            data-menu_selected={{ $menu->parent_id ?? 3 }}
+            data-menu_selected={{ $menu->parent_id ?? 0 }}
         ></div>
 
         {{ Form::formText('menu.title', 'title') }}
-        {{ Form::formSelect('menu.route_name', 'route_name', $routes) }}
+        {{-- {{ Form::formSelect('menu.route_name', 'route_name', $routes) }} --}}
+        {{ Form::formText('menu.route_name', 'route_name') }}
         {{ Form::formText('menu.route_group', 'route_group', null, ['placeholder' => 'kosongkan jika menu induk']) }}
         {{ Form::formText('menu.icon', 'icon') }}
         {{ Form::formText('menu.order', 'order') }}

@@ -77,6 +77,8 @@ class MenuController extends Controller
             'api.permissions.index',
             'api.menus.index',
             'api.menus.select',
+            'api.fileManagers.index',
+            'accounts.users.export',
             null
         ));
 
@@ -144,8 +146,11 @@ class MenuController extends Controller
             'verify',
             'api.users.index',
             'api.roles.index',
+            'api.permissions.index',
             'api.menus.index',
             'api.menus.select',
+            'api.fileManagers.index',
+            'accounts.users.export',
             null
         ));
 

@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\ConfigurationController;
 
 Route::get('/', function () {
@@ -37,7 +37,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['middleware' => 'role:superadmin'], function () {
             Route::resource('menus', MenuController::class);
+            Route::resource('file-managers', FileManagerController::class);
+            // Route::get('file-managers', [FileManagerController::class, 'index'])->name('fileManagers.index');
         });
+
     });
 
     Route::name('accounts.')->group(function() {

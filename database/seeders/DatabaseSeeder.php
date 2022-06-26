@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             MenuSubOneSeeder::class,
             MenuSubTwoSeeder::class,
+            FileManagerSeeder::class
         ]);
     }
 }

@@ -43,11 +43,17 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'users delete']);
         Permission::create(['name' => 'users import']);
         Permission::create(['name' => 'users export']);
+        Permission::create(['name' => 'users download']);
 
         Permission::create(['name' => 'menus view']);
         Permission::create(['name' => 'menus create']);
         Permission::create(['name' => 'menus edit']);
         Permission::create(['name' => 'menus delete']);
+
+        Permission::create(['name' => 'file managers view']);
+        Permission::create(['name' => 'file managers create']);
+        Permission::create(['name' => 'file managers edit']);
+        Permission::create(['name' => 'file managers delete']);
 
         $superadminRole = Role::create(['name' => 'superadmin']);
         $superadminRole->givePermissionTo(Permission::all());
@@ -107,6 +113,7 @@ class UserSeeder extends Seeder
             'users delete',
             'users import',
             'users export',
+            'users download',
         ]);
 
         $admin1 = User::factory()->create([

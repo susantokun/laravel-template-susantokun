@@ -61,10 +61,15 @@ class RoleController extends Controller
                 'users view superadmin',
                 'users import',
                 'users export',
+                'users download',
                 'menus view',
                 'menus create',
                 'menus edit',
                 'menus delete',
+                'file managers view',
+                'file managers create',
+                'file managers edit',
+                'file managers delete',
             ])->get();
         } else {
             $permissions = Permission::get();
@@ -124,10 +129,15 @@ class RoleController extends Controller
                 'users view superadmin',
                 'users import',
                 'users export',
+                'users download',
                 'menus view',
                 'menus create',
                 'menus edit',
                 'menus delete',
+                'file managers view',
+                'file managers create',
+                'file managers edit',
+                'file managers delete',
             ])->get();
         } else {
             $permissions = Permission::get();

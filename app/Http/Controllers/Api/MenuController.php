@@ -41,13 +41,24 @@ class MenuController extends BaseController
         if ($role == NULL || $role == "") {
             $parent = Menu::pluck('title', 'id')->all();
         } else {
-            $parent = Menu::where('role_id', $role)->pluck('title', 'id')->all();
+            $parent = Menu::where('role_id', $role)->get(['title', 'id']);
         }
 
-        $menuInduk = [ 0 => 'Menu Induk' ];
-        $parents = array_merge($menuInduk, $parent);
+        $menuInduk = [
+            0 => [
+                'id' => 0,
+                'title' => 'Menu Induk'
+            ]
+        ];
 
-        return $this->sendResponse($parents, __('menu.menus') .' '. __('label.get_data_success'));
+        $parents = [];
+        foreach ($parent as $key => $value) {
+            $parents[$key]['id'] = $value->id;
+            $parents[$key]['title'] = $value->title;
+        }
+        $parents2 = array_merge($menuInduk, $parents);
+
+        return $this->sendResponse($parents2, __('menu.menus') .' '. __('label.get_data_success'));
     }
 
     /**

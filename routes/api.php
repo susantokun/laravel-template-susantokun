@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\DownloadController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\Auth\LogoutController;
+use App\Http\Controllers\Api\FileManagerController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
@@ -33,6 +34,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('menus', [MenuController::class, 'index'])->name('api.menus.index');
     Route::get('menus-select', [MenuController::class, 'menuSelect'])->name('api.menus.select');
     Route::get('users', [UserController::class, 'index'])->name('api.users.index');
+    Route::get('file-managers', [FileManagerController::class, 'index'])->name('api.fileManagers.index');
 
     Route::post('download', DownloadController::class);
 });
