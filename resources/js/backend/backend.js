@@ -31,4 +31,4 @@ import "./components/pages/roles";
 import "./components/pages/permissions";
 import "./components/pages/menus";
 import "./components/pages/menus/Form";
-import "./components/pages/file-managers";
+// import "./components/pages/file-managers";
