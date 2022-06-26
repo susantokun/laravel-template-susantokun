@@ -24,5 +24,8 @@ done crud users, roles, permissions
   -> filesystem (harus ada image_file) [DONE]
   -> modal tidak mau otomatis hide [DONE]
 
-2022-06-19
+2022-06-19 :
 1. Tambah api untuk auth [DONE]
+
+2022-06-26 :
+1. untuk route_name di kelola menus buat selected with creatable value (react-select)
