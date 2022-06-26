@@ -114,13 +114,11 @@
         >
             <img
                 alt="{{ auth()->user()->image_name }}"
-                src="
-                @if (isset(auth()->user()->image_file))
+                src="@if (isset(auth()->user()->image_file))
                 {{ env('APP_URL').'/storage/'.auth()->user()->image_file }}
                 @else
-                {{env('APP_URL_AVATAR_UI').auth()->user()->full_name }}
-                @endif
-                "
+                {{ env('APP_URL_AVATAR_UI').auth()->user()->full_name }}
+                @endif"
             >
         </div>
         <div class="w-56 dropdown-menu">
