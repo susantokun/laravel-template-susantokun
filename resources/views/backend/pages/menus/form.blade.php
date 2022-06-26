@@ -7,6 +7,7 @@
             class="col-span-6"
             id="menuForm"
             data-role_selected={{ $menu->role_id ?? 3 }}
+            data-menu_selected={{ $menu->parent_id ?? 3 }}
         ></div>
 
         {{ Form::formText('menu.title', 'title') }}

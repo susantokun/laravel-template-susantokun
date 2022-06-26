@@ -5,6 +5,7 @@ export default function MenuForm(props) {
     const [dataRoles, setDataRoles] = useState([]);
     const [dataMenus, setDataMenus] = useState([]);
     const [roleSelected, setRoleSelected] = useState(props.role_selected);
+    const [menuSelected, setMenuSelected] = useState(props.menu_selected);
 
     const getRoles = async () => {
         const reqData = await axios.get("/api/roles");
@@ -57,6 +58,8 @@ export default function MenuForm(props) {
                 <select
                     className="block w-full mt-1 form-select"
                     name="parent_id"
+                    onChange={(e) => setMenuSelected(e.target.value)}
+                    value={menuSelected}
                 >
                     {dataMenus.map((item, index) => (
                         <option key={index} value={index}>
