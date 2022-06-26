@@ -315,5 +315,5 @@ if (document.getElementById("permission")) {
     const container = document.getElementById("permission");
     const root = createRoot(container);
     const props = Object.assign({}, container.dataset);
-    root.render(<Permission {...props} />);
+    root.render(<Permission {...props} />, container);
 }

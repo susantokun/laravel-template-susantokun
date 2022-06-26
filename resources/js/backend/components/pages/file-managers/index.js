@@ -297,5 +297,5 @@ if (document.getElementById("file_manager")) {
     const container = document.getElementById("file_manager");
     const root = createRoot(container);
     const props = Object.assign({}, container.dataset);
-    root.render(<FileManager {...props} />);
+    root.render(<FileManager {...props} />, container);
 }

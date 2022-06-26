@@ -794,5 +794,5 @@ if (document.getElementById("user")) {
     const container = document.getElementById("user");
     const root = createRoot(container);
     const props = Object.assign({}, container.dataset);
-    root.render(<User {...props} />);
+    root.render(<User {...props} />, container);
 }
