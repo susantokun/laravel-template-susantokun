@@ -47,6 +47,9 @@ export default function User(props) {
     const auth = JSON.parse(props.auth);
     const can_users_delete = props.can_users_delete;
     const can_users_edit = props.can_users_edit;
+    const can_users_import = props.can_users_import;
+    const can_users_export = props.can_users_export;
+    const can_users_download = props.can_users_download;
     const [isOpen, setIsOpen] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [userId, setUserId] = useState("");
@@ -472,9 +475,21 @@ export default function User(props) {
         setImportLoading(false);
     };
 
-    const handleDownloadExample = () => {
+    const handleDownloadExample = async () => {
         setIsDownload(true);
-        window.location.href = "download?name=example-users.xlsx";
+        const reqData = await axios.post("api/download", {
+            file_path: "documents/excel/example-users.xlsx",
+            permission_download: can_users_download ? "users download" : false,
+        });
+        const resData = await reqData.data;
+        if (resData.status) {
+            setTimeout(() => {
+                toast.success(resData.message);
+            }, 1000);
+            window.open(resData.data);
+        } else {
+            toast.warn(resData.message);
+        }
         setTimeout(() => {
             setIsDownload(false);
         }, 2000);
@@ -587,7 +602,10 @@ export default function User(props) {
                     </p>
 
                     <div className="my-3">
-                        <ButtonImportExample disabled={isDownload} onClick={handleDownloadExample}>
+                        <ButtonImportExample
+                            disabled={isDownload}
+                            onClick={handleDownloadExample}
+                        >
                             {isDownload ? "Mengunduh..." : "Unduh Format Excel"}
                         </ButtonImportExample>
                     </div>
@@ -659,83 +677,92 @@ export default function User(props) {
                 <div className="inline-flex items-center gap-2">
                     <ButtonPrimary path="/users/create" title="Buat Pengguna" />
 
-                    <Menu as="div" className="relative inline-block text-left">
-                        <MenuButton>
-                            <PlusIcon
-                                className="w-5 h-5 text-primary hover:text-primary/80"
-                                aria-hidden="true"
-                            />
-                        </MenuButton>
-                        <Transition
-                            as={Fragment}
-                            enter="transition ease-out duration-100"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
+                    {(can_users_import || can_users_export) && (
+                        <Menu
+                            as="div"
+                            className="relative inline-block text-left"
                         >
-                            <Menu.Items className="absolute left-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <div className="px-1 py-1">
-                                    <Menu.Item>
-                                        {({ active }) => (
-                                            <a
-                                                href="/users-export"
-                                                className={`${
-                                                    active
-                                                        ? "bg-primary/50 text-white"
-                                                        : "text-gray-900"
-                                                } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                                            >
-                                                {active ? (
-                                                    <DownloadIconOutline
-                                                        className="w-5 h-5 mr-2 text-primary/40"
-                                                        aria-hidden="true"
-                                                    />
-                                                ) : (
-                                                    <DownloadIconSolid
-                                                        className="w-5 h-5 mr-2 text-primary/40"
-                                                        aria-hidden="true"
-                                                    />
+                            <MenuButton>
+                                <PlusIcon
+                                    className="w-5 h-5 text-primary hover:text-primary/80"
+                                    aria-hidden="true"
+                                />
+                            </MenuButton>
+                            <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                            >
+                                <Menu.Items className="absolute left-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    {can_users_export && (
+                                        <div className="px-1 py-1">
+                                            <Menu.Item>
+                                                {({ active }) => (
+                                                    <a
+                                                        href="/users-export"
+                                                        className={`${
+                                                            active
+                                                                ? "bg-primary/50 text-white"
+                                                                : "text-gray-900"
+                                                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                                    >
+                                                        {active ? (
+                                                            <DownloadIconOutline
+                                                                className="w-5 h-5 mr-2 text-primary/40"
+                                                                aria-hidden="true"
+                                                            />
+                                                        ) : (
+                                                            <DownloadIconSolid
+                                                                className="w-5 h-5 mr-2 text-primary/40"
+                                                                aria-hidden="true"
+                                                            />
+                                                        )}
+                                                        Export Excel
+                                                    </a>
                                                 )}
-                                                Export Excel
-                                            </a>
-                                        )}
-                                    </Menu.Item>
-                                </div>
-                                <div className="px-1 py-1">
-                                    <Menu.Item>
-                                        {({ active }) => (
-                                            <button
-                                                tyoe="button"
-                                                onClick={() =>
-                                                    openModalImport()
-                                                }
-                                                className={`${
-                                                    active
-                                                        ? "bg-primary/50 text-white"
-                                                        : "text-gray-900"
-                                                } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                                            >
-                                                {active ? (
-                                                    <UploadIconOutline
-                                                        className="w-5 h-5 mr-2 text-primary/40"
-                                                        aria-hidden="true"
-                                                    />
-                                                ) : (
-                                                    <UploadIconSolid
-                                                        className="w-5 h-5 mr-2 text-primary/40"
-                                                        aria-hidden="true"
-                                                    />
+                                            </Menu.Item>
+                                        </div>
+                                    )}
+                                    {can_users_import && (
+                                        <div className="px-1 py-1">
+                                            <Menu.Item>
+                                                {({ active }) => (
+                                                    <button
+                                                        tyoe="button"
+                                                        onClick={() =>
+                                                            openModalImport()
+                                                        }
+                                                        className={`${
+                                                            active
+                                                                ? "bg-primary/50 text-white"
+                                                                : "text-gray-900"
+                                                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                                    >
+                                                        {active ? (
+                                                            <UploadIconOutline
+                                                                className="w-5 h-5 mr-2 text-primary/40"
+                                                                aria-hidden="true"
+                                                            />
+                                                        ) : (
+                                                            <UploadIconSolid
+                                                                className="w-5 h-5 mr-2 text-primary/40"
+                                                                aria-hidden="true"
+                                                            />
+                                                        )}
+                                                        Import Excel
+                                                    </button>
                                                 )}
-                                                Import Excel
-                                            </button>
-                                        )}
-                                    </Menu.Item>
-                                </div>
-                            </Menu.Items>
-                        </Transition>
-                    </Menu>
+                                            </Menu.Item>
+                                        </div>
+                                    )}
+                                </Menu.Items>
+                            </Transition>
+                        </Menu>
+                    )}
                 </div>
                 <input
                     onChange={(e) => setSearchTerm(e.target.value)}

@@ -52,8 +52,6 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-    Route::get('download', DownloadController::class)->name('download');
-
     Route::get('routes', function () {
         $routeCollection = Route::getRoutes();
 

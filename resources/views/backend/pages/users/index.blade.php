@@ -18,6 +18,9 @@
                 data-auth="{{ auth()->user() }}"
                 data-can_users_delete="{{ $can_users_delete }}"
                 data-can_users_edit="{{ $can_users_edit }}"
+                data-can_users_import="{{ $can_users_import }}"
+                data-can_users_export="{{ $can_users_export }}"
+                data-can_users_download="{{ $can_users_download }}"
             ></div>
         </div>
 

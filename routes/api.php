@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\DownloadController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\PermissionController;
 use App\Http\Controllers\Api\Auth\LogoutController;
@@ -32,4 +33,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('menus', [MenuController::class, 'index'])->name('api.menus.index');
     Route::get('menus-select', [MenuController::class, 'menuSelect'])->name('api.menus.select');
     Route::get('users', [UserController::class, 'index'])->name('api.users.index');
+
+    Route::post('download', DownloadController::class);
 });

@@ -102,10 +102,16 @@ class UserController extends Controller
     {
         $can_users_delete = auth()->user()->can('users delete');
         $can_users_edit = auth()->user()->can('users edit');
+        $can_users_import = auth()->user()->can('users import');
+        $can_users_export = auth()->user()->can('users export');
+        $can_users_download = auth()->user()->can('users download');
 
         return view('backend.pages.users.index', [
             'can_users_delete' => $can_users_delete,
             'can_users_edit' => $can_users_edit,
+            'can_users_import' => $can_users_import,
+            'can_users_export' => $can_users_export,
+            'can_users_download' => $can_users_download,
         ]);
     }
 

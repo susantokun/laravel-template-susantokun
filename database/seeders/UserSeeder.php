@@ -41,6 +41,8 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'users create']);
         Permission::create(['name' => 'users edit']);
         Permission::create(['name' => 'users delete']);
+        Permission::create(['name' => 'users import']);
+        Permission::create(['name' => 'users export']);
 
         Permission::create(['name' => 'menus view']);
         Permission::create(['name' => 'menus create']);
@@ -103,6 +105,8 @@ class UserSeeder extends Seeder
             'users create',
             'users edit',
             'users delete',
+            'users import',
+            'users export',
         ]);
 
         $admin1 = User::factory()->create([
