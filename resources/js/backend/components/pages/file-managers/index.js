@@ -6,7 +6,7 @@ import React, {
     useCallback,
     Fragment,
 } from "react";
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { useTable } from "react-table";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -293,9 +293,14 @@ export default function FileManager(props) {
         </>
     );
 }
-if (document.getElementById("fileManager")) {
-    const container = document.getElementById("fileManager");
-    const root = createRoot(container);
-    const props = Object.assign({}, container.dataset);
-    root.render(<FileManager {...props} />);
+// if (document.getElementById("fileManager")) {
+//     const container = document.getElementById("fileManager");
+//     const root = createRoot(container);
+//     const props = Object.assign({}, container.dataset);
+//     root.render(<FileManager {...props} />);
+// }
+
+if (document.getElementById('fileManager')) {
+    const props = Object.assign({}, document.getElementById("fileManager").dataset);
+    ReactDOM.render(<FileManager {...props} />, document.getElementById('fileManager'));
 }

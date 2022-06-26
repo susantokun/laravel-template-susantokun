@@ -5,7 +5,7 @@ import React, {
     useRef,
     useCallback,
 } from "react";
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { useTable } from "react-table";
 import TableBasic from "../../reactTable/TableBasic";
 
@@ -80,10 +80,7 @@ export default function UserBasic(props) {
         </>
     );
 }
-
-if (document.getElementById("userBasic")) {
-    const container = document.getElementById("userBasic");
-    const root = createRoot(container);
-    const props = Object.assign({}, container.dataset);
-    root.render(<UserBasic {...props} />);
+if (document.getElementById('userBasic')) {
+    const props = Object.assign({}, document.getElementById("userBasic").dataset);
+    ReactDOM.render(<UserBasic {...props} />, document.getElementById('userBasic'));
 }

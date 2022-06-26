@@ -6,7 +6,7 @@ import React, {
     useCallback,
     Fragment,
 } from "react";
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { useTable } from "react-table";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -306,9 +306,7 @@ export default function Menu(props) {
         </>
     );
 }
-if (document.getElementById("menu")) {
-    const container = document.getElementById("menu");
-    const root = createRoot(container);
-    const props = Object.assign({}, container.dataset);
-    root.render(<Menu {...props} />);
+if (document.getElementById('menu')) {
+    const props = Object.assign({}, document.getElementById("menu").dataset);
+    ReactDOM.render(<Menu {...props} />, document.getElementById('menu'));
 }

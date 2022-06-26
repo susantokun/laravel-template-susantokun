@@ -12,8 +12,6 @@ Moment.globalLocale = 'id';
 Moment.globalTimezone = 'Asia/Jakarta';
 Moment.globalLocal = true;
 
-import { createRoot } from "react-dom/client";
-
 // backend
 import "./feather";
 import "./dropdown";

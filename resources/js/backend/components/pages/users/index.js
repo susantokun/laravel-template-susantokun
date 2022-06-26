@@ -6,7 +6,7 @@ import React, {
     useCallback,
     Fragment,
 } from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from 'react-dom';
 import { useTable } from "react-table";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -39,7 +39,7 @@ import {
 } from "@heroicons/react/solid";
 import { ButtonPrimary } from "../../buttons/Button";
 import Modal from "../../Modal";
-import { FileUploader } from "react-drag-drop-files";
+// import { FileUploader } from "react-drag-drop-files";
 
 const fileTypes = ["XLSX"];
 
@@ -633,7 +633,7 @@ export default function User(props) {
                     )}
 
                     <div className="w-full">
-                        <FileUploader
+                        {/* <FileUploader
                             handleChange={handleChange}
                             name="file"
                             types={fileTypes}
@@ -656,7 +656,7 @@ export default function User(props) {
                                     </span>
                                 </div>
                             )}
-                        </FileUploader>
+                        </FileUploader> */}
                     </div>
                 </div>
 
@@ -789,10 +789,7 @@ export default function User(props) {
         </>
     );
 }
-
-if (document.getElementById("user")) {
-    const container = document.getElementById("user");
-    const root = createRoot(container);
-    const props = Object.assign({}, container.dataset);
-    root.render(<User {...props} />);
+if (document.getElementById('user')) {
+    const props = Object.assign({}, document.getElementById("user").dataset);
+    ReactDOM.render(<User {...props} />, document.getElementById('user'));
 }

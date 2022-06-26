@@ -6,7 +6,7 @@ import React, {
     useCallback,
     Fragment,
 } from "react";
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { useTable } from "react-table";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -310,10 +310,7 @@ export default function Permission(props) {
         </>
     );
 }
-
-if (document.getElementById("permission")) {
-    const container = document.getElementById("permission");
-    const root = createRoot(container);
-    const props = Object.assign({}, container.dataset);
-    root.render(<Permission {...props} />);
+if (document.getElementById('permission')) {
+    const props = Object.assign({}, document.getElementById("permission").dataset);
+    ReactDOM.render(<Permission {...props} />, document.getElementById('permission'));
 }

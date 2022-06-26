@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from 'react-dom';
 
 export default function MenuForm(props) {
     const [dataRoles, setDataRoles] = useState([]);
@@ -75,8 +75,7 @@ export default function MenuForm(props) {
     );
 }
 
-if (document.getElementById("menuForm")) {
-    const root = createRoot(document.getElementById("menuForm"))
+if (document.getElementById('menuForm')) {
     const props = Object.assign({}, document.getElementById("menuForm").dataset);
-    root.render(<MenuForm {...props} />);
+    ReactDOM.render(<MenuForm {...props} />, document.getElementById('menuForm'));
 }
